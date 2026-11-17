@@ -11,4 +11,6 @@ Artisan::command('inspire', function () {
 Schedule::command('invoices:generate')->monthlyOn(1, '01:00');
 Schedule::command('invoices:mark-overdue')->dailyAt('02:00');
 Schedule::command('leases:sync-expired')->dailyAt('00:05');
+Schedule::command('leases:notify-upcoming-end')->dailyAt('09:00');
+Schedule::command('inquiries:expire-offers')->everyFiveMinutes();
 

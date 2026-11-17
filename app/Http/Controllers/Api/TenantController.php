@@ -13,13 +13,25 @@ class TenantController extends Controller
     {
         abort_unless($request->user()->isAdmin() || $request->user()->isLandlord(), 403);
 
-        $tenants = User::with('role')
+        $query = User::with('role')
             ->whereHas('role', fn ($query) => $query->where('name', Role::TENANT))
-            ->where('is_active', true)
-            ->orderBy('name')
-            ->get()
-            ->map(fn (User $tenant) => $tenant->toAuthArray());
+            ->where('is_active', true);
 
-        return response()->json(['data' => $tenants]);
+        if ($request->user()->isLandlord()) {
+            $query->where(function ($scope) use ($request) {
+                $scope->whereHas('tenantLeases', fn ($leases) => $leases->where('landlord_id', $request->user()->id))
+                    ->orWhereHas('inquiries.room', fn ($rooms) => $rooms->where('landlord_id', $request->user()->id));
+            });
+        }
+
+        $tenants = $query->orderBy('name')->paginate(50)
+            ->through(fn (User $tenant) => $tenant->toAuthArray());
+
+        return response()->json(['data' => $tenants->items(), 'meta' => [
+            'current_page' => $tenants->currentPage(),
+            'last_page' => $tenants->lastPage(),
+            'per_page' => $tenants->perPage(),
+            'total' => $tenants->total(),
+        ]]);
     }
 }

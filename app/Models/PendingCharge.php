@@ -18,6 +18,8 @@ class PendingCharge extends Model
         'status',
         'invoice_id',
         'client_uuid',
+        'billing_period',
+        'utility_type',
     ];
 
     protected function casts(): array

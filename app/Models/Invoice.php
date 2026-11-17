@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Support\BusinessTime;
 
 class Invoice extends Model
 {
@@ -64,7 +65,7 @@ class Invoice extends Model
         $due = (float) $this->total_amount_due;
 
         if ($paid <= 0) {
-            $this->status = $this->due_date->isPast() ? self::OVERDUE : self::UNPAID;
+            $this->status = $this->due_date->toDateString() < BusinessTime::date() ? self::OVERDUE : self::UNPAID;
         } elseif ($paid + 0.001 >= $due) {
             $this->status = self::PAID;
         } else {

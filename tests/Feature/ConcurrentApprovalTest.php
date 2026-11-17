@@ -37,7 +37,12 @@ class ConcurrentApprovalTest extends TestCase
         ]);
 
         Sanctum::actingAs($landlord);
+        $this->postJson("/api/inquiries/{$inquiryB->id}/reject")->assertOk();
         $this->postJson("/api/inquiries/{$inquiryA->id}/approve")->assertOk();
+        $this->assertEquals(Inquiry::APPROVED, $inquiryA->fresh()->status);
+
+        Sanctum::actingAs($tenantA);
+        $this->postJson("/api/inquiries/{$inquiryA->id}/accept")->assertOk();
 
         $this->assertEquals(Inquiry::CONVERTED, $inquiryA->fresh()->status);
         $this->assertEquals(Inquiry::REJECTED, $inquiryB->fresh()->status);
@@ -49,6 +54,7 @@ class ConcurrentApprovalTest extends TestCase
             'tenant_id' => $tenantB->id,
         ]);
 
+        Sanctum::actingAs($landlord);
         $this->postJson("/api/inquiries/{$inquiryC->id}/approve")
             ->assertStatus(409)
             ->assertJsonFragment(['code' => 'room_taken']);

@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Support\BusinessTime;
 use App\Models\Lease;
 use App\Models\Role;
 use App\Models\Room;
@@ -171,7 +172,7 @@ class ImportLegacyData extends Command
             $startDate = $reservation->check_in ?: Carbon::parse($reservation->created_at ?? now())->toDateString();
             $endDate = $reservation->check_out ?: null;
             if ($endDate && $endDate < $startDate) $endDate = null;
-            $hasNotEnded = ! $endDate || $endDate >= now()->toDateString();
+            $hasNotEnded = ! $endDate || $endDate >= BusinessTime::date();
             $activeRoomId = $hasNotEnded && $room->status !== 'maintenance' && ! Lease::where('active_room_id', $room->id)->exists()
                 ? $room->id
                 : null;

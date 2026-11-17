@@ -9,7 +9,9 @@ class RoomPolicy
 {
     public function view(User $user, Room $room): bool
     {
-        return true;
+        return $user->isAdmin()
+            || ($user->isLandlord() && $room->landlord_id === $user->id)
+            || ($user->isTenant() && in_array($room->status, ['available', 'reserved'], true));
     }
 
     public function create(User $user): bool
@@ -19,11 +21,11 @@ class RoomPolicy
 
     public function update(User $user, Room $room): bool
     {
-        return $user->isAdmin() || ($user->isLandlord() && $room->landlord_id === $user->id);
+        return $user->isLandlord() && $room->landlord_id === $user->id;
     }
 
     public function delete(User $user, Room $room): bool
     {
-        return $this->update($user, $room);
+        return $user->isAdmin() || $this->update($user, $room);
     }
 }

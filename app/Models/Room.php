@@ -17,6 +17,7 @@ class Room extends Model
         'room_number',
         'title',
         'type',
+        'capacity',
         'description',
         'location',
         'price',
@@ -28,6 +29,7 @@ class Room extends Model
     {
         return [
             'price' => 'decimal:2',
+            'capacity' => 'integer',
             'amenities' => 'array',
         ];
     }
@@ -40,6 +42,16 @@ class Room extends Model
     public function images(): HasMany
     {
         return $this->hasMany(RoomImage::class)->orderBy('sort_order');
+    }
+
+    public function availabilityBlocks(): HasMany
+    {
+        return $this->hasMany(RoomAvailabilityBlock::class)->orderBy('start_date');
+    }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(RentalReview::class);
     }
 
     public function inquiries(): HasMany
@@ -57,9 +69,22 @@ class Room extends Model
         return $this->hasOne(Lease::class)->where('status', 'active');
     }
 
+    public function pendingOffer(): HasOne
+    {
+        return $this->hasOne(Inquiry::class)
+            ->where('status', Inquiry::APPROVED)
+            ->where('offer_expires_at', '>', now())
+            ->latestOfMany();
+    }
+
     public function scopeFilter($query, array $filters)
     {
         return $query
+            ->when($filters['search'] ?? null, fn ($q, $search) => $q->where(function ($matches) use ($search) {
+                $matches->where('title', 'like', '%'.$search.'%')
+                    ->orWhere('room_number', 'like', '%'.$search.'%')
+                    ->orWhere('location', 'like', '%'.$search.'%');
+            }))
             ->when($filters['location'] ?? null, fn ($q, $location) => $q->where('location', 'like', '%'.$location.'%'))
             ->when($filters['min_price'] ?? null, fn ($q, $min) => $q->where('price', '>=', $min))
             ->when($filters['max_price'] ?? null, fn ($q, $max) => $q->where('price', '<=', $max))

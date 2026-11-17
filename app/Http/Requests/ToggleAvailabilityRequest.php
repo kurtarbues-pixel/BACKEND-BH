@@ -8,7 +8,7 @@ class ToggleAvailabilityRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()?->can('update', $this->route('room')) ?? false;
+        return $this->user()?->isAdmin() || ($this->user()?->can('update', $this->route('room')) ?? false);
     }
 
     public function rules(): array

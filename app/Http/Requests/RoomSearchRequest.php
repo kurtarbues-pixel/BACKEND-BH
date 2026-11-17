@@ -15,10 +15,11 @@ class RoomSearchRequest extends FormRequest
     {
         return [
             'location' => ['nullable', 'string', 'max:255'],
+            'search' => ['nullable', 'string', 'max:120'],
             'min_price' => ['nullable', 'numeric', 'min:0'],
             'max_price' => ['nullable', 'numeric', 'gte:min_price'],
             'amenity' => ['nullable', 'string', 'max:100'],
-            'status' => ['nullable', 'in:available,occupied,maintenance'],
+            'status' => ['nullable', 'in:available,reserved,occupied,maintenance'],
             'type' => ['nullable', 'string', 'max:50'],
             'per_page' => ['nullable', 'integer', 'min:1', 'max:50'],
         ];

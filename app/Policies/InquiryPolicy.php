@@ -21,11 +21,11 @@ class InquiryPolicy
 
     public function approve(User $user, Inquiry $inquiry): bool
     {
-        return $user->isAdmin() || ($user->isLandlord() && $inquiry->room->landlord_id === $user->id);
+        return $user->isLandlord() && $inquiry->room->landlord_id === $user->id;
     }
 
     public function reject(User $user, Inquiry $inquiry): bool
     {
-        return $this->approve($user, $inquiry);
+        return $user->isAdmin() || $this->approve($user, $inquiry);
     }
 }

@@ -18,6 +18,6 @@ class InvoicePolicy
 
     public function pay(User $user, Invoice $invoice): bool
     {
-        return $user->isAdmin() || $invoice->lease->landlord_id === $user->id;
+        return $user->isAdmin() || ($user->isLandlord() && $invoice->lease->landlord_id === $user->id);
     }
 }

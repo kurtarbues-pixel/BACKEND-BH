@@ -67,6 +67,9 @@ return [
 
     'timezone' => 'UTC',
 
+    // Calendar dates follow Philippine local time. Database timestamps continue to use UTC.
+    'business_timezone' => env('APP_BUSINESS_TIMEZONE', 'Asia/Manila'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration

@@ -16,16 +16,16 @@ class LeasePolicy
 
     public function update(User $user, Lease $lease): bool
     {
-        return $user->isAdmin() || $lease->landlord_id === $user->id;
+        return $user->isAdmin() || ($user->isLandlord() && $lease->landlord_id === $user->id);
     }
 
     public function end(User $user, Lease $lease): bool
     {
-        return $this->update($user, $lease);
+        return $user->isAdmin() || $this->update($user, $lease);
     }
 
     public function charge(User $user, Lease $lease): bool
     {
-        return $this->update($user, $lease);
+        return $user->isAdmin() || $this->update($user, $lease);
     }
 }

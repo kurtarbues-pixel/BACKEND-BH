@@ -9,10 +9,14 @@ class Payment extends Model
 {
     protected $fillable = [
         'invoice_id',
+        'reference_number',
+        'client_uuid',
         'recorded_by',
         'amount',
+        'transaction_status',
         'method',
         'notes',
+        'failure_reason',
         'paid_at',
     ];
 
@@ -32,5 +36,10 @@ class Payment extends Model
     public function recorder(): BelongsTo
     {
         return $this->belongsTo(User::class, 'recorded_by');
+    }
+
+    public function isSuccessful(): bool
+    {
+        return $this->transaction_status === 'succeeded';
     }
 }

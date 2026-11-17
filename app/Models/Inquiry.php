@@ -20,8 +20,21 @@ class Inquiry extends Model
         'room_id',
         'tenant_id',
         'message',
+        'desired_start_date',
+        'desired_end_date',
         'status',
+        'offer_expires_at',
+        'decision_reason',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'desired_start_date' => 'date',
+            'desired_end_date' => 'date',
+            'offer_expires_at' => 'datetime',
+        ];
+    }
 
     public function room(): BelongsTo
     {
@@ -41,7 +54,7 @@ class Inquiry extends Model
     public function canTransitionTo(string $target): bool
     {
         $allowed = [
-            self::PENDING => [self::APPROVED, self::REJECTED, self::CONVERTED],
+            self::PENDING => [self::APPROVED, self::REJECTED],
             self::APPROVED => [self::CONVERTED, self::REJECTED],
             self::REJECTED => [],
             self::CONVERTED => [],

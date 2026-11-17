@@ -19,7 +19,7 @@ class InquiryApprovedMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Your boarding house inquiry was approved',
+            subject: 'Your BoardEase inquiry was approved',
         );
     }
 

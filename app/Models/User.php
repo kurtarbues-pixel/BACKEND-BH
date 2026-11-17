@@ -6,6 +6,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -67,6 +68,26 @@ class User extends Authenticatable
     public function notifications(): HasMany
     {
         return $this->hasMany(Notification::class);
+    }
+
+    public function maintenanceRequests(): HasMany
+    {
+        return $this->hasMany(MaintenanceRequest::class, 'tenant_id');
+    }
+
+    public function sentConversationMessages(): HasMany
+    {
+        return $this->hasMany(ConversationMessage::class, 'sender_id');
+    }
+
+    public function rentalReviews(): HasMany
+    {
+        return $this->hasMany(RentalReview::class, 'tenant_id');
+    }
+
+    public function favoriteRooms(): BelongsToMany
+    {
+        return $this->belongsToMany(Room::class, 'room_favorites')->withTimestamps();
     }
 
     public function isAdmin(): bool
