@@ -56,7 +56,9 @@ class Invoice extends Model
 
     public function remainingBalance(): string
     {
-        return bcsub((string) $this->total_amount_due, (string) $this->amount_paid, 2);
+        return function_exists('bcsub')
+            ? bcsub((string) $this->total_amount_due, (string) $this->amount_paid, 2)
+            : number_format((float) $this->total_amount_due - (float) $this->amount_paid, 2, '.', '');
     }
 
     public function refreshPaymentStatus(): void
