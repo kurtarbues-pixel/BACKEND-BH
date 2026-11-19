@@ -14,9 +14,18 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['nullable', 'required_without:identifier', 'email'],
-            'identifier' => ['nullable', 'required_without:email', 'string', 'max:255'],
+            'email' => ['nullable', 'string', 'max:255'],
+            'identifier' => ['nullable', 'string', 'max:255'],
             'password' => ['required', 'string'],
         ];
+    }
+
+    public function withValidator($validator): void
+    {
+        $validator->after(function ($validator) {
+            if (empty($this->input('email')) && empty($this->input('identifier'))) {
+                $validator->errors()->add('email', 'Please enter your email address or username.');
+            }
+        });
     }
 }
