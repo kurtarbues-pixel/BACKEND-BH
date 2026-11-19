@@ -24,4 +24,4 @@ ENV APP_KEY=base64:OJumJtCzrK7uwVmu1PDqAUPYRwZAosCil968izh66C8=
 
 EXPOSE 8080
 
-CMD ["sh", "-c", "touch database/database.sqlite && php artisan config:clear && (php artisan migrate --force || true) && (php artisan db:seed --force || true) && exec php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"]
+CMD ["sh", "-c", "touch database/database.sqlite && php artisan config:clear && php artisan storage:link --force && (php artisan migrate --force || true) && (php artisan db:seed --force || true) && exec php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"]
