@@ -28,6 +28,86 @@ class DatabaseSeeder extends Seeder
 
         $this->call(RoleSeeder::class);
 
+        $sqlUsers = [
+            [
+                'id' => 1,
+                'name' => 'Edcil Jhon B. Faciol',
+                'username' => 'eji',
+                'email' => 'edciljhonfaciol@gmail.com',
+                'phone' => '09915633814',
+                'role_id' => 4,
+                'is_active' => 1,
+                'password' => '$2y$12$nelUK8wKlDjsY8codBNDz.Aiaxis8yx9q2fDWkr2kN5efHaagsJMa',
+            ],
+            [
+                'id' => 2,
+                'name' => 'Kurt Laurence Arbues',
+                'username' => 'kurtarbues',
+                'email' => 'kurtlaurencearbues@gmail.com',
+                'phone' => '09935215868',
+                'role_id' => 1,
+                'is_active' => 1,
+                'password' => '$2y$12$mkoLKEbAyEJmFTFbnGl1Q.bAE2.nwjUNitPgMxtHcKkFkszG8UdV6',
+            ],
+            [
+                'id' => 3,
+                'name' => 'Giovanni P. Cantos',
+                'username' => 'gio',
+                'email' => 'giovannicantos18@gmail.com',
+                'phone' => '09935478932',
+                'role_id' => 2,
+                'is_active' => 1,
+                'password' => '$2y$12$GI5WB3itk4genbVnDkOiWuOTl.s6OACOgOuZ8YTwrXc/cr76Aepzm',
+            ],
+            [
+                'id' => 4,
+                'name' => 'Glendale Montehermoso',
+                'username' => 'glendale',
+                'email' => 'youknowglendale@gmail.com',
+                'phone' => '09935215868',
+                'role_id' => 4,
+                'is_active' => 1,
+                'password' => '$2y$12$UC4Y9pSTsrp7uIH0ljdJuuSCy2kIfjmPe0BexQw52mFXR.x6h7wn6',
+            ],
+            [
+                'id' => 10,
+                'name' => 'Ralph Christian Sabandal',
+                'username' => 'larp',
+                'email' => 'ralphchristian@gmail.com',
+                'phone' => '09924917058',
+                'role_id' => 4,
+                'is_active' => 1,
+                'password' => '$2y$12$zz.Px3quiPW49HOQAi2jmO/1CpJWDFnMe93ki0v7RSZ1tsJTXBNkm',
+            ],
+            [
+                'id' => 11,
+                'name' => 'Angel Stacee Tabligan',
+                'username' => 'stayc',
+                'email' => 'angelstacee@gmail.com',
+                'phone' => '09450676188',
+                'role_id' => 2,
+                'is_active' => 1,
+                'password' => '$2y$12$bNxYNjryK8cAQoHqenR5kOHpJNFl6pQZmIgZRtR76Duyc4lgYmBNW',
+            ],
+            [
+                'id' => 12,
+                'name' => 'Romy Tadlas',
+                'username' => 'romy',
+                'email' => 'romytadlas@gmail.com',
+                'phone' => '09677676673',
+                'role_id' => 4,
+                'is_active' => 1,
+                'password' => '$2y$12$a/Dk1K8yErSCnJ3NoDI.EOSWFy67/J5XMHRuKphVu/ZTct8K9grU2',
+            ],
+        ];
+
+        foreach ($sqlUsers as $userData) {
+            \Illuminate\Support\Facades\DB::table('users')->updateOrInsert(
+                ['email' => $userData['email']],
+                $userData
+            );
+        }
+
         $adminRole = Role::where('name', Role::ADMIN)->first();
         $landlordRole = Role::where('name', Role::LANDLORD)->first();
         $tenantRole = Role::where('name', Role::TENANT)->first();
