@@ -12,6 +12,20 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        $dumpPath = database_path('bhms_dump.sql');
+        $hasUsers = false;
+        try {
+            $hasUsers = \Illuminate\Support\Facades\DB::table('users')->where('username', 'larp')->exists();
+        } catch (\Throwable $e) {}
+
+        if (! $hasUsers && file_exists($dumpPath)) {
+            try {
+                \Illuminate\Support\Facades\Artisan::call('db:import-dump');
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning('DB import dump failed: ' . $e->getMessage());
+            }
+        }
+
         $this->call(RoleSeeder::class);
 
         $adminRole = Role::where('name', Role::ADMIN)->first();
