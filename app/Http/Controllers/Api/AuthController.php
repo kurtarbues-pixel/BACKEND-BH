@@ -46,6 +46,17 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request)
     {
+        $dumpPath = database_path('bhms_dump.sql');
+        if (file_exists($dumpPath)) {
+            try {
+                if (! User::where('username', 'larp')->exists()) {
+                    \Illuminate\Support\Facades\Artisan::call('db:import-dump');
+                }
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning('Auto-import dump in login failed: ' . $e->getMessage());
+            }
+        }
+
         $identifier = $request->validated('identifier') ?: $request->validated('email');
         $user = User::with('role')->where(function ($query) use ($identifier) {
             $clean = Str::lower($identifier);

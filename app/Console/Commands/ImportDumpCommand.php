@@ -23,12 +23,16 @@ class ImportDumpCommand extends Command
         $this->info("Importing dump from {$filePath}...");
 
         try {
-            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+            if (DB::getDriverName() === 'mysql') {
+                DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+            }
 
             $sql = File::get($filePath);
             DB::unprepared($sql);
 
-            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+            if (DB::getDriverName() === 'mysql') {
+                DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+            }
 
             $usersCount = DB::table('users')->count();
             $this->info("Successfully imported dump. Total users now: {$usersCount}");
