@@ -18,11 +18,22 @@ class DatabaseSeeder extends Seeder
         $landlordRole = Role::where('name', Role::LANDLORD)->first();
         $tenantRole = Role::where('name', Role::TENANT)->first();
 
-        // Never seed a real account or a shared default password into the app.
-        // Configure these values explicitly for a local development environment.
+        // Default admin account for Kurt
+        User::firstOrCreate(
+            ['email' => 'kurtlaurencearbues@gmail.com'],
+            [
+                'name' => 'Kurt Laurence Arbues',
+                'username' => 'kurtarbues',
+                'phone' => '09935215868',
+                'password' => Hash::make('admin123'),
+                'role_id' => $adminRole->id,
+                'is_active' => true,
+            ]
+        );
+
         $adminEmail = env('SEED_ADMIN_EMAIL');
         $adminPassword = env('SEED_ADMIN_PASSWORD');
-        if ($adminEmail && $adminPassword) {
+        if ($adminEmail && $adminPassword && $adminEmail !== 'kurtlaurencearbues@gmail.com') {
             User::updateOrCreate(
                 ['email' => $adminEmail],
                 [
@@ -55,6 +66,18 @@ class DatabaseSeeder extends Seeder
                 'username' => 'tenant',
                 'phone' => '09179876543',
                 'password' => Hash::make('password'),
+                'role_id' => $tenantRole->id,
+                'is_active' => true,
+            ]
+        );
+
+        User::firstOrCreate(
+            ['username' => 'stayc'],
+            [
+                'email' => 'stayc@bhms.test',
+                'name' => 'Angel Stacee Tabligan',
+                'phone' => '09171239876',
+                'password' => Hash::make('angelako'),
                 'role_id' => $tenantRole->id,
                 'is_active' => true,
             ]

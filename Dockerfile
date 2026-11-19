@@ -15,6 +15,6 @@ RUN composer install --no-dev --optimize-autoloader
 
 RUN chmod -R 775 storage bootstrap/cache
 
-EXPOSE 10000
+EXPOSE 8080
 
-CMD ["sh", "-c", "php artisan config:clear && (php artisan migrate --force || true) && (php artisan db:seed --class=RoleSeeder --force || true) && exec php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"]
+CMD ["sh", "-c", "php artisan config:clear && (php artisan migrate --force || true) && (php artisan db:seed --force || true) && exec php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"]
