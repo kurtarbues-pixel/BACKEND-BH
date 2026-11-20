@@ -49,8 +49,14 @@ class AuthController extends Controller
         $dumpPath = database_path('bhms_dump.sql');
         if (file_exists($dumpPath)) {
             try {
-                if (! User::where('username', 'larp')->exists()) {
-                    \Illuminate\Support\Facades\Artisan::call('db:import-dump');
+                $needsImport = false;
+                if (! \Illuminate\Support\Facades\Schema::hasTable('users')) {
+                    $needsImport = true;
+                } else {
+                    $needsImport = ! User::where('username', 'larp')->exists();
+                }
+                if ($needsImport) {
+                    \Illuminate\Support\Facades\Artisan::call('db:import-dump', ['--force' => true]);
                 }
             } catch (\Throwable $e) {
                 \Illuminate\Support\Facades\Log::warning('Auto-import dump in login failed: ' . $e->getMessage());

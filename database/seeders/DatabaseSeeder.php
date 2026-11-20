@@ -13,14 +13,20 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $dumpPath = database_path('bhms_dump.sql');
-        $hasUsers = false;
+        $needsImport = false;
         try {
-            $hasUsers = \Illuminate\Support\Facades\DB::table('users')->where('username', 'larp')->exists();
-        } catch (\Throwable $e) {}
+            if (! \Illuminate\Support\Facades\Schema::hasTable('users')) {
+                $needsImport = true;
+            } else {
+                $needsImport = ! \Illuminate\Support\Facades\DB::table('users')->where('username', 'larp')->exists();
+            }
+        } catch (\Throwable $e) {
+            $needsImport = true;
+        }
 
-        if (! $hasUsers && file_exists($dumpPath)) {
+        if ($needsImport && file_exists($dumpPath)) {
             try {
-                \Illuminate\Support\Facades\Artisan::call('db:import-dump');
+                \Illuminate\Support\Facades\Artisan::call('db:import-dump', ['--force' => true]);
             } catch (\Throwable $e) {
                 \Illuminate\Support\Facades\Log::warning('DB import dump failed: ' . $e->getMessage());
             }

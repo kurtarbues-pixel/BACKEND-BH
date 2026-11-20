@@ -1,915 +1,1585 @@
--- MariaDB dump 10.19  Distrib 10.4.32-MariaDB, for Win64 (AMD64)
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost    Database: bhms
--- ------------------------------------------------------
--- Server version	10.4.32-MariaDB
+-- Host: 127.0.0.1:3306
+-- Generation Time: Nov 20, 2026 at 01:23 PM
+-- Server version: 8.2.0
+-- PHP Version: 8.3.0
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Database: `bhms`
+--
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `activity_logs`
 --
 
-DROP TABLE IF EXISTS `activity_logs`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `activity_logs` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` bigint(20) unsigned DEFAULT NULL,
-  `action` varchar(255) NOT NULL,
-  `subject_type` varchar(255) DEFAULT NULL,
-  `subject_id` bigint(20) unsigned DEFAULT NULL,
-  `properties` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`properties`)),
-  `ip_address` varchar(45) DEFAULT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED DEFAULT NULL,
+  `action` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subject_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `subject_id` bigint UNSIGNED DEFAULT NULL,
+  `properties` json DEFAULT NULL,
+  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `activity_logs_user_id_foreign` (`user_id`),
-  KEY `activity_logs_subject_type_subject_id_index` (`subject_type`,`subject_id`),
-  CONSTRAINT `activity_logs_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=357 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `activity_logs`
 --
 
-LOCK TABLES `activity_logs` WRITE;
-/*!40000 ALTER TABLE `activity_logs` DISABLE KEYS */;
-INSERT INTO `activity_logs` VALUES (1,1,'auth.register','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-10 09:09:25','2026-11-10 09:09:25'),(2,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-10 09:20:51','2026-11-10 09:20:51'),(3,2,'auth.login','App\\Models\\User',2,NULL,'127.0.0.1','2026-11-10 09:24:22','2026-11-10 09:24:22'),(4,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-10 09:35:31','2026-11-10 09:35:31'),(5,2,'auth.login','App\\Models\\User',2,NULL,'127.0.0.1','2026-11-10 09:44:38','2026-11-10 09:44:38'),(6,2,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-10 09:44:42','2026-11-10 09:44:42'),(7,2,'auth.login','App\\Models\\User',2,NULL,'127.0.0.1','2026-11-10 10:06:24','2026-11-10 10:06:24'),(8,2,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-10 10:06:29','2026-11-10 10:06:29'),(9,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-10 10:06:45','2026-11-10 10:06:45'),(10,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-10 10:06:49','2026-11-10 10:06:49'),(11,3,'auth.register','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-11 05:51:45','2026-11-11 05:51:45'),(12,3,'room.created','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-11 05:55:42','2026-11-11 05:55:42'),(13,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-11 05:56:53','2026-11-11 05:56:53'),(14,2,'auth.login','App\\Models\\User',2,NULL,'127.0.0.1','2026-11-11 05:58:05','2026-11-11 05:58:05'),(15,2,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-11 06:23:53','2026-11-11 06:23:53'),(16,2,'auth.login','App\\Models\\User',2,NULL,'127.0.0.1','2026-11-11 06:42:02','2026-11-11 06:42:02'),(17,2,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-11 06:42:37','2026-11-11 06:42:37'),(18,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-11 06:45:28','2026-11-11 06:45:28'),(19,1,'room.favorited','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-11 06:45:52','2026-11-11 06:45:52'),(20,1,'room.unfavorited','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-11 06:45:58','2026-11-11 06:45:58'),(21,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-11 06:46:22','2026-11-11 06:46:22'),(22,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-11 06:47:04','2026-11-11 06:47:04'),(23,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-11 06:47:09','2026-11-11 06:47:09'),(24,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-11 06:47:36','2026-11-11 06:47:36'),(25,3,'room.updated','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-11 06:48:06','2026-11-11 06:48:06'),(26,3,'room.updated','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-11 06:48:17','2026-11-11 06:48:17'),(27,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-11 06:49:52','2026-11-11 06:49:52'),(28,2,'auth.login','App\\Models\\User',2,NULL,'127.0.0.1','2026-11-11 06:54:50','2026-11-11 06:54:50'),(29,2,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-11 07:02:33','2026-11-11 07:02:33'),(30,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-11 07:02:49','2026-11-11 07:02:49'),(31,3,'room.updated','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-11 07:03:05','2026-11-11 07:03:05'),(32,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-11 07:04:26','2026-11-11 07:04:26'),(33,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-11 07:04:47','2026-11-11 07:04:47'),(34,1,'inquiry.created','App\\Models\\Inquiry',1,NULL,'127.0.0.1','2026-11-11 07:05:40','2026-11-11 07:05:40'),(35,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-11 07:06:43','2026-11-11 07:06:43'),(36,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-11 07:07:01','2026-11-11 07:07:01'),(37,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-11 07:07:26','2026-11-11 07:07:26'),(38,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-11 07:07:41','2026-11-11 07:07:41'),(39,1,'inquiry.offer_accepted','App\\Models\\Inquiry',1,'{\"lease_id\": 1}','127.0.0.1','2026-11-11 07:08:14','2026-11-11 07:08:14'),(40,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-11 07:08:38','2026-11-11 07:08:38'),(41,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-11 07:09:03','2026-11-11 07:09:03'),(42,3,'charge.created','App\\Models\\PendingCharge',1,'{\"lease_id\": 1}','127.0.0.1','2026-11-11 07:10:04','2026-11-11 07:10:04'),(43,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-11 07:10:26','2026-11-11 07:10:26'),(44,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-11 07:10:48','2026-11-11 07:10:48'),(45,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-11 07:12:53','2026-11-11 07:12:53'),(46,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-11 07:22:00','2026-11-11 07:22:00'),(47,3,'room.updated','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-11 07:23:05','2026-11-11 07:23:05'),(48,3,'room.updated','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-11 07:23:12','2026-11-11 07:23:12'),(49,3,'room.updated','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-11 07:23:57','2026-11-11 07:23:57'),(50,3,'room.updated','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-11 07:24:22','2026-11-11 07:24:22'),(51,3,'room.updated','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-11 07:24:29','2026-11-11 07:24:29'),(52,3,'room.updated','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-11 07:24:34','2026-11-11 07:24:34'),(53,3,'room.updated','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-11 07:24:36','2026-11-11 07:24:36'),(54,3,'room.updated','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-11 07:25:53','2026-11-11 07:25:53'),(55,3,'room.updated','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-11 07:42:47','2026-11-11 07:42:47'),(56,3,'room.updated','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-11 07:42:50','2026-11-11 07:42:50'),(57,3,'room.updated','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-11 07:42:52','2026-11-11 07:42:52'),(58,3,'room.updated','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-11 07:54:12','2026-11-11 07:54:12'),(59,3,'room.updated','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-11 07:54:14','2026-11-11 07:54:14'),(60,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-11 07:55:22','2026-11-11 07:55:22'),(61,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-11 07:55:43','2026-11-11 07:55:43'),(62,3,'room.updated','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-11 07:55:57','2026-11-11 07:55:57'),(63,3,'room.updated','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-11 08:00:51','2026-11-11 08:00:51'),(64,3,'room.images','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-11 08:00:52','2026-11-11 08:00:52'),(65,3,'room.updated','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-11 08:01:46','2026-11-11 08:01:46'),(66,3,'room.images','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-11 08:01:46','2026-11-11 08:01:46'),(67,3,'room.images','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-11 08:01:47','2026-11-11 08:01:47'),(68,3,'room.updated','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-11 08:02:33','2026-11-11 08:02:33'),(69,3,'room.images','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-11 08:02:33','2026-11-11 08:02:33'),(70,3,'room.images','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-11 08:02:34','2026-11-11 08:02:34'),(71,3,'room.images','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-11 08:02:34','2026-11-11 08:02:34'),(72,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-11 08:02:57','2026-11-11 08:02:57'),(73,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-11 08:03:21','2026-11-11 08:03:21'),(74,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-11 08:05:33','2026-11-11 08:05:33'),(75,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-11 08:13:21','2026-11-11 08:13:21'),(76,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-11 08:13:38','2026-11-11 08:13:38'),(77,4,'auth.register','App\\Models\\User',4,NULL,'127.0.0.1','2026-11-11 08:17:08','2026-11-11 08:17:08'),(78,4,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-11 08:17:17','2026-11-11 08:17:17'),(79,4,'auth.login','App\\Models\\User',4,NULL,'127.0.0.1','2026-11-11 08:17:25','2026-11-11 08:17:25'),(80,4,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-11 08:17:32','2026-11-11 08:17:32'),(81,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-11 08:23:01','2026-11-11 08:23:01'),(82,1,'profile.password_changed','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-11 08:23:57','2026-11-11 08:23:57'),(83,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-11 08:24:10','2026-11-11 08:24:10'),(84,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-11 08:24:48','2026-11-11 08:24:48'),(85,1,'profile.updated','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-11 08:35:12','2026-11-11 08:35:12'),(86,1,'profile.updated','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-11 08:35:28','2026-11-11 08:35:28'),(87,1,'profile.updated','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-11 08:40:28','2026-11-11 08:40:28'),(88,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-11 08:40:33','2026-11-11 08:40:33'),(89,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-11 08:40:43','2026-11-11 08:40:43'),(90,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-11 09:03:24','2026-11-11 09:03:24'),(91,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-11 09:03:49','2026-11-11 09:03:49'),(92,3,'room.created','App\\Models\\Room',2,NULL,'127.0.0.1','2026-11-11 09:31:00','2026-11-11 09:31:00'),(93,3,'room.images','App\\Models\\Room',2,NULL,'127.0.0.1','2026-11-11 09:31:01','2026-11-11 09:31:01'),(94,3,'lease.updated','App\\Models\\Lease',1,NULL,'127.0.0.1','2026-11-11 09:37:51','2026-11-11 09:37:51'),(95,3,'profile.updated','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-11 09:52:06','2026-11-11 09:52:06'),(96,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-11 09:52:09','2026-11-11 09:52:09'),(97,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-11 09:52:28','2026-11-11 09:52:28'),(98,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-11 09:53:03','2026-11-11 09:53:03'),(99,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-12 09:53:57','2026-11-12 09:53:57'),(100,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-12 09:54:39','2026-11-12 09:54:39'),(101,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-12 10:00:01','2026-11-12 10:00:01'),(102,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-12 10:11:23','2026-11-12 10:11:23'),(103,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-12 10:11:36','2026-11-12 10:11:36'),(104,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-12 10:24:52','2026-11-12 10:24:52'),(105,2,'auth.login','App\\Models\\User',2,NULL,'127.0.0.1','2026-11-12 10:25:02','2026-11-12 10:25:02'),(106,2,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-12 10:57:12','2026-11-12 10:57:12'),(107,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-13 06:50:17','2026-11-13 06:50:17'),(108,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-13 07:26:52','2026-11-13 07:26:52'),(109,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-13 07:33:38','2026-11-13 07:33:38'),(110,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-13 07:56:41','2026-11-13 07:56:41'),(111,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-13 07:57:57','2026-11-13 07:57:57'),(112,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-13 08:02:49','2026-11-13 08:02:49'),(113,2,'auth.login','App\\Models\\User',2,NULL,'127.0.0.1','2026-11-13 08:03:19','2026-11-13 08:03:19'),(114,2,'auth.login','App\\Models\\User',2,NULL,'127.0.0.1','2026-11-13 08:03:21','2026-11-13 08:03:21'),(115,2,'profile.updated','App\\Models\\User',2,NULL,'127.0.0.1','2026-11-13 08:03:36','2026-11-13 08:03:36'),(116,2,'profile.updated','App\\Models\\User',2,NULL,'127.0.0.1','2026-11-13 08:03:38','2026-11-13 08:03:38'),(117,2,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-13 08:04:31','2026-11-13 08:04:31'),(118,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-13 08:04:47','2026-11-13 08:04:47'),(119,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-13 08:04:50','2026-11-13 08:04:50'),(120,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-13 08:05:06','2026-11-13 08:05:06'),(121,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-13 08:05:19','2026-11-13 08:05:19'),(122,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-13 08:08:59','2026-11-13 08:08:59'),(123,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-13 08:09:54','2026-11-13 08:09:54'),(124,NULL,'auth.login','App\\Models\\User',5,NULL,'127.0.0.1','2026-11-14 08:04:29','2026-11-14 08:04:29'),(125,NULL,'auth.login','App\\Models\\User',6,NULL,'127.0.0.1','2026-11-14 08:04:30','2026-11-14 08:04:30'),(126,NULL,'auth.login','App\\Models\\User',7,NULL,'127.0.0.1','2026-11-14 08:04:31','2026-11-14 08:04:31'),(127,NULL,'auth.login','App\\Models\\User',8,NULL,'127.0.0.1','2026-11-14 08:04:31','2026-11-14 08:04:31'),(128,NULL,'auth.login','App\\Models\\User',9,NULL,'127.0.0.1','2026-11-14 08:04:32','2026-11-14 08:04:32'),(129,NULL,'room.availability','App\\Models\\Room',3,'{\"status\": \"available\"}','127.0.0.1','2026-11-14 08:13:13','2026-11-14 08:13:13'),(130,NULL,'lease.created','App\\Models\\Lease',2,NULL,'127.0.0.1','2026-11-14 08:13:14','2026-11-14 08:13:14'),(131,NULL,'room.availability','App\\Models\\Room',5,'{\"status\": \"available\"}','127.0.0.1','2026-11-14 08:13:14','2026-11-14 08:13:14'),(132,NULL,'lease.created','App\\Models\\Lease',3,NULL,'127.0.0.1','2026-11-14 08:13:14','2026-11-14 08:13:14'),(133,NULL,'lease.agreement_accepted','App\\Models\\Lease',2,NULL,'127.0.0.1','2026-11-14 08:14:03','2026-11-14 08:14:03'),(134,NULL,'lease.agreement_accepted','App\\Models\\Lease',3,NULL,'127.0.0.1','2026-11-14 08:14:03','2026-11-14 08:14:03'),(135,NULL,'lease.updated','App\\Models\\Lease',2,NULL,'127.0.0.1','2026-11-14 08:15:21','2026-11-14 08:15:21'),(136,NULL,'lease.agreement_accepted','App\\Models\\Lease',2,NULL,'127.0.0.1','2026-11-14 08:15:22','2026-11-14 08:15:22'),(137,NULL,'lease.move_in_inspection','App\\Models\\LeaseInspection',1,'{\"lease_id\": 2}','127.0.0.1','2026-11-14 08:15:22','2026-11-14 08:15:22'),(138,NULL,'lease.updated','App\\Models\\Lease',3,NULL,'127.0.0.1','2026-11-14 08:15:23','2026-11-14 08:15:23'),(139,NULL,'lease.agreement_accepted','App\\Models\\Lease',3,NULL,'127.0.0.1','2026-11-14 08:15:23','2026-11-14 08:15:23'),(140,NULL,'lease.move_in_inspection','App\\Models\\LeaseInspection',2,'{\"lease_id\": 3}','127.0.0.1','2026-11-14 08:15:24','2026-11-14 08:15:24'),(141,NULL,'charge.created','App\\Models\\PendingCharge',2,'{\"lease_id\": 2}','127.0.0.1','2026-11-14 08:16:08','2026-11-14 08:16:08'),(142,NULL,'charge.created','App\\Models\\PendingCharge',3,'{\"lease_id\": 3}','127.0.0.1','2026-11-14 08:16:08','2026-11-14 08:16:08'),(143,NULL,'lease.move_out_inspection','App\\Models\\LeaseInspection',3,'{\"lease_id\": 2}','127.0.0.1','2026-11-14 08:17:03','2026-11-14 08:17:03'),(144,NULL,'room.availability','App\\Models\\Room',3,'{\"status\": \"maintenance\"}','127.0.0.1','2026-11-14 08:17:05','2026-11-14 08:17:05'),(145,NULL,'lease.move_out_inspection','App\\Models\\LeaseInspection',4,'{\"lease_id\": 3}','127.0.0.1','2026-11-14 08:17:34','2026-11-14 08:17:34'),(146,NULL,'room.availability','App\\Models\\Room',5,'{\"status\": \"maintenance\"}','127.0.0.1','2026-11-14 08:17:34','2026-11-14 08:17:34'),(147,NULL,'payment.simulated_failed','App\\Models\\Payment',2,'{\"idempotent\": false, \"invoice_id\": 2, \"reference_number\": \"BE-SIM-F6786EF3-D4FD-40F1-8E37-BF92F6DE38D6\"}','127.0.0.1','2026-11-14 08:20:20','2026-11-14 08:20:20'),(148,NULL,'payment.simulated_failed','App\\Models\\Payment',2,'{\"idempotent\": true, \"invoice_id\": 2, \"reference_number\": \"BE-SIM-F6786EF3-D4FD-40F1-8E37-BF92F6DE38D6\"}','127.0.0.1','2026-11-14 08:20:20','2026-11-14 08:20:20'),(149,NULL,'room.availability','App\\Models\\Room',4,'{\"status\": \"available\"}','127.0.0.1','2026-11-14 08:21:28','2026-11-14 08:21:28'),(150,NULL,'lease.created','App\\Models\\Lease',4,NULL,'127.0.0.1','2026-11-14 08:21:28','2026-11-14 08:21:28'),(151,NULL,'lease.agreement_accepted','App\\Models\\Lease',4,NULL,'127.0.0.1','2026-11-14 08:23:19','2026-11-14 08:23:19'),(152,NULL,'lease.move_in_inspection','App\\Models\\LeaseInspection',5,'{\"lease_id\": 4}','127.0.0.1','2026-11-14 08:23:19','2026-11-14 08:23:19'),(153,NULL,'room.availability','App\\Models\\Room',6,'{\"status\": \"available\"}','127.0.0.1','2026-11-14 08:26:15','2026-11-14 08:26:15'),(154,NULL,'inquiry.offer_accepted','App\\Models\\Inquiry',2,'{\"lease_id\": 5}','127.0.0.1','2026-11-14 08:26:46','2026-11-14 08:26:46'),(155,NULL,'lease.agreement_accepted','App\\Models\\Lease',5,NULL,'127.0.0.1','2026-11-14 08:26:46','2026-11-14 08:26:46'),(156,NULL,'lease.move_in_inspection','App\\Models\\LeaseInspection',6,'{\"lease_id\": 5}','127.0.0.1','2026-11-14 08:26:47','2026-11-14 08:26:47'),(157,NULL,'room.created','App\\Models\\Room',7,NULL,'127.0.0.1','2026-11-14 08:50:56','2026-11-14 08:50:56'),(158,NULL,'inquiry.created','App\\Models\\Inquiry',3,NULL,'127.0.0.1','2026-11-14 08:50:56','2026-11-14 08:50:56'),(159,NULL,'payment.simulated_succeeded','App\\Models\\Payment',3,'{\"idempotent\": false, \"invoice_id\": 3, \"reference_number\": \"BE-SIM-DEC66F61-BBFB-4444-BA6A-0F5A4B45842D\"}','127.0.0.1','2026-11-14 08:50:57','2026-11-14 08:50:57'),(160,NULL,'auth.login','App\\Models\\User',5,NULL,'127.0.0.1','2026-11-14 16:59:36','2026-11-14 16:59:36'),(161,NULL,'auth.login','App\\Models\\User',6,NULL,'127.0.0.1','2026-11-14 16:59:38','2026-11-14 16:59:38'),(162,NULL,'auth.login','App\\Models\\User',8,NULL,'127.0.0.1','2026-11-14 16:59:39','2026-11-14 16:59:39'),(163,2,'auth.login','App\\Models\\User',2,NULL,'127.0.0.1','2026-11-14 17:17:03','2026-11-14 17:17:03'),(164,2,'auth.login','App\\Models\\User',2,NULL,'127.0.0.1','2026-11-14 17:17:05','2026-11-14 17:17:05'),(165,2,'admin.user.updated','App\\Models\\User',8,'{\"is_active\": false}','127.0.0.1','2026-11-14 17:18:37','2026-11-14 17:18:37'),(166,2,'admin.user.updated','App\\Models\\User',8,'{\"is_active\": true}','127.0.0.1','2026-11-14 17:18:40','2026-11-14 17:18:40'),(167,2,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-14 17:45:19','2026-11-14 17:45:19'),(168,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-14 17:45:29','2026-11-14 17:45:29'),(169,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-14 17:53:35','2026-11-14 17:53:35'),(170,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-14 17:54:05','2026-11-14 17:54:05'),(171,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-14 17:54:27','2026-11-14 17:54:27'),(172,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-14 17:54:38','2026-11-14 17:54:38'),(173,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-14 18:08:43','2026-11-14 18:08:43'),(174,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-14 18:09:43','2026-11-14 18:09:43'),(175,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-14 18:11:04','2026-11-14 18:11:04'),(176,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-14 18:11:10','2026-11-14 18:11:10'),(177,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-14 18:12:00','2026-11-14 18:12:00'),(178,NULL,'room.created','App\\Models\\Room',8,NULL,'127.0.0.1','2026-11-15 13:10:08','2026-11-15 13:10:08'),(179,NULL,'inquiry.created','App\\Models\\Inquiry',4,NULL,'127.0.0.1','2026-11-15 13:10:08','2026-11-15 13:10:08'),(180,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-15 13:36:49','2026-11-15 13:36:49'),(181,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-15 13:36:54','2026-11-15 13:36:54'),(182,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-15 13:37:09','2026-11-15 13:37:09'),(183,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-15 13:39:54','2026-11-15 13:39:54'),(184,2,'auth.login','App\\Models\\User',2,NULL,'127.0.0.1','2026-11-15 14:53:39','2026-11-15 14:53:39'),(185,2,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-15 14:54:23','2026-11-15 14:54:23'),(186,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-15 14:54:29','2026-11-15 14:54:29'),(187,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-15 14:57:50','2026-11-15 14:57:50'),(188,2,'auth.login','App\\Models\\User',2,NULL,'127.0.0.1','2026-11-15 14:58:04','2026-11-15 14:58:04'),(189,2,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-15 15:09:17','2026-11-15 15:09:17'),(190,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-15 15:09:30','2026-11-15 15:09:30'),(191,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-15 15:35:24','2026-11-15 15:35:24'),(192,2,'auth.login','App\\Models\\User',2,NULL,'127.0.0.1','2026-11-15 15:35:34','2026-11-15 15:35:34'),(193,2,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-15 15:37:07','2026-11-15 15:37:07'),(194,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-15 15:37:13','2026-11-15 15:37:13'),(195,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-15 15:37:20','2026-11-15 15:37:20'),(196,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-15 15:43:18','2026-11-15 15:43:18'),(197,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-15 15:44:05','2026-11-15 15:44:05'),(198,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-15 15:44:13','2026-11-15 15:44:13'),(199,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-15 15:45:47','2026-11-15 15:45:47'),(200,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-15 15:46:04','2026-11-15 15:46:04'),(201,3,'lease.updated','App\\Models\\Lease',1,NULL,'127.0.0.1','2026-11-15 15:46:34','2026-11-15 15:46:34'),(202,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-15 15:46:47','2026-11-15 15:46:47'),(203,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-15 15:46:54','2026-11-15 15:46:54'),(204,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-15 15:48:07','2026-11-15 15:48:07'),(205,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-15 15:48:17','2026-11-15 15:48:17'),(206,3,'lease.updated','App\\Models\\Lease',1,NULL,'127.0.0.1','2026-11-15 15:48:32','2026-11-15 15:48:32'),(207,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-15 15:48:39','2026-11-15 15:48:39'),(208,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-15 15:48:44','2026-11-15 15:48:44'),(209,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-15 16:04:31','2026-11-15 16:04:31'),(210,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-15 16:05:02','2026-11-15 16:05:02'),(211,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-15 16:20:49','2026-11-15 16:20:49'),(212,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-15 16:20:55','2026-11-15 16:20:55'),(213,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-15 16:30:49','2026-11-15 16:30:49'),(214,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-15 16:30:54','2026-11-15 16:30:54'),(215,1,'payment.simulated_succeeded','App\\Models\\Payment',4,'{\"idempotent\": false, \"invoice_id\": 4, \"reference_number\": \"BE-SIM-2B0FE072-3400-4AD7-8335-88E65C6F5956\"}','127.0.0.1','2026-11-15 16:32:16','2026-11-15 16:32:16'),(216,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-15 16:34:16','2026-11-15 16:34:16'),(217,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-15 16:34:25','2026-11-15 16:34:25'),(218,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-15 16:35:39','2026-11-15 16:35:39'),(219,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-15 16:38:21','2026-11-15 16:38:21'),(220,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-15 16:43:47','2026-11-15 16:43:47'),(221,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-15 16:44:28','2026-11-15 16:44:28'),(222,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-15 16:52:48','2026-11-15 16:52:48'),(223,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-15 16:53:11','2026-11-15 16:53:11'),(224,3,'room.updated','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-15 16:54:31','2026-11-15 16:54:31'),(225,3,'room.images','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-15 16:54:32','2026-11-15 16:54:32'),(226,3,'room.updated','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-15 16:55:00','2026-11-15 16:55:00'),(227,3,'room.images','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-15 16:55:01','2026-11-15 16:55:01'),(228,3,'room.updated','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-15 16:56:12','2026-11-15 16:56:12'),(229,3,'room.images','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-15 16:56:12','2026-11-15 16:56:12'),(230,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-15 16:56:55','2026-11-15 16:56:55'),(231,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-15 16:57:01','2026-11-15 16:57:01'),(232,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-15 17:03:30','2026-11-15 17:03:30'),(233,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-15 17:03:37','2026-11-15 17:03:37'),(234,3,'room.updated','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-15 17:04:31','2026-11-15 17:04:31'),(235,3,'room.images','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-15 17:04:31','2026-11-15 17:04:31'),(236,3,'room.images','App\\Models\\Room',1,NULL,'127.0.0.1','2026-11-15 17:04:32','2026-11-15 17:04:32'),(237,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-15 17:04:58','2026-11-15 17:04:58'),(238,2,'auth.login','App\\Models\\User',2,NULL,'127.0.0.1','2026-11-15 17:05:16','2026-11-15 17:05:16'),(239,2,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-15 17:06:28','2026-11-15 17:06:28'),(240,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-15 17:09:30','2026-11-15 17:09:30'),(241,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-15 17:21:29','2026-11-15 17:21:29'),(242,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-15 17:21:36','2026-11-15 17:21:36'),(243,3,'room.updated','App\\Models\\Room',2,NULL,'127.0.0.1','2026-11-15 17:22:18','2026-11-15 17:22:18'),(244,3,'room.images','App\\Models\\Room',2,NULL,'127.0.0.1','2026-11-15 17:22:18','2026-11-15 17:22:18'),(245,3,'room.images.deleted','App\\Models\\Room',2,'{\"image_id\": 24}','127.0.0.1','2026-11-15 17:22:33','2026-11-15 17:22:33'),(246,3,'room.images.deleted','App\\Models\\Room',2,'{\"image_id\": 14}','127.0.0.1','2026-11-15 17:29:29','2026-11-15 17:29:29'),(247,3,'room.images.deleted','App\\Models\\Room',2,'{\"image_id\": 15}','127.0.0.1','2026-11-15 17:29:33','2026-11-15 17:29:33'),(248,3,'room.updated','App\\Models\\Room',2,NULL,'127.0.0.1','2026-11-15 17:29:48','2026-11-15 17:29:48'),(249,3,'room.images','App\\Models\\Room',2,NULL,'127.0.0.1','2026-11-15 17:29:49','2026-11-15 17:29:49'),(250,3,'room.images','App\\Models\\Room',2,NULL,'127.0.0.1','2026-11-15 17:29:50','2026-11-15 17:29:50'),(251,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-15 17:41:44','2026-11-15 17:41:44'),(252,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-15 17:41:51','2026-11-15 17:41:51'),(253,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-15 17:42:39','2026-11-15 17:42:39'),(254,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-16 13:42:44','2026-11-16 13:42:44'),(255,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 13:44:28','2026-11-16 13:44:28'),(256,2,'auth.login','App\\Models\\User',2,NULL,'127.0.0.1','2026-11-16 13:46:48','2026-11-16 13:46:48'),(257,2,'admin.user.updated','App\\Models\\User',4,NULL,'127.0.0.1','2026-11-16 13:49:21','2026-11-16 13:49:21'),(258,2,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 13:49:46','2026-11-16 13:49:46'),(259,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-16 13:49:51','2026-11-16 13:49:51'),(260,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 14:00:18','2026-11-16 14:00:18'),(261,4,'auth.login','App\\Models\\User',4,NULL,'127.0.0.1','2026-11-16 14:00:41','2026-11-16 14:00:41'),(262,4,'profile.updated','App\\Models\\User',4,NULL,'127.0.0.1','2026-11-16 14:01:05','2026-11-16 14:01:05'),(263,4,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 14:01:28','2026-11-16 14:01:28'),(264,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-16 14:01:35','2026-11-16 14:01:35'),(265,3,'lease.updated','App\\Models\\Lease',1,NULL,'127.0.0.1','2026-11-16 14:02:15','2026-11-16 14:02:15'),(266,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 14:03:49','2026-11-16 14:03:49'),(267,2,'auth.login','App\\Models\\User',2,NULL,'127.0.0.1','2026-11-16 14:03:59','2026-11-16 14:03:59'),(268,2,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 14:20:24','2026-11-16 14:20:24'),(269,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-16 14:20:48','2026-11-16 14:20:48'),(270,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 14:24:52','2026-11-16 14:24:52'),(271,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-16 14:25:02','2026-11-16 14:25:02'),(272,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 14:25:25','2026-11-16 14:25:25'),(273,2,'auth.login','App\\Models\\User',2,NULL,'127.0.0.1','2026-11-16 14:25:46','2026-11-16 14:25:46'),(274,2,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 14:26:58','2026-11-16 14:26:58'),(275,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-16 14:57:14','2026-11-16 14:57:14'),(276,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 15:00:50','2026-11-16 15:00:50'),(277,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-16 15:02:03','2026-11-16 15:02:03'),(278,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 15:03:33','2026-11-16 15:03:33'),(279,2,'auth.login','App\\Models\\User',2,NULL,'127.0.0.1','2026-11-16 15:03:42','2026-11-16 15:03:42'),(280,2,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 15:07:20','2026-11-16 15:07:20'),(281,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-16 15:07:29','2026-11-16 15:07:29'),(282,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 15:10:47','2026-11-16 15:10:47'),(283,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-16 15:10:54','2026-11-16 15:10:54'),(284,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 15:13:59','2026-11-16 15:13:59'),(285,4,'auth.login','App\\Models\\User',4,NULL,'127.0.0.1','2026-11-16 15:14:09','2026-11-16 15:14:09'),(286,4,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 15:40:19','2026-11-16 15:40:19'),(287,2,'auth.login','App\\Models\\User',2,NULL,'127.0.0.1','2026-11-16 15:40:25','2026-11-16 15:40:25'),(288,2,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 15:40:38','2026-11-16 15:40:38'),(289,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-16 15:47:32','2026-11-16 15:47:32'),(290,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 15:58:23','2026-11-16 15:58:23'),(291,4,'auth.login','App\\Models\\User',4,NULL,'127.0.0.1','2026-11-16 15:58:30','2026-11-16 15:58:30'),(292,4,'inquiry.created','App\\Models\\Inquiry',5,NULL,'127.0.0.1','2026-11-16 16:02:39','2026-11-16 16:02:39'),(293,4,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 16:02:45','2026-11-16 16:02:45'),(294,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-16 16:02:51','2026-11-16 16:02:51'),(295,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 16:03:35','2026-11-16 16:03:35'),(296,4,'auth.login','App\\Models\\User',4,NULL,'127.0.0.1','2026-11-16 16:03:41','2026-11-16 16:03:41'),(297,4,'inquiry.offer_accepted','App\\Models\\Inquiry',5,'{\"lease_id\": 6}','127.0.0.1','2026-11-16 16:03:57','2026-11-16 16:03:57'),(298,4,'lease.agreement_accepted','App\\Models\\Lease',6,NULL,'127.0.0.1','2026-11-16 16:04:38','2026-11-16 16:04:38'),(299,4,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 16:06:20','2026-11-16 16:06:20'),(300,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-16 16:06:35','2026-11-16 16:06:35'),(301,3,'charge.created','App\\Models\\PendingCharge',5,'{\"lease_id\": 6, \"billing_period\": \"2026-11\"}','127.0.0.1','2026-11-16 16:12:29','2026-11-16 16:12:29'),(302,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 16:14:47','2026-11-16 16:14:47'),(303,4,'auth.login','App\\Models\\User',4,NULL,'127.0.0.1','2026-11-16 16:14:55','2026-11-16 16:14:55'),(304,4,'payment.simulated_succeeded','App\\Models\\Payment',5,'{\"idempotent\": false, \"invoice_id\": 5, \"reference_number\": \"BE-SIM-7D0D17D2-4799-4FEB-90F3-29DB88D9F346\"}','127.0.0.1','2026-11-16 16:16:09','2026-11-16 16:16:09'),(305,4,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 16:17:28','2026-11-16 16:17:28'),(306,1,'auth.login','App\\Models\\User',1,NULL,'127.0.0.1','2026-11-16 16:24:23','2026-11-16 16:24:23'),(307,1,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 16:48:05','2026-11-16 16:48:05'),(308,3,'auth.login','App\\Models\\User',3,NULL,'127.0.0.1','2026-11-16 16:48:14','2026-11-16 16:48:14'),(309,3,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 16:56:19','2026-11-16 16:56:19'),(310,10,'auth.register','App\\Models\\User',10,NULL,'127.0.0.1','2026-11-16 16:59:01','2026-11-16 16:59:01'),(311,10,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 16:59:17','2026-11-16 16:59:17'),(312,11,'auth.register','App\\Models\\User',11,NULL,'127.0.0.1','2026-11-16 17:00:14','2026-11-16 17:00:14'),(313,11,'room.created','App\\Models\\Room',9,NULL,'127.0.0.1','2026-11-16 17:06:49','2026-11-16 17:06:49'),(314,11,'room.images','App\\Models\\Room',9,NULL,'127.0.0.1','2026-11-16 17:06:49','2026-11-16 17:06:49'),(315,11,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 17:07:05','2026-11-16 17:07:05'),(316,10,'auth.login','App\\Models\\User',10,NULL,'127.0.0.1','2026-11-16 17:07:40','2026-11-16 17:07:40'),(317,10,'inquiry.created','App\\Models\\Inquiry',6,NULL,'127.0.0.1','2026-11-16 17:07:48','2026-11-16 17:07:48'),(318,10,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 17:07:53','2026-11-16 17:07:53'),(319,11,'auth.login','App\\Models\\User',11,NULL,'127.0.0.1','2026-11-16 17:08:02','2026-11-16 17:08:02'),(320,11,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 17:08:12','2026-11-16 17:08:12'),(321,10,'auth.login','App\\Models\\User',10,NULL,'127.0.0.1','2026-11-16 17:08:21','2026-11-16 17:08:21'),(322,10,'inquiry.offer_accepted','App\\Models\\Inquiry',6,'{\"lease_id\": 7}','127.0.0.1','2026-11-16 17:08:31','2026-11-16 17:08:31'),(323,10,'lease.agreement_accepted','App\\Models\\Lease',7,NULL,'127.0.0.1','2026-11-16 17:08:52','2026-11-16 17:08:52'),(324,10,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 17:09:42','2026-11-16 17:09:42'),(325,11,'auth.login','App\\Models\\User',11,NULL,'127.0.0.1','2026-11-16 17:09:48','2026-11-16 17:09:48'),(326,11,'charge.created','App\\Models\\PendingCharge',6,'{\"lease_id\": 7, \"billing_period\": \"2026-11\"}','127.0.0.1','2026-11-16 17:11:18','2026-11-16 17:11:18'),(327,11,'payment.recorded','App\\Models\\Invoice',6,'{\"amount\": 1100}','127.0.0.1','2026-11-16 17:14:19','2026-11-16 17:14:19'),(328,11,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 17:17:41','2026-11-16 17:17:41'),(329,10,'auth.login','App\\Models\\User',10,NULL,'127.0.0.1','2026-11-16 17:22:44','2026-11-16 17:22:44'),(330,10,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 17:22:51','2026-11-16 17:22:51'),(331,11,'auth.login','App\\Models\\User',11,NULL,'127.0.0.1','2026-11-16 17:23:54','2026-11-16 17:23:54'),(332,11,'room.images.deleted','App\\Models\\Room',9,'{\"image_id\": 31}','127.0.0.1','2026-11-16 17:24:12','2026-11-16 17:24:12'),(333,11,'room.updated','App\\Models\\Room',9,NULL,'127.0.0.1','2026-11-16 17:24:14','2026-11-16 17:24:14'),(334,11,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-16 17:24:32','2026-11-16 17:24:32'),(335,10,'auth.login','App\\Models\\User',10,NULL,'127.0.0.1','2026-11-17 04:21:17','2026-11-17 04:21:17'),(336,10,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-17 04:22:03','2026-11-17 04:22:03'),(337,12,'auth.register','App\\Models\\User',12,NULL,'127.0.0.1','2026-11-17 04:23:22','2026-11-17 04:23:22'),(338,12,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-17 04:23:39','2026-11-17 04:23:39'),(339,11,'auth.login','App\\Models\\User',11,NULL,'127.0.0.1','2026-11-17 04:24:06','2026-11-17 04:24:06'),(340,11,'room.created','App\\Models\\Room',10,NULL,'127.0.0.1','2026-11-17 04:25:45','2026-11-17 04:25:45'),(341,11,'room.images','App\\Models\\Room',10,NULL,'127.0.0.1','2026-11-17 04:25:46','2026-11-17 04:25:46'),(342,11,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-17 04:25:51','2026-11-17 04:25:51'),(343,12,'auth.login','App\\Models\\User',12,NULL,'127.0.0.1','2026-11-17 04:25:58','2026-11-17 04:25:58'),(344,12,'inquiry.created','App\\Models\\Inquiry',7,NULL,'127.0.0.1','2026-11-17 04:26:53','2026-11-17 04:26:53'),(345,12,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-17 04:27:00','2026-11-17 04:27:00'),(346,11,'auth.login','App\\Models\\User',11,NULL,'127.0.0.1','2026-11-17 04:27:19','2026-11-17 04:27:19'),(347,11,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-17 04:27:53','2026-11-17 04:27:53'),(348,11,'auth.login','App\\Models\\User',11,NULL,'127.0.0.1','2026-11-17 04:28:10','2026-11-17 04:28:10'),(349,11,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-17 04:55:19','2026-11-17 04:55:19'),(350,11,'auth.login','App\\Models\\User',11,NULL,'127.0.0.1','2026-11-19 09:25:51','2026-11-19 09:25:51'),(351,11,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-19 09:36:12','2026-11-19 09:36:12'),(352,11,'auth.login','App\\Models\\User',11,NULL,'127.0.0.1','2026-11-19 09:37:17','2026-11-19 09:37:17'),(353,11,'auth.login','App\\Models\\User',11,NULL,'127.0.0.1','2026-11-19 12:42:45','2026-11-19 12:42:45'),(354,11,'auth.login','App\\Models\\User',11,NULL,'127.0.0.1','2026-11-19 12:50:11','2026-11-19 12:50:11'),(355,11,'auth.logout',NULL,NULL,NULL,'127.0.0.1','2026-11-19 12:50:25','2026-11-19 12:50:25'),(356,11,'auth.login','App\\Models\\User',11,NULL,'127.0.0.1','2026-11-19 13:42:29','2026-11-19 13:42:29');
-/*!40000 ALTER TABLE `activity_logs` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `activity_logs` (`id`, `user_id`, `action`, `subject_type`, `subject_id`, `properties`, `ip_address`, `created_at`, `updated_at`) VALUES
+(1, 1, 'auth.register', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-10 09:09:25', '2026-11-10 09:09:25'),
+(2, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-10 09:20:51', '2026-11-10 09:20:51'),
+(3, 2, 'auth.login', 'App\\Models\\User', 2, NULL, '127.0.0.1', '2026-11-10 09:24:22', '2026-11-10 09:24:22'),
+(4, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-10 09:35:31', '2026-11-10 09:35:31'),
+(5, 2, 'auth.login', 'App\\Models\\User', 2, NULL, '127.0.0.1', '2026-11-10 09:44:38', '2026-11-10 09:44:38'),
+(6, 2, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-10 09:44:42', '2026-11-10 09:44:42'),
+(7, 2, 'auth.login', 'App\\Models\\User', 2, NULL, '127.0.0.1', '2026-11-10 10:06:24', '2026-11-10 10:06:24'),
+(8, 2, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-10 10:06:29', '2026-11-10 10:06:29'),
+(9, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-10 10:06:45', '2026-11-10 10:06:45'),
+(10, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-10 10:06:49', '2026-11-10 10:06:49'),
+(11, 3, 'auth.register', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-11 05:51:45', '2026-11-11 05:51:45'),
+(12, 3, 'room.created', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-11 05:55:42', '2026-11-11 05:55:42'),
+(13, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-11 05:56:53', '2026-11-11 05:56:53'),
+(14, 2, 'auth.login', 'App\\Models\\User', 2, NULL, '127.0.0.1', '2026-11-11 05:58:05', '2026-11-11 05:58:05'),
+(15, 2, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-11 06:23:53', '2026-11-11 06:23:53'),
+(16, 2, 'auth.login', 'App\\Models\\User', 2, NULL, '127.0.0.1', '2026-11-11 06:42:02', '2026-11-11 06:42:02'),
+(17, 2, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-11 06:42:37', '2026-11-11 06:42:37'),
+(18, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-11 06:45:28', '2026-11-11 06:45:28'),
+(19, 1, 'room.favorited', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-11 06:45:52', '2026-11-11 06:45:52'),
+(20, 1, 'room.unfavorited', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-11 06:45:58', '2026-11-11 06:45:58'),
+(21, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-11 06:46:22', '2026-11-11 06:46:22'),
+(22, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-11 06:47:04', '2026-11-11 06:47:04'),
+(23, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-11 06:47:09', '2026-11-11 06:47:09'),
+(24, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-11 06:47:36', '2026-11-11 06:47:36'),
+(25, 3, 'room.updated', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-11 06:48:06', '2026-11-11 06:48:06'),
+(26, 3, 'room.updated', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-11 06:48:17', '2026-11-11 06:48:17'),
+(27, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-11 06:49:52', '2026-11-11 06:49:52'),
+(28, 2, 'auth.login', 'App\\Models\\User', 2, NULL, '127.0.0.1', '2026-11-11 06:54:50', '2026-11-11 06:54:50'),
+(29, 2, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-11 07:02:33', '2026-11-11 07:02:33'),
+(30, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-11 07:02:49', '2026-11-11 07:02:49'),
+(31, 3, 'room.updated', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-11 07:03:05', '2026-11-11 07:03:05'),
+(32, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-11 07:04:26', '2026-11-11 07:04:26'),
+(33, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-11 07:04:47', '2026-11-11 07:04:47'),
+(34, 1, 'inquiry.created', 'App\\Models\\Inquiry', 1, NULL, '127.0.0.1', '2026-11-11 07:05:40', '2026-11-11 07:05:40'),
+(35, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-11 07:06:43', '2026-11-11 07:06:43'),
+(36, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-11 07:07:01', '2026-11-11 07:07:01'),
+(37, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-11 07:07:26', '2026-11-11 07:07:26'),
+(38, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-11 07:07:41', '2026-11-11 07:07:41'),
+(39, 1, 'inquiry.offer_accepted', 'App\\Models\\Inquiry', 1, '{\"lease_id\": 1}', '127.0.0.1', '2026-11-11 07:08:14', '2026-11-11 07:08:14'),
+(40, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-11 07:08:38', '2026-11-11 07:08:38'),
+(41, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-11 07:09:03', '2026-11-11 07:09:03'),
+(42, 3, 'charge.created', 'App\\Models\\PendingCharge', 1, '{\"lease_id\": 1}', '127.0.0.1', '2026-11-11 07:10:04', '2026-11-11 07:10:04'),
+(43, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-11 07:10:26', '2026-11-11 07:10:26'),
+(44, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-11 07:10:48', '2026-11-11 07:10:48'),
+(45, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-11 07:12:53', '2026-11-11 07:12:53'),
+(46, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-11 07:22:00', '2026-11-11 07:22:00'),
+(47, 3, 'room.updated', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-11 07:23:05', '2026-11-11 07:23:05'),
+(48, 3, 'room.updated', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-11 07:23:12', '2026-11-11 07:23:12'),
+(49, 3, 'room.updated', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-11 07:23:57', '2026-11-11 07:23:57'),
+(50, 3, 'room.updated', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-11 07:24:22', '2026-11-11 07:24:22'),
+(51, 3, 'room.updated', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-11 07:24:29', '2026-11-11 07:24:29'),
+(52, 3, 'room.updated', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-11 07:24:34', '2026-11-11 07:24:34'),
+(53, 3, 'room.updated', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-11 07:24:36', '2026-11-11 07:24:36'),
+(54, 3, 'room.updated', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-11 07:25:53', '2026-11-11 07:25:53'),
+(55, 3, 'room.updated', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-11 07:42:47', '2026-11-11 07:42:47'),
+(56, 3, 'room.updated', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-11 07:42:50', '2026-11-11 07:42:50'),
+(57, 3, 'room.updated', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-11 07:42:52', '2026-11-11 07:42:52'),
+(58, 3, 'room.updated', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-11 07:54:12', '2026-11-11 07:54:12'),
+(59, 3, 'room.updated', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-11 07:54:14', '2026-11-11 07:54:14'),
+(60, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-11 07:55:22', '2026-11-11 07:55:22'),
+(61, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-11 07:55:43', '2026-11-11 07:55:43'),
+(62, 3, 'room.updated', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-11 07:55:57', '2026-11-11 07:55:57'),
+(63, 3, 'room.updated', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-11 08:00:51', '2026-11-11 08:00:51'),
+(64, 3, 'room.images', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-11 08:00:52', '2026-11-11 08:00:52'),
+(65, 3, 'room.updated', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-11 08:01:46', '2026-11-11 08:01:46'),
+(66, 3, 'room.images', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-11 08:01:46', '2026-11-11 08:01:46'),
+(67, 3, 'room.images', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-11 08:01:47', '2026-11-11 08:01:47'),
+(68, 3, 'room.updated', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-11 08:02:33', '2026-11-11 08:02:33'),
+(69, 3, 'room.images', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-11 08:02:33', '2026-11-11 08:02:33'),
+(70, 3, 'room.images', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-11 08:02:34', '2026-11-11 08:02:34'),
+(71, 3, 'room.images', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-11 08:02:34', '2026-11-11 08:02:34'),
+(72, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-11 08:02:57', '2026-11-11 08:02:57'),
+(73, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-11 08:03:21', '2026-11-11 08:03:21'),
+(74, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-11 08:05:33', '2026-11-11 08:05:33'),
+(75, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-11 08:13:21', '2026-11-11 08:13:21'),
+(76, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-11 08:13:38', '2026-11-11 08:13:38'),
+(77, 4, 'auth.register', 'App\\Models\\User', 4, NULL, '127.0.0.1', '2026-11-11 08:17:08', '2026-11-11 08:17:08'),
+(78, 4, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-11 08:17:17', '2026-11-11 08:17:17'),
+(79, 4, 'auth.login', 'App\\Models\\User', 4, NULL, '127.0.0.1', '2026-11-11 08:17:25', '2026-11-11 08:17:25'),
+(80, 4, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-11 08:17:32', '2026-11-11 08:17:32'),
+(81, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-11 08:23:01', '2026-11-11 08:23:01'),
+(82, 1, 'profile.password_changed', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-11 08:23:57', '2026-11-11 08:23:57'),
+(83, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-11 08:24:10', '2026-11-11 08:24:10'),
+(84, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-11 08:24:48', '2026-11-11 08:24:48'),
+(85, 1, 'profile.updated', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-11 08:35:12', '2026-11-11 08:35:12'),
+(86, 1, 'profile.updated', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-11 08:35:28', '2026-11-11 08:35:28'),
+(87, 1, 'profile.updated', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-11 08:40:28', '2026-11-11 08:40:28'),
+(88, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-11 08:40:33', '2026-11-11 08:40:33'),
+(89, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-11 08:40:43', '2026-11-11 08:40:43'),
+(90, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-11 09:03:24', '2026-11-11 09:03:24'),
+(91, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-11 09:03:49', '2026-11-11 09:03:49'),
+(92, 3, 'room.created', 'App\\Models\\Room', 2, NULL, '127.0.0.1', '2026-11-11 09:31:00', '2026-11-11 09:31:00'),
+(93, 3, 'room.images', 'App\\Models\\Room', 2, NULL, '127.0.0.1', '2026-11-11 09:31:01', '2026-11-11 09:31:01'),
+(94, 3, 'lease.updated', 'App\\Models\\Lease', 1, NULL, '127.0.0.1', '2026-11-11 09:37:51', '2026-11-11 09:37:51'),
+(95, 3, 'profile.updated', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-11 09:52:06', '2026-11-11 09:52:06'),
+(96, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-11 09:52:09', '2026-11-11 09:52:09'),
+(97, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-11 09:52:28', '2026-11-11 09:52:28'),
+(98, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-11 09:53:03', '2026-11-11 09:53:03'),
+(99, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-12 09:53:57', '2026-11-12 09:53:57'),
+(100, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-12 09:54:39', '2026-11-12 09:54:39'),
+(101, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-12 10:00:01', '2026-11-12 10:00:01'),
+(102, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-12 10:11:23', '2026-11-12 10:11:23'),
+(103, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-12 10:11:36', '2026-11-12 10:11:36'),
+(104, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-12 10:24:52', '2026-11-12 10:24:52'),
+(105, 2, 'auth.login', 'App\\Models\\User', 2, NULL, '127.0.0.1', '2026-11-12 10:25:02', '2026-11-12 10:25:02'),
+(106, 2, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-12 10:57:12', '2026-11-12 10:57:12'),
+(107, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-13 06:50:17', '2026-11-13 06:50:17'),
+(108, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-13 07:26:52', '2026-11-13 07:26:52'),
+(109, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-13 07:33:38', '2026-11-13 07:33:38'),
+(110, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-13 07:56:41', '2026-11-13 07:56:41'),
+(111, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-13 07:57:57', '2026-11-13 07:57:57'),
+(112, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-13 08:02:49', '2026-11-13 08:02:49'),
+(113, 2, 'auth.login', 'App\\Models\\User', 2, NULL, '127.0.0.1', '2026-11-13 08:03:19', '2026-11-13 08:03:19'),
+(114, 2, 'auth.login', 'App\\Models\\User', 2, NULL, '127.0.0.1', '2026-11-13 08:03:21', '2026-11-13 08:03:21'),
+(115, 2, 'profile.updated', 'App\\Models\\User', 2, NULL, '127.0.0.1', '2026-11-13 08:03:36', '2026-11-13 08:03:36'),
+(116, 2, 'profile.updated', 'App\\Models\\User', 2, NULL, '127.0.0.1', '2026-11-13 08:03:38', '2026-11-13 08:03:38'),
+(117, 2, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-13 08:04:31', '2026-11-13 08:04:31'),
+(118, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-13 08:04:47', '2026-11-13 08:04:47'),
+(119, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-13 08:04:50', '2026-11-13 08:04:50'),
+(120, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-13 08:05:06', '2026-11-13 08:05:06'),
+(121, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-13 08:05:19', '2026-11-13 08:05:19'),
+(122, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-13 08:08:59', '2026-11-13 08:08:59'),
+(123, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-13 08:09:54', '2026-11-13 08:09:54'),
+(124, NULL, 'auth.login', 'App\\Models\\User', 5, NULL, '127.0.0.1', '2026-11-14 08:04:29', '2026-11-14 08:04:29'),
+(125, NULL, 'auth.login', 'App\\Models\\User', 6, NULL, '127.0.0.1', '2026-11-14 08:04:30', '2026-11-14 08:04:30'),
+(126, NULL, 'auth.login', 'App\\Models\\User', 7, NULL, '127.0.0.1', '2026-11-14 08:04:31', '2026-11-14 08:04:31'),
+(127, NULL, 'auth.login', 'App\\Models\\User', 8, NULL, '127.0.0.1', '2026-11-14 08:04:31', '2026-11-14 08:04:31'),
+(128, NULL, 'auth.login', 'App\\Models\\User', 9, NULL, '127.0.0.1', '2026-11-14 08:04:32', '2026-11-14 08:04:32'),
+(129, NULL, 'room.availability', 'App\\Models\\Room', 3, '{\"status\": \"available\"}', '127.0.0.1', '2026-11-14 08:13:13', '2026-11-14 08:13:13'),
+(130, NULL, 'lease.created', 'App\\Models\\Lease', 2, NULL, '127.0.0.1', '2026-11-14 08:13:14', '2026-11-14 08:13:14'),
+(131, NULL, 'room.availability', 'App\\Models\\Room', 5, '{\"status\": \"available\"}', '127.0.0.1', '2026-11-14 08:13:14', '2026-11-14 08:13:14'),
+(132, NULL, 'lease.created', 'App\\Models\\Lease', 3, NULL, '127.0.0.1', '2026-11-14 08:13:14', '2026-11-14 08:13:14'),
+(133, NULL, 'lease.agreement_accepted', 'App\\Models\\Lease', 2, NULL, '127.0.0.1', '2026-11-14 08:14:03', '2026-11-14 08:14:03'),
+(134, NULL, 'lease.agreement_accepted', 'App\\Models\\Lease', 3, NULL, '127.0.0.1', '2026-11-14 08:14:03', '2026-11-14 08:14:03'),
+(135, NULL, 'lease.updated', 'App\\Models\\Lease', 2, NULL, '127.0.0.1', '2026-11-14 08:15:21', '2026-11-14 08:15:21'),
+(136, NULL, 'lease.agreement_accepted', 'App\\Models\\Lease', 2, NULL, '127.0.0.1', '2026-11-14 08:15:22', '2026-11-14 08:15:22'),
+(137, NULL, 'lease.move_in_inspection', 'App\\Models\\LeaseInspection', 1, '{\"lease_id\": 2}', '127.0.0.1', '2026-11-14 08:15:22', '2026-11-14 08:15:22'),
+(138, NULL, 'lease.updated', 'App\\Models\\Lease', 3, NULL, '127.0.0.1', '2026-11-14 08:15:23', '2026-11-14 08:15:23'),
+(139, NULL, 'lease.agreement_accepted', 'App\\Models\\Lease', 3, NULL, '127.0.0.1', '2026-11-14 08:15:23', '2026-11-14 08:15:23'),
+(140, NULL, 'lease.move_in_inspection', 'App\\Models\\LeaseInspection', 2, '{\"lease_id\": 3}', '127.0.0.1', '2026-11-14 08:15:24', '2026-11-14 08:15:24'),
+(141, NULL, 'charge.created', 'App\\Models\\PendingCharge', 2, '{\"lease_id\": 2}', '127.0.0.1', '2026-11-14 08:16:08', '2026-11-14 08:16:08'),
+(142, NULL, 'charge.created', 'App\\Models\\PendingCharge', 3, '{\"lease_id\": 3}', '127.0.0.1', '2026-11-14 08:16:08', '2026-11-14 08:16:08'),
+(143, NULL, 'lease.move_out_inspection', 'App\\Models\\LeaseInspection', 3, '{\"lease_id\": 2}', '127.0.0.1', '2026-11-14 08:17:03', '2026-11-14 08:17:03'),
+(144, NULL, 'room.availability', 'App\\Models\\Room', 3, '{\"status\": \"maintenance\"}', '127.0.0.1', '2026-11-14 08:17:05', '2026-11-14 08:17:05'),
+(145, NULL, 'lease.move_out_inspection', 'App\\Models\\LeaseInspection', 4, '{\"lease_id\": 3}', '127.0.0.1', '2026-11-14 08:17:34', '2026-11-14 08:17:34'),
+(146, NULL, 'room.availability', 'App\\Models\\Room', 5, '{\"status\": \"maintenance\"}', '127.0.0.1', '2026-11-14 08:17:34', '2026-11-14 08:17:34'),
+(147, NULL, 'payment.simulated_failed', 'App\\Models\\Payment', 2, '{\"idempotent\": false, \"invoice_id\": 2, \"reference_number\": \"BE-SIM-F6786EF3-D4FD-40F1-8E37-BF92F6DE38D6\"}', '127.0.0.1', '2026-11-14 08:20:20', '2026-11-14 08:20:20'),
+(148, NULL, 'payment.simulated_failed', 'App\\Models\\Payment', 2, '{\"idempotent\": true, \"invoice_id\": 2, \"reference_number\": \"BE-SIM-F6786EF3-D4FD-40F1-8E37-BF92F6DE38D6\"}', '127.0.0.1', '2026-11-14 08:20:20', '2026-11-14 08:20:20'),
+(149, NULL, 'room.availability', 'App\\Models\\Room', 4, '{\"status\": \"available\"}', '127.0.0.1', '2026-11-14 08:21:28', '2026-11-14 08:21:28'),
+(150, NULL, 'lease.created', 'App\\Models\\Lease', 4, NULL, '127.0.0.1', '2026-11-14 08:21:28', '2026-11-14 08:21:28'),
+(151, NULL, 'lease.agreement_accepted', 'App\\Models\\Lease', 4, NULL, '127.0.0.1', '2026-11-14 08:23:19', '2026-11-14 08:23:19'),
+(152, NULL, 'lease.move_in_inspection', 'App\\Models\\LeaseInspection', 5, '{\"lease_id\": 4}', '127.0.0.1', '2026-11-14 08:23:19', '2026-11-14 08:23:19'),
+(153, NULL, 'room.availability', 'App\\Models\\Room', 6, '{\"status\": \"available\"}', '127.0.0.1', '2026-11-14 08:26:15', '2026-11-14 08:26:15'),
+(154, NULL, 'inquiry.offer_accepted', 'App\\Models\\Inquiry', 2, '{\"lease_id\": 5}', '127.0.0.1', '2026-11-14 08:26:46', '2026-11-14 08:26:46'),
+(155, NULL, 'lease.agreement_accepted', 'App\\Models\\Lease', 5, NULL, '127.0.0.1', '2026-11-14 08:26:46', '2026-11-14 08:26:46'),
+(156, NULL, 'lease.move_in_inspection', 'App\\Models\\LeaseInspection', 6, '{\"lease_id\": 5}', '127.0.0.1', '2026-11-14 08:26:47', '2026-11-14 08:26:47'),
+(157, NULL, 'room.created', 'App\\Models\\Room', 7, NULL, '127.0.0.1', '2026-11-14 08:50:56', '2026-11-14 08:50:56'),
+(158, NULL, 'inquiry.created', 'App\\Models\\Inquiry', 3, NULL, '127.0.0.1', '2026-11-14 08:50:56', '2026-11-14 08:50:56'),
+(159, NULL, 'payment.simulated_succeeded', 'App\\Models\\Payment', 3, '{\"idempotent\": false, \"invoice_id\": 3, \"reference_number\": \"BE-SIM-DEC66F61-BBFB-4444-BA6A-0F5A4B45842D\"}', '127.0.0.1', '2026-11-14 08:50:57', '2026-11-14 08:50:57'),
+(160, NULL, 'auth.login', 'App\\Models\\User', 5, NULL, '127.0.0.1', '2026-11-14 16:59:36', '2026-11-14 16:59:36'),
+(161, NULL, 'auth.login', 'App\\Models\\User', 6, NULL, '127.0.0.1', '2026-11-14 16:59:38', '2026-11-14 16:59:38'),
+(162, NULL, 'auth.login', 'App\\Models\\User', 8, NULL, '127.0.0.1', '2026-11-14 16:59:39', '2026-11-14 16:59:39'),
+(163, 2, 'auth.login', 'App\\Models\\User', 2, NULL, '127.0.0.1', '2026-11-14 17:17:03', '2026-11-14 17:17:03'),
+(164, 2, 'auth.login', 'App\\Models\\User', 2, NULL, '127.0.0.1', '2026-11-14 17:17:05', '2026-11-14 17:17:05'),
+(165, 2, 'admin.user.updated', 'App\\Models\\User', 8, '{\"is_active\": false}', '127.0.0.1', '2026-11-14 17:18:37', '2026-11-14 17:18:37'),
+(166, 2, 'admin.user.updated', 'App\\Models\\User', 8, '{\"is_active\": true}', '127.0.0.1', '2026-11-14 17:18:40', '2026-11-14 17:18:40'),
+(167, 2, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-14 17:45:19', '2026-11-14 17:45:19'),
+(168, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-14 17:45:29', '2026-11-14 17:45:29'),
+(169, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-14 17:53:35', '2026-11-14 17:53:35'),
+(170, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-14 17:54:05', '2026-11-14 17:54:05'),
+(171, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-14 17:54:27', '2026-11-14 17:54:27'),
+(172, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-14 17:54:38', '2026-11-14 17:54:38'),
+(173, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-14 18:08:43', '2026-11-14 18:08:43'),
+(174, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-14 18:09:43', '2026-11-14 18:09:43'),
+(175, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-14 18:11:04', '2026-11-14 18:11:04'),
+(176, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-14 18:11:10', '2026-11-14 18:11:10'),
+(177, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-14 18:12:00', '2026-11-14 18:12:00'),
+(178, NULL, 'room.created', 'App\\Models\\Room', 8, NULL, '127.0.0.1', '2026-11-15 13:10:08', '2026-11-15 13:10:08'),
+(179, NULL, 'inquiry.created', 'App\\Models\\Inquiry', 4, NULL, '127.0.0.1', '2026-11-15 13:10:08', '2026-11-15 13:10:08'),
+(180, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-15 13:36:49', '2026-11-15 13:36:49'),
+(181, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-15 13:36:54', '2026-11-15 13:36:54'),
+(182, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-15 13:37:09', '2026-11-15 13:37:09'),
+(183, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-15 13:39:54', '2026-11-15 13:39:54'),
+(184, 2, 'auth.login', 'App\\Models\\User', 2, NULL, '127.0.0.1', '2026-11-15 14:53:39', '2026-11-15 14:53:39'),
+(185, 2, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-15 14:54:23', '2026-11-15 14:54:23'),
+(186, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-15 14:54:29', '2026-11-15 14:54:29'),
+(187, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-15 14:57:50', '2026-11-15 14:57:50'),
+(188, 2, 'auth.login', 'App\\Models\\User', 2, NULL, '127.0.0.1', '2026-11-15 14:58:04', '2026-11-15 14:58:04'),
+(189, 2, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-15 15:09:17', '2026-11-15 15:09:17'),
+(190, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-15 15:09:30', '2026-11-15 15:09:30'),
+(191, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-15 15:35:24', '2026-11-15 15:35:24'),
+(192, 2, 'auth.login', 'App\\Models\\User', 2, NULL, '127.0.0.1', '2026-11-15 15:35:34', '2026-11-15 15:35:34'),
+(193, 2, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-15 15:37:07', '2026-11-15 15:37:07'),
+(194, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-15 15:37:13', '2026-11-15 15:37:13'),
+(195, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-15 15:37:20', '2026-11-15 15:37:20'),
+(196, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-15 15:43:18', '2026-11-15 15:43:18'),
+(197, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-15 15:44:05', '2026-11-15 15:44:05'),
+(198, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-15 15:44:13', '2026-11-15 15:44:13'),
+(199, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-15 15:45:47', '2026-11-15 15:45:47'),
+(200, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-15 15:46:04', '2026-11-15 15:46:04'),
+(201, 3, 'lease.updated', 'App\\Models\\Lease', 1, NULL, '127.0.0.1', '2026-11-15 15:46:34', '2026-11-15 15:46:34'),
+(202, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-15 15:46:47', '2026-11-15 15:46:47'),
+(203, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-15 15:46:54', '2026-11-15 15:46:54'),
+(204, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-15 15:48:07', '2026-11-15 15:48:07'),
+(205, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-15 15:48:17', '2026-11-15 15:48:17'),
+(206, 3, 'lease.updated', 'App\\Models\\Lease', 1, NULL, '127.0.0.1', '2026-11-15 15:48:32', '2026-11-15 15:48:32'),
+(207, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-15 15:48:39', '2026-11-15 15:48:39'),
+(208, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-15 15:48:44', '2026-11-15 15:48:44'),
+(209, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-15 16:04:31', '2026-11-15 16:04:31'),
+(210, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-15 16:05:02', '2026-11-15 16:05:02'),
+(211, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-15 16:20:49', '2026-11-15 16:20:49'),
+(212, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-15 16:20:55', '2026-11-15 16:20:55'),
+(213, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-15 16:30:49', '2026-11-15 16:30:49'),
+(214, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-15 16:30:54', '2026-11-15 16:30:54'),
+(215, 1, 'payment.simulated_succeeded', 'App\\Models\\Payment', 4, '{\"idempotent\": false, \"invoice_id\": 4, \"reference_number\": \"BE-SIM-2B0FE072-3400-4AD7-8335-88E65C6F5956\"}', '127.0.0.1', '2026-11-15 16:32:16', '2026-11-15 16:32:16'),
+(216, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-15 16:34:16', '2026-11-15 16:34:16'),
+(217, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-15 16:34:25', '2026-11-15 16:34:25'),
+(218, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-15 16:35:39', '2026-11-15 16:35:39'),
+(219, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-15 16:38:21', '2026-11-15 16:38:21'),
+(220, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-15 16:43:47', '2026-11-15 16:43:47'),
+(221, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-15 16:44:28', '2026-11-15 16:44:28'),
+(222, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-15 16:52:48', '2026-11-15 16:52:48'),
+(223, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-15 16:53:11', '2026-11-15 16:53:11'),
+(224, 3, 'room.updated', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-15 16:54:31', '2026-11-15 16:54:31'),
+(225, 3, 'room.images', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-15 16:54:32', '2026-11-15 16:54:32'),
+(226, 3, 'room.updated', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-15 16:55:00', '2026-11-15 16:55:00'),
+(227, 3, 'room.images', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-15 16:55:01', '2026-11-15 16:55:01'),
+(228, 3, 'room.updated', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-15 16:56:12', '2026-11-15 16:56:12'),
+(229, 3, 'room.images', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-15 16:56:12', '2026-11-15 16:56:12'),
+(230, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-15 16:56:55', '2026-11-15 16:56:55'),
+(231, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-15 16:57:01', '2026-11-15 16:57:01'),
+(232, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-15 17:03:30', '2026-11-15 17:03:30'),
+(233, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-15 17:03:37', '2026-11-15 17:03:37'),
+(234, 3, 'room.updated', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-15 17:04:31', '2026-11-15 17:04:31'),
+(235, 3, 'room.images', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-15 17:04:31', '2026-11-15 17:04:31'),
+(236, 3, 'room.images', 'App\\Models\\Room', 1, NULL, '127.0.0.1', '2026-11-15 17:04:32', '2026-11-15 17:04:32'),
+(237, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-15 17:04:58', '2026-11-15 17:04:58'),
+(238, 2, 'auth.login', 'App\\Models\\User', 2, NULL, '127.0.0.1', '2026-11-15 17:05:16', '2026-11-15 17:05:16'),
+(239, 2, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-15 17:06:28', '2026-11-15 17:06:28'),
+(240, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-15 17:09:30', '2026-11-15 17:09:30'),
+(241, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-15 17:21:29', '2026-11-15 17:21:29'),
+(242, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-15 17:21:36', '2026-11-15 17:21:36'),
+(243, 3, 'room.updated', 'App\\Models\\Room', 2, NULL, '127.0.0.1', '2026-11-15 17:22:18', '2026-11-15 17:22:18'),
+(244, 3, 'room.images', 'App\\Models\\Room', 2, NULL, '127.0.0.1', '2026-11-15 17:22:18', '2026-11-15 17:22:18'),
+(245, 3, 'room.images.deleted', 'App\\Models\\Room', 2, '{\"image_id\": 24}', '127.0.0.1', '2026-11-15 17:22:33', '2026-11-15 17:22:33'),
+(246, 3, 'room.images.deleted', 'App\\Models\\Room', 2, '{\"image_id\": 14}', '127.0.0.1', '2026-11-15 17:29:29', '2026-11-15 17:29:29'),
+(247, 3, 'room.images.deleted', 'App\\Models\\Room', 2, '{\"image_id\": 15}', '127.0.0.1', '2026-11-15 17:29:33', '2026-11-15 17:29:33'),
+(248, 3, 'room.updated', 'App\\Models\\Room', 2, NULL, '127.0.0.1', '2026-11-15 17:29:48', '2026-11-15 17:29:48'),
+(249, 3, 'room.images', 'App\\Models\\Room', 2, NULL, '127.0.0.1', '2026-11-15 17:29:49', '2026-11-15 17:29:49'),
+(250, 3, 'room.images', 'App\\Models\\Room', 2, NULL, '127.0.0.1', '2026-11-15 17:29:50', '2026-11-15 17:29:50'),
+(251, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-15 17:41:44', '2026-11-15 17:41:44'),
+(252, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-15 17:41:51', '2026-11-15 17:41:51'),
+(253, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-15 17:42:39', '2026-11-15 17:42:39'),
+(254, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-16 13:42:44', '2026-11-16 13:42:44'),
+(255, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 13:44:28', '2026-11-16 13:44:28'),
+(256, 2, 'auth.login', 'App\\Models\\User', 2, NULL, '127.0.0.1', '2026-11-16 13:46:48', '2026-11-16 13:46:48'),
+(257, 2, 'admin.user.updated', 'App\\Models\\User', 4, NULL, '127.0.0.1', '2026-11-16 13:49:21', '2026-11-16 13:49:21'),
+(258, 2, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 13:49:46', '2026-11-16 13:49:46'),
+(259, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-16 13:49:51', '2026-11-16 13:49:51'),
+(260, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 14:00:18', '2026-11-16 14:00:18'),
+(261, 4, 'auth.login', 'App\\Models\\User', 4, NULL, '127.0.0.1', '2026-11-16 14:00:41', '2026-11-16 14:00:41'),
+(262, 4, 'profile.updated', 'App\\Models\\User', 4, NULL, '127.0.0.1', '2026-11-16 14:01:05', '2026-11-16 14:01:05'),
+(263, 4, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 14:01:28', '2026-11-16 14:01:28'),
+(264, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-16 14:01:35', '2026-11-16 14:01:35'),
+(265, 3, 'lease.updated', 'App\\Models\\Lease', 1, NULL, '127.0.0.1', '2026-11-16 14:02:15', '2026-11-16 14:02:15'),
+(266, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 14:03:49', '2026-11-16 14:03:49'),
+(267, 2, 'auth.login', 'App\\Models\\User', 2, NULL, '127.0.0.1', '2026-11-16 14:03:59', '2026-11-16 14:03:59'),
+(268, 2, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 14:20:24', '2026-11-16 14:20:24'),
+(269, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-16 14:20:48', '2026-11-16 14:20:48'),
+(270, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 14:24:52', '2026-11-16 14:24:52'),
+(271, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-16 14:25:02', '2026-11-16 14:25:02'),
+(272, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 14:25:25', '2026-11-16 14:25:25'),
+(273, 2, 'auth.login', 'App\\Models\\User', 2, NULL, '127.0.0.1', '2026-11-16 14:25:46', '2026-11-16 14:25:46'),
+(274, 2, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 14:26:58', '2026-11-16 14:26:58'),
+(275, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-16 14:57:14', '2026-11-16 14:57:14'),
+(276, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 15:00:50', '2026-11-16 15:00:50'),
+(277, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-16 15:02:03', '2026-11-16 15:02:03'),
+(278, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 15:03:33', '2026-11-16 15:03:33'),
+(279, 2, 'auth.login', 'App\\Models\\User', 2, NULL, '127.0.0.1', '2026-11-16 15:03:42', '2026-11-16 15:03:42'),
+(280, 2, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 15:07:20', '2026-11-16 15:07:20'),
+(281, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-16 15:07:29', '2026-11-16 15:07:29'),
+(282, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 15:10:47', '2026-11-16 15:10:47'),
+(283, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-16 15:10:54', '2026-11-16 15:10:54'),
+(284, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 15:13:59', '2026-11-16 15:13:59'),
+(285, 4, 'auth.login', 'App\\Models\\User', 4, NULL, '127.0.0.1', '2026-11-16 15:14:09', '2026-11-16 15:14:09'),
+(286, 4, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 15:40:19', '2026-11-16 15:40:19'),
+(287, 2, 'auth.login', 'App\\Models\\User', 2, NULL, '127.0.0.1', '2026-11-16 15:40:25', '2026-11-16 15:40:25'),
+(288, 2, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 15:40:38', '2026-11-16 15:40:38'),
+(289, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-16 15:47:32', '2026-11-16 15:47:32'),
+(290, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 15:58:23', '2026-11-16 15:58:23'),
+(291, 4, 'auth.login', 'App\\Models\\User', 4, NULL, '127.0.0.1', '2026-11-16 15:58:30', '2026-11-16 15:58:30'),
+(292, 4, 'inquiry.created', 'App\\Models\\Inquiry', 5, NULL, '127.0.0.1', '2026-11-16 16:02:39', '2026-11-16 16:02:39'),
+(293, 4, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 16:02:45', '2026-11-16 16:02:45'),
+(294, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-16 16:02:51', '2026-11-16 16:02:51'),
+(295, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 16:03:35', '2026-11-16 16:03:35'),
+(296, 4, 'auth.login', 'App\\Models\\User', 4, NULL, '127.0.0.1', '2026-11-16 16:03:41', '2026-11-16 16:03:41'),
+(297, 4, 'inquiry.offer_accepted', 'App\\Models\\Inquiry', 5, '{\"lease_id\": 6}', '127.0.0.1', '2026-11-16 16:03:57', '2026-11-16 16:03:57'),
+(298, 4, 'lease.agreement_accepted', 'App\\Models\\Lease', 6, NULL, '127.0.0.1', '2026-11-16 16:04:38', '2026-11-16 16:04:38'),
+(299, 4, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 16:06:20', '2026-11-16 16:06:20'),
+(300, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-16 16:06:35', '2026-11-16 16:06:35'),
+(301, 3, 'charge.created', 'App\\Models\\PendingCharge', 5, '{\"lease_id\": 6, \"billing_period\": \"2026-11\"}', '127.0.0.1', '2026-11-16 16:12:29', '2026-11-16 16:12:29'),
+(302, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 16:14:47', '2026-11-16 16:14:47'),
+(303, 4, 'auth.login', 'App\\Models\\User', 4, NULL, '127.0.0.1', '2026-11-16 16:14:55', '2026-11-16 16:14:55'),
+(304, 4, 'payment.simulated_succeeded', 'App\\Models\\Payment', 5, '{\"idempotent\": false, \"invoice_id\": 5, \"reference_number\": \"BE-SIM-7D0D17D2-4799-4FEB-90F3-29DB88D9F346\"}', '127.0.0.1', '2026-11-16 16:16:09', '2026-11-16 16:16:09'),
+(305, 4, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 16:17:28', '2026-11-16 16:17:28'),
+(306, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-16 16:24:23', '2026-11-16 16:24:23'),
+(307, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 16:48:05', '2026-11-16 16:48:05'),
+(308, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-16 16:48:14', '2026-11-16 16:48:14'),
+(309, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 16:56:19', '2026-11-16 16:56:19'),
+(310, 10, 'auth.register', 'App\\Models\\User', 10, NULL, '127.0.0.1', '2026-11-16 16:59:01', '2026-11-16 16:59:01'),
+(311, 10, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 16:59:17', '2026-11-16 16:59:17'),
+(312, 11, 'auth.register', 'App\\Models\\User', 11, NULL, '127.0.0.1', '2026-11-16 17:00:14', '2026-11-16 17:00:14'),
+(313, 11, 'room.created', 'App\\Models\\Room', 9, NULL, '127.0.0.1', '2026-11-16 17:06:49', '2026-11-16 17:06:49'),
+(314, 11, 'room.images', 'App\\Models\\Room', 9, NULL, '127.0.0.1', '2026-11-16 17:06:49', '2026-11-16 17:06:49'),
+(315, 11, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 17:07:05', '2026-11-16 17:07:05'),
+(316, 10, 'auth.login', 'App\\Models\\User', 10, NULL, '127.0.0.1', '2026-11-16 17:07:40', '2026-11-16 17:07:40'),
+(317, 10, 'inquiry.created', 'App\\Models\\Inquiry', 6, NULL, '127.0.0.1', '2026-11-16 17:07:48', '2026-11-16 17:07:48'),
+(318, 10, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 17:07:53', '2026-11-16 17:07:53'),
+(319, 11, 'auth.login', 'App\\Models\\User', 11, NULL, '127.0.0.1', '2026-11-16 17:08:02', '2026-11-16 17:08:02'),
+(320, 11, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 17:08:12', '2026-11-16 17:08:12'),
+(321, 10, 'auth.login', 'App\\Models\\User', 10, NULL, '127.0.0.1', '2026-11-16 17:08:21', '2026-11-16 17:08:21'),
+(322, 10, 'inquiry.offer_accepted', 'App\\Models\\Inquiry', 6, '{\"lease_id\": 7}', '127.0.0.1', '2026-11-16 17:08:31', '2026-11-16 17:08:31'),
+(323, 10, 'lease.agreement_accepted', 'App\\Models\\Lease', 7, NULL, '127.0.0.1', '2026-11-16 17:08:52', '2026-11-16 17:08:52'),
+(324, 10, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 17:09:42', '2026-11-16 17:09:42'),
+(325, 11, 'auth.login', 'App\\Models\\User', 11, NULL, '127.0.0.1', '2026-11-16 17:09:48', '2026-11-16 17:09:48'),
+(326, 11, 'charge.created', 'App\\Models\\PendingCharge', 6, '{\"lease_id\": 7, \"billing_period\": \"2026-11\"}', '127.0.0.1', '2026-11-16 17:11:18', '2026-11-16 17:11:18'),
+(327, 11, 'payment.recorded', 'App\\Models\\Invoice', 6, '{\"amount\": 1100}', '127.0.0.1', '2026-11-16 17:14:19', '2026-11-16 17:14:19'),
+(328, 11, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 17:17:41', '2026-11-16 17:17:41'),
+(329, 10, 'auth.login', 'App\\Models\\User', 10, NULL, '127.0.0.1', '2026-11-16 17:22:44', '2026-11-16 17:22:44'),
+(330, 10, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 17:22:51', '2026-11-16 17:22:51'),
+(331, 11, 'auth.login', 'App\\Models\\User', 11, NULL, '127.0.0.1', '2026-11-16 17:23:54', '2026-11-16 17:23:54'),
+(332, 11, 'room.images.deleted', 'App\\Models\\Room', 9, '{\"image_id\": 31}', '127.0.0.1', '2026-11-16 17:24:12', '2026-11-16 17:24:12'),
+(333, 11, 'room.updated', 'App\\Models\\Room', 9, NULL, '127.0.0.1', '2026-11-16 17:24:14', '2026-11-16 17:24:14'),
+(334, 11, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-16 17:24:32', '2026-11-16 17:24:32'),
+(335, 10, 'auth.login', 'App\\Models\\User', 10, NULL, '127.0.0.1', '2026-11-17 04:21:17', '2026-11-17 04:21:17'),
+(336, 10, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-17 04:22:03', '2026-11-17 04:22:03'),
+(337, 12, 'auth.register', 'App\\Models\\User', 12, NULL, '127.0.0.1', '2026-11-17 04:23:22', '2026-11-17 04:23:22'),
+(338, 12, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-17 04:23:39', '2026-11-17 04:23:39'),
+(339, 11, 'auth.login', 'App\\Models\\User', 11, NULL, '127.0.0.1', '2026-11-17 04:24:06', '2026-11-17 04:24:06'),
+(340, 11, 'room.created', 'App\\Models\\Room', 10, NULL, '127.0.0.1', '2026-11-17 04:25:45', '2026-11-17 04:25:45'),
+(341, 11, 'room.images', 'App\\Models\\Room', 10, NULL, '127.0.0.1', '2026-11-17 04:25:46', '2026-11-17 04:25:46'),
+(342, 11, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-17 04:25:51', '2026-11-17 04:25:51'),
+(343, 12, 'auth.login', 'App\\Models\\User', 12, NULL, '127.0.0.1', '2026-11-17 04:25:58', '2026-11-17 04:25:58'),
+(344, 12, 'inquiry.created', 'App\\Models\\Inquiry', 7, NULL, '127.0.0.1', '2026-11-17 04:26:53', '2026-11-17 04:26:53'),
+(345, 12, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-17 04:27:00', '2026-11-17 04:27:00'),
+(346, 11, 'auth.login', 'App\\Models\\User', 11, NULL, '127.0.0.1', '2026-11-17 04:27:19', '2026-11-17 04:27:19'),
+(347, 11, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-17 04:27:53', '2026-11-17 04:27:53'),
+(348, 11, 'auth.login', 'App\\Models\\User', 11, NULL, '127.0.0.1', '2026-11-17 04:28:10', '2026-11-17 04:28:10'),
+(349, 11, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-17 04:55:19', '2026-11-17 04:55:19'),
+(350, 11, 'auth.login', 'App\\Models\\User', 11, NULL, '127.0.0.1', '2026-11-19 09:25:51', '2026-11-19 09:25:51'),
+(351, 11, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-19 09:36:12', '2026-11-19 09:36:12'),
+(352, 11, 'auth.login', 'App\\Models\\User', 11, NULL, '127.0.0.1', '2026-11-19 09:37:17', '2026-11-19 09:37:17'),
+(353, 2, 'auth.login', 'App\\Models\\User', 2, NULL, '127.0.0.1', '2026-11-19 15:49:03', '2026-11-19 15:49:03'),
+(354, 2, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-19 16:19:55', '2026-11-19 16:19:55'),
+(355, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-19 16:20:04', '2026-11-19 16:20:04'),
+(356, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-19 16:57:39', '2026-11-19 16:57:39'),
+(357, 1, 'auth.login', 'App\\Models\\User', 1, NULL, '127.0.0.1', '2026-11-19 17:10:24', '2026-11-19 17:10:24'),
+(358, 1, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-19 17:13:46', '2026-11-19 17:13:46'),
+(359, 3, 'auth.login', 'App\\Models\\User', 3, NULL, '127.0.0.1', '2026-11-19 17:13:54', '2026-11-19 17:13:54'),
+(360, 3, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-19 17:16:17', '2026-11-19 17:16:17'),
+(361, 2, 'auth.login', 'App\\Models\\User', 2, NULL, '127.0.0.1', '2026-11-19 17:16:35', '2026-11-19 17:16:35'),
+(362, 2, 'auth.logout', NULL, NULL, NULL, '127.0.0.1', '2026-11-19 17:47:34', '2026-11-19 17:47:34');
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `cache`
 --
 
-DROP TABLE IF EXISTS `cache`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cache` (
-  `key` varchar(255) NOT NULL,
-  `value` mediumtext NOT NULL,
-  `expiration` int(11) NOT NULL,
-  PRIMARY KEY (`key`),
-  KEY `cache_expiration_index` (`expiration`)
+  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `expiration` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `cache`
 --
 
-LOCK TABLES `cache` WRITE;
-/*!40000 ALTER TABLE `cache` DISABLE KEYS */;
-INSERT INTO `cache` VALUES ('boardease-cache-04aa5ae36fb08c00254e3b2de3f65edc','i:1;',1795094035),('boardease-cache-04aa5ae36fb08c00254e3b2de3f65edc:timer','i:1795094035;',1795094035),('boardease-cache-1392781e1a14b04d6e33219943d3e0c5','i:1;',1794837700),('boardease-cache-1392781e1a14b04d6e33219943d3e0c5:timer','i:1794837700;',1794837700),('boardease-cache-50d70b4ec6251138f531b46957761dd9','i:1;',1795092038),('boardease-cache-50d70b4ec6251138f531b46957761dd9:timer','i:1795092038;',1795092038),('boardease-cache-570b3ed768e03df9858bc23499a090d6','i:1;',1794836863),('boardease-cache-570b3ed768e03df9858bc23499a090d6:timer','i:1794836863;',1794836863),('boardease-cache-5c785c036466adea360111aa28563bfd556b5fba','i:1;',1794836766),('boardease-cache-5c785c036466adea360111aa28563bfd556b5fba:timer','i:1794836766;',1794836766),('boardease-cache-6295c30a9930f255be8fe8be6b4c2a55','i:1;',1794846323),('boardease-cache-6295c30a9930f255be8fe8be6b4c2a55:timer','i:1794846323;',1794846323),('boardease-cache-70307b9a52c3e9c022682381d5bbc91c','i:2;',1794837686),('boardease-cache-70307b9a52c3e9c022682381d5bbc91c:timer','i:1794837686;',1794837686),('boardease-cache-747450b9bdd4057a79e66c712b46296f','i:1;',1794889332),('boardease-cache-747450b9bdd4057a79e66c712b46296f:timer','i:1794889332;',1794889332),('boardease-cache-88c58d4f410825af1158a25febad1db9','i:1;',1794845755),('boardease-cache-88c58d4f410825af1158a25febad1db9:timer','i:1794845755;',1794845755),('boardease-cache-9c085778922074d830ef2c3ffdb873cf','i:2;',1795095797),('boardease-cache-9c085778922074d830ef2c3ffdb873cf:timer','i:1795095797;',1795095797),('boardease-cache-ac9f1ad4981a26767c22b3787a2e39e3','i:1;',1795095809),('boardease-cache-ac9f1ad4981a26767c22b3787a2e39e3:timer','i:1795095808;',1795095809),('boardease-cache-c1e514f158a9a53ca33cd480a560e8e2','i:1;',1794889618),('boardease-cache-c1e514f158a9a53ca33cd480a560e8e2:timer','i:1794889618;',1794889618),('boardease-cache-cbdbd87181527457921c88c3e5e277dd','i:1;',1794847754),('boardease-cache-cbdbd87181527457921c88c3e5e277dd:timer','i:1794847754;',1794847754),('boarding-house-management-system-cache-09db0abf91a7feec4a90cfdae6856b84','i:1;',1794671328),('boarding-house-management-system-cache-09db0abf91a7feec4a90cfdae6856b84:timer','i:1794671328;',1794671328),('boarding-house-management-system-cache-134d9624ae8fad969b5369ef552baa33','i:1;',1794672332),('boarding-house-management-system-cache-134d9624ae8fad969b5369ef552baa33:timer','i:1794672332;',1794672332),('boarding-house-management-system-cache-151887d7e7e2ed3b31ecaf37950958ae','i:1;',1794413905),('boarding-house-management-system-cache-151887d7e7e2ed3b31ecaf37950958ae:timer','i:1794413905;',1794413905),('boarding-house-management-system-cache-2ee78bcfa8032032fdadaf4a7e77562c','i:1;',1794414347),('boarding-house-management-system-cache-2ee78bcfa8032032fdadaf4a7e77562c:timer','i:1794414347;',1794414347),('boarding-house-management-system-cache-3366a7cf16b3bb1b2666f4bab1859c45','i:1;',1794675638),('boarding-house-management-system-cache-3366a7cf16b3bb1b2666f4bab1859c45:timer','i:1794675638;',1794675638),('boarding-house-management-system-cache-4bf6352ecbe6d1a9f4d8f5eac355ab3e','i:1;',1794675636),('boarding-house-management-system-cache-4bf6352ecbe6d1a9f4d8f5eac355ab3e:timer','i:1794675636;',1794675636),('boarding-house-management-system-cache-50d70b4ec6251138f531b46957761dd9','i:1;',1794756994),('boarding-house-management-system-cache-50d70b4ec6251138f531b46957761dd9:timer','i:1794756994;',1794756994),('boarding-house-management-system-cache-6295c30a9930f255be8fe8be6b4c2a55','i:1;',1794757783),('boarding-house-management-system-cache-6295c30a9930f255be8fe8be6b4c2a55:timer','i:1794757783;',1794757783),('boarding-house-management-system-cache-6bae6745f3a0763e1927d154290d3518','i:1;',1794416689),('boarding-house-management-system-cache-6bae6745f3a0763e1927d154290d3518:timer','i:1794416689;',1794416689),('boarding-house-management-system-cache-81c309f027ff0fdccfc37df7780c73ad','i:1;',1794405533),('boarding-house-management-system-cache-81c309f027ff0fdccfc37df7780c73ad:timer','i:1794405533;',1794405533),('boarding-house-management-system-cache-9698510d58016fefb440ad14998f3d3e','i:1;',1794672330),('boarding-house-management-system-cache-9698510d58016fefb440ad14998f3d3e:timer','i:1794672330;',1794672330),('boarding-house-management-system-cache-9c085778922074d830ef2c3ffdb873cf','i:1;',1794754173),('boarding-house-management-system-cache-9c085778922074d830ef2c3ffdb873cf:timer','i:1794754173;',1794754173),('boarding-house-management-system-cache-bc154f471344bd454ce68f819b850186','i:1;',1794408937),('boarding-house-management-system-cache-bc154f471344bd454ce68f819b850186:timer','i:1794408937;',1794408937),('boarding-house-management-system-cache-c6586152f4fbc2131a462d2640cd41a0','i:1;',1794675639),('boarding-house-management-system-cache-c6586152f4fbc2131a462d2640cd41a0:timer','i:1794675639;',1794675639),('boarding-house-management-system-cache-cbdbd87181527457921c88c3e5e277dd','i:1;',1794757756),('boarding-house-management-system-cache-cbdbd87181527457921c88c3e5e277dd:timer','i:1794757756;',1794757756),('boarding-house-management-system-cache-d2f5911369d2e7d96d237f9233fd649b','i:1;',1794408950),('boarding-house-management-system-cache-d2f5911369d2e7d96d237f9233fd649b:timer','i:1794408950;',1794408950);
-/*!40000 ALTER TABLE `cache` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
+('boardease-cache-1392781e1a14b04d6e33219943d3e0c5', 'i:1;', 1794837700),
+('boardease-cache-1392781e1a14b04d6e33219943d3e0c5:timer', 'i:1794837700;', 1794837700),
+('boardease-cache-50d70b4ec6251138f531b46957761dd9', 'i:3;', 1795108645),
+('boardease-cache-50d70b4ec6251138f531b46957761dd9:timer', 'i:1795108645;', 1795108645),
+('boardease-cache-570b3ed768e03df9858bc23499a090d6', 'i:1;', 1795103395),
+('boardease-cache-570b3ed768e03df9858bc23499a090d6:timer', 'i:1795103395;', 1795103395),
+('boardease-cache-5c785c036466adea360111aa28563bfd556b5fba', 'i:1;', 1794836766),
+('boardease-cache-5c785c036466adea360111aa28563bfd556b5fba:timer', 'i:1794836766;', 1794836766),
+('boardease-cache-6295c30a9930f255be8fe8be6b4c2a55', 'i:1;', 1795108284),
+('boardease-cache-6295c30a9930f255be8fe8be6b4c2a55:timer', 'i:1795108283;', 1795108283),
+('boardease-cache-70307b9a52c3e9c022682381d5bbc91c', 'i:2;', 1794837686),
+('boardease-cache-70307b9a52c3e9c022682381d5bbc91c:timer', 'i:1794837686;', 1794837686),
+('boardease-cache-747450b9bdd4057a79e66c712b46296f', 'i:1;', 1794889332),
+('boardease-cache-747450b9bdd4057a79e66c712b46296f:timer', 'i:1794889332;', 1794889332),
+('boardease-cache-88c58d4f410825af1158a25febad1db9', 'i:1;', 1794845755),
+('boardease-cache-88c58d4f410825af1158a25febad1db9:timer', 'i:1794845755;', 1794845755),
+('boardease-cache-ac9f1ad4981a26767c22b3787a2e39e3', 'i:1;', 1795081096),
+('boardease-cache-ac9f1ad4981a26767c22b3787a2e39e3:timer', 'i:1795081096;', 1795081096),
+('boardease-cache-c1e514f158a9a53ca33cd480a560e8e2', 'i:1;', 1794889618),
+('boardease-cache-c1e514f158a9a53ca33cd480a560e8e2:timer', 'i:1794889618;', 1794889618),
+('boardease-cache-cbdbd87181527457921c88c3e5e277dd', 'i:1;', 1795108494),
+('boardease-cache-cbdbd87181527457921c88c3e5e277dd:timer', 'i:1795108494;', 1795108494),
+('boarding-house-management-system-cache-09db0abf91a7feec4a90cfdae6856b84', 'i:1;', 1794671328),
+('boarding-house-management-system-cache-09db0abf91a7feec4a90cfdae6856b84:timer', 'i:1794671328;', 1794671328),
+('boarding-house-management-system-cache-134d9624ae8fad969b5369ef552baa33', 'i:1;', 1794672332),
+('boarding-house-management-system-cache-134d9624ae8fad969b5369ef552baa33:timer', 'i:1794672332;', 1794672332),
+('boarding-house-management-system-cache-151887d7e7e2ed3b31ecaf37950958ae', 'i:1;', 1794413905),
+('boarding-house-management-system-cache-151887d7e7e2ed3b31ecaf37950958ae:timer', 'i:1794413905;', 1794413905),
+('boarding-house-management-system-cache-2ee78bcfa8032032fdadaf4a7e77562c', 'i:1;', 1794414347),
+('boarding-house-management-system-cache-2ee78bcfa8032032fdadaf4a7e77562c:timer', 'i:1794414347;', 1794414347),
+('boarding-house-management-system-cache-3366a7cf16b3bb1b2666f4bab1859c45', 'i:1;', 1794675638),
+('boarding-house-management-system-cache-3366a7cf16b3bb1b2666f4bab1859c45:timer', 'i:1794675638;', 1794675638),
+('boarding-house-management-system-cache-4bf6352ecbe6d1a9f4d8f5eac355ab3e', 'i:1;', 1794675636),
+('boarding-house-management-system-cache-4bf6352ecbe6d1a9f4d8f5eac355ab3e:timer', 'i:1794675636;', 1794675636),
+('boarding-house-management-system-cache-50d70b4ec6251138f531b46957761dd9', 'i:1;', 1794756994),
+('boarding-house-management-system-cache-50d70b4ec6251138f531b46957761dd9:timer', 'i:1794756994;', 1794756994),
+('boarding-house-management-system-cache-6295c30a9930f255be8fe8be6b4c2a55', 'i:1;', 1794757783),
+('boarding-house-management-system-cache-6295c30a9930f255be8fe8be6b4c2a55:timer', 'i:1794757783;', 1794757783),
+('boarding-house-management-system-cache-6bae6745f3a0763e1927d154290d3518', 'i:1;', 1794416689),
+('boarding-house-management-system-cache-6bae6745f3a0763e1927d154290d3518:timer', 'i:1794416689;', 1794416689),
+('boarding-house-management-system-cache-81c309f027ff0fdccfc37df7780c73ad', 'i:1;', 1794405533),
+('boarding-house-management-system-cache-81c309f027ff0fdccfc37df7780c73ad:timer', 'i:1794405533;', 1794405533),
+('boarding-house-management-system-cache-9698510d58016fefb440ad14998f3d3e', 'i:1;', 1794672330),
+('boarding-house-management-system-cache-9698510d58016fefb440ad14998f3d3e:timer', 'i:1794672330;', 1794672330),
+('boarding-house-management-system-cache-9c085778922074d830ef2c3ffdb873cf', 'i:1;', 1794754173),
+('boarding-house-management-system-cache-9c085778922074d830ef2c3ffdb873cf:timer', 'i:1794754173;', 1794754173),
+('boarding-house-management-system-cache-bc154f471344bd454ce68f819b850186', 'i:1;', 1794408937),
+('boarding-house-management-system-cache-bc154f471344bd454ce68f819b850186:timer', 'i:1794408937;', 1794408937),
+('boarding-house-management-system-cache-c6586152f4fbc2131a462d2640cd41a0', 'i:1;', 1794675639),
+('boarding-house-management-system-cache-c6586152f4fbc2131a462d2640cd41a0:timer', 'i:1794675639;', 1794675639),
+('boarding-house-management-system-cache-cbdbd87181527457921c88c3e5e277dd', 'i:1;', 1794757756),
+('boarding-house-management-system-cache-cbdbd87181527457921c88c3e5e277dd:timer', 'i:1794757756;', 1794757756),
+('boarding-house-management-system-cache-d2f5911369d2e7d96d237f9233fd649b', 'i:1;', 1794408950),
+('boarding-house-management-system-cache-d2f5911369d2e7d96d237f9233fd649b:timer', 'i:1794408950;', 1794408950);
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `cache_locks`
 --
 
-DROP TABLE IF EXISTS `cache_locks`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cache_locks` (
-  `key` varchar(255) NOT NULL,
-  `owner` varchar(255) NOT NULL,
-  `expiration` int(11) NOT NULL,
-  PRIMARY KEY (`key`),
-  KEY `cache_locks_expiration_index` (`expiration`)
+  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `owner` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `expiration` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `cache_locks`
---
-
-LOCK TABLES `cache_locks` WRITE;
-/*!40000 ALTER TABLE `cache_locks` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cache_locks` ENABLE KEYS */;
-UNLOCK TABLES;
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `conversation_messages`
 --
 
-DROP TABLE IF EXISTS `conversation_messages`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `conversation_messages` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `conversation_id` bigint(20) unsigned NOT NULL,
-  `sender_id` bigint(20) unsigned NOT NULL,
-  `body` text NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `conversation_id` bigint UNSIGNED NOT NULL,
+  `sender_id` bigint UNSIGNED NOT NULL,
+  `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `read_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `conversation_messages_sender_id_foreign` (`sender_id`),
-  KEY `conversation_messages_conversation_id_created_at_index` (`conversation_id`,`created_at`),
-  CONSTRAINT `conversation_messages_conversation_id_foreign` FOREIGN KEY (`conversation_id`) REFERENCES `lease_conversations` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `conversation_messages_sender_id_foreign` FOREIGN KEY (`sender_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `conversation_messages`
 --
 
-LOCK TABLES `conversation_messages` WRITE;
-/*!40000 ALTER TABLE `conversation_messages` DISABLE KEYS */;
-INSERT INTO `conversation_messages` VALUES (3,2,3,'hi pwede kabang makausap','2026-11-14 18:06:22','2026-11-14 17:53:22','2026-11-14 18:06:22'),(4,2,1,'hahahahahah pwede kayo','2026-11-14 18:10:51','2026-11-14 18:07:33','2026-11-14 18:10:51'),(5,2,3,'sige2x alas 8 meet up','2026-11-15 15:11:55','2026-11-14 18:11:01','2026-11-15 15:11:55'),(6,2,1,'ngano wala','2026-11-15 15:44:26','2026-11-15 15:12:00','2026-11-15 15:44:26'),(7,2,3,'gale unsaon na lang ni','2026-11-15 15:47:04','2026-11-15 15:44:47','2026-11-15 15:47:04'),(8,2,1,'okay na kay na solved na','2026-11-15 17:42:01','2026-11-15 17:09:53','2026-11-15 17:42:01'),(9,2,3,'welcome','2026-11-16 13:43:13','2026-11-15 17:42:06','2026-11-16 13:43:13'),(10,2,3,'hi malapit na matapos ang iyong pagkain','2026-11-16 15:11:03','2026-11-16 15:10:39','2026-11-16 15:11:03'),(11,2,1,'sige2x bibili na ako','2026-11-16 16:12:51','2026-11-16 15:11:13','2026-11-16 16:12:51');
-/*!40000 ALTER TABLE `conversation_messages` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `conversation_messages` (`id`, `conversation_id`, `sender_id`, `body`, `read_at`, `created_at`, `updated_at`) VALUES
+(3, 2, 3, 'hi pwede kabang makausap', '2026-11-14 18:06:22', '2026-11-14 17:53:22', '2026-11-14 18:06:22'),
+(4, 2, 1, 'hahahahahah pwede kayo', '2026-11-14 18:10:51', '2026-11-14 18:07:33', '2026-11-14 18:10:51'),
+(5, 2, 3, 'sige2x alas 8 meet up', '2026-11-15 15:11:55', '2026-11-14 18:11:01', '2026-11-15 15:11:55'),
+(6, 2, 1, 'ngano wala', '2026-11-15 15:44:26', '2026-11-15 15:12:00', '2026-11-15 15:44:26'),
+(7, 2, 3, 'gale unsaon na lang ni', '2026-11-15 15:47:04', '2026-11-15 15:44:47', '2026-11-15 15:47:04'),
+(8, 2, 1, 'okay na kay na solved na', '2026-11-15 17:42:01', '2026-11-15 17:09:53', '2026-11-15 17:42:01'),
+(9, 2, 3, 'welcome', '2026-11-16 13:43:13', '2026-11-15 17:42:06', '2026-11-16 13:43:13'),
+(10, 2, 3, 'hi malapit na matapos ang iyong pagkain', '2026-11-16 15:11:03', '2026-11-16 15:10:39', '2026-11-16 15:11:03'),
+(11, 2, 1, 'sige2x bibili na ako', '2026-11-16 16:12:51', '2026-11-16 15:11:13', '2026-11-16 16:12:51');
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `failed_jobs`
 --
 
-DROP TABLE IF EXISTS `failed_jobs`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `failed_jobs` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `uuid` varchar(255) NOT NULL,
-  `connection` text NOT NULL,
-  `queue` text NOT NULL,
-  `payload` longtext NOT NULL,
-  `exception` longtext NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
+  `id` bigint UNSIGNED NOT NULL,
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `failed_jobs`
---
-
-LOCK TABLES `failed_jobs` WRITE;
-/*!40000 ALTER TABLE `failed_jobs` DISABLE KEYS */;
-/*!40000 ALTER TABLE `failed_jobs` ENABLE KEYS */;
-UNLOCK TABLES;
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `inquiries`
 --
 
-DROP TABLE IF EXISTS `inquiries`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `inquiries` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `room_id` bigint(20) unsigned NOT NULL,
-  `tenant_id` bigint(20) unsigned NOT NULL,
-  `message` text NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `room_id` bigint UNSIGNED NOT NULL,
+  `tenant_id` bigint UNSIGNED NOT NULL,
+  `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `desired_start_date` date DEFAULT NULL,
   `desired_end_date` date DEFAULT NULL,
-  `status` enum('pending','approved','rejected','converted') NOT NULL DEFAULT 'pending',
+  `status` enum('pending','approved','rejected','converted') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
   `offer_expires_at` timestamp NULL DEFAULT NULL,
-  `decision_reason` text DEFAULT NULL,
+  `decision_reason` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `inquiries_room_id_foreign` (`room_id`),
-  KEY `inquiries_tenant_id_foreign` (`tenant_id`),
-  KEY `inquiries_room_id_status_index` (`room_id`,`status`),
-  KEY `inquiries_tenant_id_status_index` (`tenant_id`,`status`),
-  KEY `inquiry_room_offer_lookup` (`room_id`,`status`,`offer_expires_at`),
-  CONSTRAINT `inquiries_room_id_foreign` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `inquiries_tenant_id_foreign` FOREIGN KEY (`tenant_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `inquiries`
 --
 
-LOCK TABLES `inquiries` WRITE;
-/*!40000 ALTER TABLE `inquiries` DISABLE KEYS */;
-INSERT INTO `inquiries` VALUES (1,1,1,'Hello I am interested',NULL,NULL,'converted','2026-11-12 07:07:13',NULL,'2026-11-11 07:05:40','2026-11-11 07:08:14'),(5,2,4,'I am interested in renting Room 2. Please let me know the requirements and move-in details.','2026-11-17',NULL,'converted','2026-11-17 16:03:26',NULL,'2026-11-16 16:02:39','2026-11-16 16:03:57'),(6,9,10,'I am interested in renting Room 1. Please let me know the requirements and move-in details.','2026-11-17',NULL,'converted','2026-11-17 17:08:10',NULL,'2026-11-16 17:07:48','2026-11-16 17:08:31'),(7,10,12,'I am interested in renting Room 2. Please let me know the requirements and move-in details.','2026-12-11',NULL,'pending',NULL,NULL,'2026-11-17 04:26:53','2026-11-17 04:26:53');
-/*!40000 ALTER TABLE `inquiries` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `inquiries` (`id`, `room_id`, `tenant_id`, `message`, `desired_start_date`, `desired_end_date`, `status`, `offer_expires_at`, `decision_reason`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 'Hello I am interested', NULL, NULL, 'converted', '2026-11-12 07:07:13', NULL, '2026-11-11 07:05:40', '2026-11-11 07:08:14'),
+(5, 2, 4, 'I am interested in renting Room 2. Please let me know the requirements and move-in details.', '2026-11-17', NULL, 'converted', '2026-11-17 16:03:26', NULL, '2026-11-16 16:02:39', '2026-11-16 16:03:57'),
+(6, 9, 10, 'I am interested in renting Room 1. Please let me know the requirements and move-in details.', '2026-11-17', NULL, 'converted', '2026-11-17 17:08:10', NULL, '2026-11-16 17:07:48', '2026-11-16 17:08:31'),
+(7, 10, 12, 'I am interested in renting Room 2. Please let me know the requirements and move-in details.', '2026-12-11', NULL, 'pending', NULL, NULL, '2026-11-17 04:26:53', '2026-11-17 04:26:53');
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `invoices`
 --
 
-DROP TABLE IF EXISTS `invoices`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `invoices` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `lease_id` bigint(20) unsigned NOT NULL,
-  `billing_period` char(7) NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `lease_id` bigint UNSIGNED NOT NULL,
+  `billing_period` char(7) COLLATE utf8mb4_unicode_ci NOT NULL,
   `base_rent` decimal(10,2) NOT NULL,
-  `additional_charges_total` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `additional_charges_total` decimal(10,2) NOT NULL DEFAULT '0.00',
   `total_amount_due` decimal(10,2) NOT NULL,
-  `amount_paid` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `status` enum('unpaid','partial','paid','overdue') NOT NULL DEFAULT 'unpaid',
+  `amount_paid` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `status` enum('unpaid','partial','paid','overdue') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'unpaid',
   `due_date` date NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `invoices_lease_id_billing_period_unique` (`lease_id`,`billing_period`),
-  KEY `invoices_lease_id_foreign` (`lease_id`),
-  KEY `invoices_status_due_date_index` (`status`,`due_date`),
-  CONSTRAINT `invoices_lease_id_foreign` FOREIGN KEY (`lease_id`) REFERENCES `leases` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `invoices`
 --
 
-LOCK TABLES `invoices` WRITE;
-/*!40000 ALTER TABLE `invoices` DISABLE KEYS */;
-INSERT INTO `invoices` VALUES (4,1,'2026-11',1500.00,250.00,1750.00,1750.00,'paid','2026-12-05','2026-11-15 16:30:23','2026-11-15 16:32:16'),(5,6,'2026-11',2000.00,2000.00,4000.00,4000.00,'paid','2026-12-05','2026-11-16 16:13:19','2026-11-16 16:16:09'),(6,7,'2026-11',1000.00,100.00,1100.00,1100.00,'paid','2026-12-05','2026-11-16 17:11:27','2026-11-16 17:14:19');
-/*!40000 ALTER TABLE `invoices` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `invoices` (`id`, `lease_id`, `billing_period`, `base_rent`, `additional_charges_total`, `total_amount_due`, `amount_paid`, `status`, `due_date`, `created_at`, `updated_at`) VALUES
+(4, 1, '2026-11', 1500.00, 250.00, 1750.00, 1750.00, 'paid', '2026-12-05', '2026-11-15 16:30:23', '2026-11-15 16:32:16'),
+(5, 6, '2026-11', 2000.00, 2000.00, 4000.00, 4000.00, 'paid', '2026-12-05', '2026-11-16 16:13:19', '2026-11-16 16:16:09'),
+(6, 7, '2026-11', 1000.00, 100.00, 1100.00, 1100.00, 'paid', '2026-12-05', '2026-11-16 17:11:27', '2026-11-16 17:14:19');
 
---
--- Table structure for table `lease_conversations`
---
-
-DROP TABLE IF EXISTS `lease_conversations`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `lease_conversations` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `lease_id` bigint(20) unsigned NOT NULL,
-  `tenant_id` bigint(20) unsigned NOT NULL,
-  `landlord_id` bigint(20) unsigned NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `lease_conversations_lease_id_unique` (`lease_id`),
-  KEY `lease_conversations_landlord_id_foreign` (`landlord_id`),
-  KEY `lease_conversations_tenant_id_landlord_id_index` (`tenant_id`,`landlord_id`),
-  CONSTRAINT `lease_conversations_landlord_id_foreign` FOREIGN KEY (`landlord_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `lease_conversations_lease_id_foreign` FOREIGN KEY (`lease_id`) REFERENCES `leases` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `lease_conversations_tenant_id_foreign` FOREIGN KEY (`tenant_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `lease_conversations`
---
-
-LOCK TABLES `lease_conversations` WRITE;
-/*!40000 ALTER TABLE `lease_conversations` DISABLE KEYS */;
-INSERT INTO `lease_conversations` VALUES (2,1,1,3,'2026-11-14 17:53:07','2026-11-14 17:53:07');
-/*!40000 ALTER TABLE `lease_conversations` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `lease_inspections`
---
-
-DROP TABLE IF EXISTS `lease_inspections`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `lease_inspections` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `lease_id` bigint(20) unsigned NOT NULL,
-  `recorded_by` bigint(20) unsigned NOT NULL,
-  `kind` enum('move_in','move_out') NOT NULL,
-  `inspection_date` date NOT NULL,
-  `condition` text NOT NULL,
-  `notes` text DEFAULT NULL,
-  `damages_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `damage_description` varchar(255) DEFAULT NULL,
-  `status` enum('pending','completed') NOT NULL DEFAULT 'completed',
-  `completed_at` timestamp NULL DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `lease_inspection_once_per_kind` (`lease_id`,`kind`),
-  KEY `lease_inspections_recorded_by_foreign` (`recorded_by`),
-  KEY `lease_inspections_kind_status_index` (`kind`,`status`),
-  CONSTRAINT `lease_inspections_lease_id_foreign` FOREIGN KEY (`lease_id`) REFERENCES `leases` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `lease_inspections_recorded_by_foreign` FOREIGN KEY (`recorded_by`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `lease_inspections`
---
-
-LOCK TABLES `lease_inspections` WRITE;
-/*!40000 ALTER TABLE `lease_inspections` DISABLE KEYS */;
-/*!40000 ALTER TABLE `lease_inspections` ENABLE KEYS */;
-UNLOCK TABLES;
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `leases`
 --
 
-DROP TABLE IF EXISTS `leases`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `leases` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `room_id` bigint(20) unsigned NOT NULL,
-  `tenant_id` bigint(20) unsigned NOT NULL,
-  `landlord_id` bigint(20) unsigned NOT NULL,
-  `inquiry_id` bigint(20) unsigned DEFAULT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `room_id` bigint UNSIGNED NOT NULL,
+  `tenant_id` bigint UNSIGNED NOT NULL,
+  `landlord_id` bigint UNSIGNED NOT NULL,
+  `inquiry_id` bigint UNSIGNED DEFAULT NULL,
   `start_date` date NOT NULL,
   `end_date` date DEFAULT NULL,
   `monthly_rent` decimal(10,2) NOT NULL,
-  `status` enum('active','ended') NOT NULL DEFAULT 'active',
-  `agreement_status` varchar(20) NOT NULL DEFAULT 'legacy',
+  `status` enum('active','ended') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
+  `agreement_status` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'legacy',
   `agreement_accepted_at` timestamp NULL DEFAULT NULL,
-  `agreement_accepted_ip` varchar(45) DEFAULT NULL,
-  `agreement_snapshot` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`agreement_snapshot`)),
-  `active_room_id` bigint(20) unsigned DEFAULT NULL,
+  `agreement_accepted_ip` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `agreement_snapshot` json DEFAULT NULL,
+  `active_room_id` bigint UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `one_active_lease_per_room` (`active_room_id`),
-  KEY `leases_room_id_foreign` (`room_id`),
-  KEY `leases_tenant_id_foreign` (`tenant_id`),
-  KEY `leases_landlord_id_foreign` (`landlord_id`),
-  KEY `leases_inquiry_id_foreign` (`inquiry_id`),
-  KEY `leases_landlord_id_status_index` (`landlord_id`,`status`),
-  KEY `leases_tenant_id_status_index` (`tenant_id`,`status`),
-  CONSTRAINT `leases_inquiry_id_foreign` FOREIGN KEY (`inquiry_id`) REFERENCES `inquiries` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `leases_landlord_id_foreign` FOREIGN KEY (`landlord_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `leases_room_id_foreign` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `leases_tenant_id_foreign` FOREIGN KEY (`tenant_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `leases`
 --
 
-LOCK TABLES `leases` WRITE;
-/*!40000 ALTER TABLE `leases` DISABLE KEYS */;
-INSERT INTO `leases` VALUES (1,1,1,3,1,'2026-11-15','2026-12-16',1500.00,'active','legacy',NULL,NULL,NULL,1,'2026-11-11 07:08:14','2026-11-16 14:02:15'),(6,2,4,3,5,'2026-11-17',NULL,2000.00,'active','accepted','2026-11-16 16:04:38','127.0.0.1','{\"end_date\": null, \"location\": \"Poblacion, Tagoloan, Misamis, Oriental\", \"room_title\": \"LADY\", \"start_date\": \"2026-11-17\", \"room_number\": \"2\", \"tenant_name\": \"Glendale Montehermoso\", \"monthly_rent\": \"2000.00\", \"landlord_name\": \"Giovanni P. Cantos\"}',2,'2026-11-16 16:03:57','2026-11-16 16:04:38'),(7,9,10,11,6,'2026-11-17',NULL,1000.00,'active','accepted','2026-11-16 17:08:52','127.0.0.1','{\"end_date\": null, \"location\": \"Baluarte, Tagoloan, Mis. Or.\", \"room_title\": \"Stayc Here\", \"start_date\": \"2026-11-17\", \"room_number\": \"1\", \"tenant_name\": \"Ralph Christian Sabandal\", \"monthly_rent\": \"1000.00\", \"landlord_name\": \"Angel Stacee Tabligan\"}',9,'2026-11-16 17:08:31','2026-11-16 17:08:52');
-/*!40000 ALTER TABLE `leases` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `leases` (`id`, `room_id`, `tenant_id`, `landlord_id`, `inquiry_id`, `start_date`, `end_date`, `monthly_rent`, `status`, `agreement_status`, `agreement_accepted_at`, `agreement_accepted_ip`, `agreement_snapshot`, `active_room_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 3, 1, '2026-11-15', '2026-12-16', 1500.00, 'active', 'legacy', NULL, NULL, NULL, 1, '2026-11-11 07:08:14', '2026-11-16 14:02:15'),
+(6, 2, 4, 3, 5, '2026-11-17', NULL, 2000.00, 'active', 'accepted', '2026-11-16 16:04:38', '127.0.0.1', '{\"end_date\": null, \"location\": \"Poblacion, Tagoloan, Misamis, Oriental\", \"room_title\": \"LADY\", \"start_date\": \"2026-11-17\", \"room_number\": \"2\", \"tenant_name\": \"Glendale Montehermoso\", \"monthly_rent\": \"2000.00\", \"landlord_name\": \"Giovanni P. Cantos\"}', 2, '2026-11-16 16:03:57', '2026-11-16 16:04:38'),
+(7, 9, 10, 11, 6, '2026-11-17', NULL, 1000.00, 'active', 'accepted', '2026-11-16 17:08:52', '127.0.0.1', '{\"end_date\": null, \"location\": \"Baluarte, Tagoloan, Mis. Or.\", \"room_title\": \"Stayc Here\", \"start_date\": \"2026-11-17\", \"room_number\": \"1\", \"tenant_name\": \"Ralph Christian Sabandal\", \"monthly_rent\": \"1000.00\", \"landlord_name\": \"Angel Stacee Tabligan\"}', 9, '2026-11-16 17:08:31', '2026-11-16 17:08:52');
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `legacy_imports`
+-- Table structure for table `lease_conversations`
 --
 
-DROP TABLE IF EXISTS `legacy_imports`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `legacy_imports` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `source_table` varchar(50) NOT NULL,
-  `source_id` bigint(20) unsigned NOT NULL,
-  `target_type` varchar(50) NOT NULL,
-  `target_id` bigint(20) unsigned NOT NULL,
+CREATE TABLE `lease_conversations` (
+  `id` bigint UNSIGNED NOT NULL,
+  `lease_id` bigint UNSIGNED NOT NULL,
+  `tenant_id` bigint UNSIGNED NOT NULL,
+  `landlord_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `legacy_imports_source_table_source_id_unique` (`source_table`,`source_id`),
-  KEY `legacy_imports_target_type_target_id_index` (`target_type`,`target_id`)
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `legacy_imports`
+-- Dumping data for table `lease_conversations`
 --
 
-LOCK TABLES `legacy_imports` WRITE;
-/*!40000 ALTER TABLE `legacy_imports` DISABLE KEYS */;
-/*!40000 ALTER TABLE `legacy_imports` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `lease_conversations` (`id`, `lease_id`, `tenant_id`, `landlord_id`, `created_at`, `updated_at`) VALUES
+(2, 1, 1, 3, '2026-11-14 17:53:07', '2026-11-14 17:53:07');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lease_inspections`
+--
+
+CREATE TABLE `lease_inspections` (
+  `id` bigint UNSIGNED NOT NULL,
+  `lease_id` bigint UNSIGNED NOT NULL,
+  `recorded_by` bigint UNSIGNED NOT NULL,
+  `kind` enum('move_in','move_out') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `inspection_date` date NOT NULL,
+  `condition` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notes` text COLLATE utf8mb4_unicode_ci,
+  `damages_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `damage_description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` enum('pending','completed') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'completed',
+  `completed_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `maintenance_requests`
 --
 
-DROP TABLE IF EXISTS `maintenance_requests`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `maintenance_requests` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `lease_id` bigint(20) unsigned NOT NULL,
-  `tenant_id` bigint(20) unsigned NOT NULL,
-  `landlord_id` bigint(20) unsigned NOT NULL,
-  `title` varchar(160) NOT NULL,
-  `description` text NOT NULL,
-  `photo_path` varchar(255) DEFAULT NULL,
-  `status` enum('pending','in_progress','resolved') NOT NULL DEFAULT 'pending',
+  `id` bigint UNSIGNED NOT NULL,
+  `lease_id` bigint UNSIGNED NOT NULL,
+  `tenant_id` bigint UNSIGNED NOT NULL,
+  `landlord_id` bigint UNSIGNED NOT NULL,
+  `title` varchar(160) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `photo_path` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` enum('pending','in_progress','resolved') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
   `resolved_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `maintenance_requests_lease_id_foreign` (`lease_id`),
-  KEY `maintenance_requests_landlord_id_status_index` (`landlord_id`,`status`),
-  KEY `maintenance_requests_tenant_id_created_at_index` (`tenant_id`,`created_at`),
-  CONSTRAINT `maintenance_requests_landlord_id_foreign` FOREIGN KEY (`landlord_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `maintenance_requests_lease_id_foreign` FOREIGN KEY (`lease_id`) REFERENCES `leases` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `maintenance_requests_tenant_id_foreign` FOREIGN KEY (`tenant_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `maintenance_requests`
 --
 
-LOCK TABLES `maintenance_requests` WRITE;
-/*!40000 ALTER TABLE `maintenance_requests` DISABLE KEYS */;
-INSERT INTO `maintenance_requests` VALUES (2,1,1,3,'na leak ang wifi','nag ka bagyo dani','maintenance/1/g6c6S5etz0rtgAl6ENVD4YpseehoCrqKkhppgJcR.png','resolved','2026-11-16 14:25:10','2026-11-14 18:06:07','2026-11-16 14:25:10'),(3,1,1,3,'leaking kitchen sink','dani sa akong ge board na kitchen sink kalit ra nay agas sa tubig',NULL,'in_progress',NULL,'2026-11-15 17:01:09','2026-11-16 14:25:12');
-/*!40000 ALTER TABLE `maintenance_requests` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `maintenance_requests` (`id`, `lease_id`, `tenant_id`, `landlord_id`, `title`, `description`, `photo_path`, `status`, `resolved_at`, `created_at`, `updated_at`) VALUES
+(2, 1, 1, 3, 'na leak ang wifi', 'nag ka bagyo dani', 'maintenance/1/g6c6S5etz0rtgAl6ENVD4YpseehoCrqKkhppgJcR.png', 'resolved', '2026-11-16 14:25:10', '2026-11-14 18:06:07', '2026-11-16 14:25:10'),
+(3, 1, 1, 3, 'leaking kitchen sink', 'dani sa akong ge board na kitchen sink kalit ra nay agas sa tubig', NULL, 'in_progress', NULL, '2026-11-15 17:01:09', '2026-11-16 14:25:12');
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `migrations`
 --
 
-DROP TABLE IF EXISTS `migrations`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `migrations` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `migration` varchar(255) NOT NULL,
-  `batch` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `id` int UNSIGNED NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `migrations`
 --
 
-LOCK TABLES `migrations` WRITE;
-/*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES (1,'0000_01_01_000000_create_roles_table',1),(2,'0001_01_01_000000_create_users_table',1),(3,'0001_01_01_000001_create_cache_table',1),(4,'0001_01_01_000002_create_jobs_table',1),(5,'2026_10_02_171204_create_personal_access_tokens_table',1),(6,'2026_10_03_000001_create_rooms_table',1),(7,'2026_10_03_000002_create_room_images_table',1),(8,'2026_10_03_000003_create_inquiries_table',1),(9,'2026_10_03_000004_create_leases_table',1),(10,'2026_10_03_000005_create_invoices_table',1),(11,'2026_10_03_000006_create_pending_charges_table',1),(12,'2026_10_03_000007_create_payments_table',1),(13,'2026_10_03_000008_create_notifications_table',1),(14,'2026_10_03_000009_create_activity_logs_table',1),(15,'2026_10_10_000001_allow_maintenance_room_status',1),(16,'2026_10_10_000002_add_usernames_and_legacy_import_map',1),(17,'2026_10_28_000001_add_offer_fields_to_inquiries_table',1),(18,'2026_11_09_000001_create_room_favorites_table',1),(19,'2026_11_09_160748_add_last_activity_at_to_personal_access_tokens_table',1),(20,'2026_11_11_174418_add_type_and_data_to_notifications_table',2),(21,'2026_11_13_000001_add_simulated_payment_details_to_payments_table',3),(22,'2026_11_14_000001_add_room_calendar_and_lease_workflow',4),(23,'2026_11_15_000001_create_maintenance_messaging_reviews_tables',5),(24,'2026_11_15_000002_add_capacity_to_rooms_table',6),(25,'2026_11_15_000003_add_billing_period_and_utility_type_to_pending_charges',7);
-/*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(1, '0000_01_01_000000_create_roles_table', 1),
+(2, '0001_01_01_000000_create_users_table', 1),
+(3, '0001_01_01_000001_create_cache_table', 1),
+(4, '0001_01_01_000002_create_jobs_table', 1),
+(5, '2026_10_02_171204_create_personal_access_tokens_table', 1),
+(6, '2026_10_03_000001_create_rooms_table', 1),
+(7, '2026_10_03_000002_create_room_images_table', 1),
+(8, '2026_10_03_000003_create_inquiries_table', 1),
+(9, '2026_10_03_000004_create_leases_table', 1),
+(10, '2026_10_03_000005_create_invoices_table', 1),
+(11, '2026_10_03_000006_create_pending_charges_table', 1),
+(12, '2026_10_03_000007_create_payments_table', 1),
+(13, '2026_10_03_000008_create_notifications_table', 1),
+(14, '2026_10_03_000009_create_activity_logs_table', 1),
+(15, '2026_10_10_000001_allow_maintenance_room_status', 1),
+(16, '2026_10_10_000002_add_usernames_and_legacy_import_map', 1),
+(17, '2026_10_28_000001_add_offer_fields_to_inquiries_table', 1),
+(18, '2026_11_09_000001_create_room_favorites_table', 1),
+(19, '2026_11_09_160748_add_last_activity_at_to_personal_access_tokens_table', 1),
+(20, '2026_11_11_174418_add_type_and_data_to_notifications_table', 2),
+(21, '2026_11_13_000001_add_simulated_payment_details_to_payments_table', 3),
+(22, '2026_11_14_000001_add_room_calendar_and_lease_workflow', 4),
+(23, '2026_11_15_000001_create_maintenance_messaging_reviews_tables', 5),
+(24, '2026_11_15_000002_add_capacity_to_rooms_table', 6),
+(25, '2026_11_15_000003_add_billing_period_and_utility_type_to_pending_charges', 7);
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `notifications`
 --
 
-DROP TABLE IF EXISTS `notifications`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `notifications` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` bigint(20) unsigned NOT NULL,
-  `type` varchar(255) DEFAULT NULL,
-  `title` varchar(255) NOT NULL,
-  `body` text NOT NULL,
-  `data` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`data`)),
+  `id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `data` json DEFAULT NULL,
   `read_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `notifications_user_id_foreign` (`user_id`),
-  CONSTRAINT `notifications_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `notifications`
 --
 
-LOCK TABLES `notifications` WRITE;
-/*!40000 ALTER TABLE `notifications` DISABLE KEYS */;
-INSERT INTO `notifications` VALUES (1,1,NULL,'Inquiry approved','Your rental offer for Gio Boarding Room is ready. Accept it within 24 hours to start your lease.',NULL,'2026-11-13 07:35:22','2026-11-11 07:08:14','2026-11-13 07:35:22'),(21,1,'message','New message','Giovanni P. Cantos sent you a message.','{\"conversation_id\": 2}','2026-11-14 18:05:07','2026-11-14 17:53:22','2026-11-14 18:05:07'),(22,3,'maintenance','New maintenance request','A tenant reported: na leak ang wifi','{\"maintenance_request_id\": 2}','2026-11-14 18:10:02','2026-11-14 18:06:07','2026-11-14 18:10:02'),(23,3,'message','New message','Edcil Jhon B. Faciol sent you a message.','{\"conversation_id\": 2}','2026-11-14 18:10:01','2026-11-14 18:07:33','2026-11-14 18:10:01'),(24,1,'maintenance','Maintenance request updated','na leak ang wifi is now in progress.','{\"maintenance_request_id\": 2}','2026-11-14 18:11:57','2026-11-14 18:10:28','2026-11-14 18:11:57'),(25,1,'maintenance','Maintenance request updated','na leak ang wifi is now resolved.','{\"maintenance_request_id\": 2}','2026-11-14 18:11:57','2026-11-14 18:10:39','2026-11-14 18:11:57'),(26,1,'message','New message','Giovanni P. Cantos sent you a message.','{\"conversation_id\": 2}','2026-11-14 18:11:57','2026-11-14 18:11:01','2026-11-14 18:11:57'),(30,3,'message','New message','Edcil Jhon B. Faciol sent you a message.','{\"conversation_id\": 2}','2026-11-15 15:44:23','2026-11-15 15:12:00','2026-11-15 15:44:23'),(31,1,'message','New message','Giovanni P. Cantos sent you a message.','{\"conversation_id\": 2}','2026-11-15 15:47:01','2026-11-15 15:44:47','2026-11-15 15:47:01'),(32,1,'invoice.new','New Billing Statement (2026-11)','Your billing statement for 2026-11 of ₱1,750.00 is ready. Due date: 2026-12-05.','{\"total\": \"1750.00\", \"period\": \"2026-11\", \"due_date\": \"2026-12-05\", \"lease_id\": 1, \"invoice_id\": 4}','2026-11-15 16:52:44','2026-11-15 16:30:23','2026-11-15 16:52:44'),(33,2,'system.invoice','Invoice generated','A rental invoice for 2026-11 was generated for Room 1.','{\"lease_id\": 1, \"invoice_id\": 4}','2026-11-15 17:06:20','2026-11-15 16:30:23','2026-11-15 17:06:20'),(35,1,'payment.received','Simulated payment successful','Your simulated payment of ₱1,750.00 for 2026-11 was recorded. No real money was processed.','{\"invoice_id\": 4, \"payment_reference\": \"BE-SIM-2B0FE072-3400-4AD7-8335-88E65C6F5956\"}','2026-11-15 16:52:35','2026-11-15 16:32:16','2026-11-15 16:52:35'),(36,3,'payment.received','Tenant payment received','Edcil Jhon B. Faciol made a simulated payment of PHP 1,750.00 for 2026-11.','{\"tenant_id\": 1, \"invoice_id\": 4, \"payment_reference\": \"BE-SIM-2B0FE072-3400-4AD7-8335-88E65C6F5956\"}','2026-11-15 16:34:52','2026-11-15 16:32:16','2026-11-15 16:34:52'),(37,2,'system.payment','Simulated payment succeeded','Edcil Jhon B. Faciol completed a simulated payment for invoice 4.','{\"invoice_id\": 4, \"payment_reference\": \"BE-SIM-2B0FE072-3400-4AD7-8335-88E65C6F5956\"}','2026-11-15 17:06:12','2026-11-15 16:32:16','2026-11-15 17:06:12'),(39,3,'maintenance','New maintenance request','A tenant reported: leaking kitchen sink','{\"maintenance_request_id\": 3}','2026-11-15 17:04:53','2026-11-15 17:01:09','2026-11-15 17:04:53'),(40,3,'message','New message','Edcil Jhon B. Faciol sent you a message.','{\"conversation_id\": 2}','2026-11-15 17:41:58','2026-11-15 17:09:53','2026-11-15 17:41:58'),(41,1,'message','New message','Giovanni P. Cantos sent you a message.','{\"conversation_id\": 2}','2026-11-16 13:43:11','2026-11-15 17:42:06','2026-11-16 13:43:11'),(42,1,'maintenance','Maintenance request updated','na leak ang wifi is now in progress.','{\"maintenance_request_id\": 2}','2026-11-16 15:02:33','2026-11-16 14:02:40','2026-11-16 15:02:33'),(43,1,'maintenance','Maintenance request updated','na leak ang wifi is now resolved.','{\"maintenance_request_id\": 2}','2026-11-16 15:02:33','2026-11-16 14:25:10','2026-11-16 15:02:33'),(44,1,'maintenance','Maintenance request updated','leaking kitchen sink is now in progress.','{\"maintenance_request_id\": 3}','2026-11-16 15:02:33','2026-11-16 14:25:12','2026-11-16 15:02:33'),(45,1,'message','New message','Giovanni P. Cantos sent you a message.','{\"conversation_id\": 2}','2026-11-16 15:11:01','2026-11-16 15:10:39','2026-11-16 15:11:01'),(46,3,'message','New message','Edcil Jhon B. Faciol sent you a message.','{\"conversation_id\": 2}','2026-11-16 16:12:48','2026-11-16 15:11:13','2026-11-16 16:12:48'),(47,3,'inquiry.new','New Room Application','Glendale Montehermoso submitted an application for Room 2.','{\"message\": \"I am interested in renting Room 2. Please let me know the requirements and move-in details.\", \"room_id\": 2, \"inquiry_id\": 5, \"room_title\": \"LADY\", \"room_number\": \"2\", \"monthly_rent\": \"2000.00\", \"applicant_name\": \"Glendale Montehermoso\", \"applicant_email\": \"youknowglendale@gmail.com\", \"applicant_phone\": \"09935215868\"}','2026-11-16 16:02:59','2026-11-16 16:02:39','2026-11-16 16:02:59'),(48,4,'inquiry.offer','Rental Offer Received!','Your application for Room 2 (LADY) has been approved! You have 24 hours to accept.','{\"room_id\": 2, \"inquiry_id\": 5, \"room_title\": \"LADY\", \"room_number\": \"2\", \"monthly_rent\": \"2000.00\", \"offer_expires_at\": \"2026-11-17T16:03:26+00:00\"}','2026-11-16 16:03:49','2026-11-16 16:03:26','2026-11-16 16:03:49'),(49,3,'lease.started','Lease Agreement Accepted','Glendale Montehermoso accepted the agreement for Room 2. Record the move-in inspection to complete occupancy.','{\"room_id\": 2, \"lease_id\": 6, \"room_number\": \"2\", \"tenant_name\": \"Glendale Montehermoso\"}','2026-11-16 16:06:50','2026-11-16 16:03:57','2026-11-16 16:06:50'),(50,4,'lease.agreement_accepted','Lease Agreement Accepted','Your agreement for Room 2 (LADY) is signed. Arrange the move-in inspection with your landlord.','{\"room_id\": 2, \"lease_id\": 6, \"room_number\": \"2\"}','2026-11-16 16:04:28','2026-11-16 16:03:57','2026-11-16 16:04:28'),(51,4,'charge.created','Additional charge added','A charge of PHP 2,000.00 was added to your 2026-11 billing period.','{\"period\": \"2026-11\", \"lease_id\": 6, \"charge_id\": 5, \"invoice_id\": null}',NULL,'2026-11-16 16:12:29','2026-11-16 16:12:29'),(52,4,'invoice.new','New Billing Statement (2026-11)','Your billing statement for 2026-11 of ₱4,000.00 is ready. Due date: 2026-12-05.','{\"total\": \"4000.00\", \"period\": \"2026-11\", \"due_date\": \"2026-12-05\", \"lease_id\": 6, \"invoice_id\": 5}',NULL,'2026-11-16 16:13:19','2026-11-16 16:13:19'),(53,3,'invoice.new','Invoice generated for your rental','The 2026-11 invoice for Room 2 is ready. Total: PHP 4,000.00.','{\"period\": \"2026-11\", \"lease_id\": 6, \"invoice_id\": 5}','2026-11-16 16:14:42','2026-11-16 16:13:19','2026-11-16 16:14:42'),(54,4,'payment.received','Simulated payment successful','Your simulated payment of ₱4,000.00 for 2026-11 was recorded. No real money was processed.','{\"invoice_id\": 5, \"payment_reference\": \"BE-SIM-7D0D17D2-4799-4FEB-90F3-29DB88D9F346\"}',NULL,'2026-11-16 16:16:09','2026-11-16 16:16:09'),(55,3,'payment.received','Tenant payment received','Glendale Montehermoso made a simulated payment of PHP 4,000.00 for 2026-11.','{\"tenant_id\": 4, \"invoice_id\": 5, \"payment_reference\": \"BE-SIM-7D0D17D2-4799-4FEB-90F3-29DB88D9F346\"}','2026-11-16 16:56:01','2026-11-16 16:16:09','2026-11-16 16:56:01'),(56,11,'inquiry.new','New Room Application','Ralph Christian Sabandal submitted an application for Room 1.','{\"message\": \"I am interested in renting Room 1. Please let me know the requirements and move-in details.\", \"room_id\": 9, \"inquiry_id\": 6, \"room_title\": \"Stayc Here\", \"room_number\": \"1\", \"monthly_rent\": \"1000.00\", \"applicant_name\": \"Ralph Christian Sabandal\", \"applicant_email\": \"ralphchristian@gmail.com\", \"applicant_phone\": \"09924917058\"}','2026-11-16 17:08:07','2026-11-16 17:07:48','2026-11-16 17:08:07'),(57,10,'inquiry.offer','Rental Offer Received!','Your application for Room 1 (Stayc Here) has been approved! You have 24 hours to accept.','{\"room_id\": 9, \"inquiry_id\": 6, \"room_title\": \"Stayc Here\", \"room_number\": \"1\", \"monthly_rent\": \"1000.00\", \"offer_expires_at\": \"2026-11-17T17:08:10+00:00\"}','2026-11-16 17:08:28','2026-11-16 17:08:10','2026-11-16 17:08:28'),(58,11,'lease.started','Lease Agreement Accepted','Ralph Christian Sabandal accepted the agreement for Room 1. Record the move-in inspection to complete occupancy.','{\"room_id\": 9, \"lease_id\": 7, \"room_number\": \"1\", \"tenant_name\": \"Ralph Christian Sabandal\"}','2026-11-16 17:09:56','2026-11-16 17:08:31','2026-11-16 17:09:56'),(59,10,'lease.agreement_accepted','Lease Agreement Accepted','Your agreement for Room 1 (Stayc Here) is signed. Arrange the move-in inspection with your landlord.','{\"room_id\": 9, \"lease_id\": 7, \"room_number\": \"1\"}','2026-11-16 17:08:44','2026-11-16 17:08:31','2026-11-16 17:08:44'),(60,10,'charge.created','Additional charge added','A charge of PHP 100.00 was added to your 2026-11 billing period.','{\"period\": \"2026-11\", \"lease_id\": 7, \"charge_id\": 6, \"invoice_id\": null}',NULL,'2026-11-16 17:11:18','2026-11-16 17:11:18'),(61,10,'invoice.new','New Billing Statement (2026-11)','Your billing statement for 2026-11 of ₱1,100.00 is ready. Due date: 2026-12-05.','{\"total\": \"1100.00\", \"period\": \"2026-11\", \"due_date\": \"2026-12-05\", \"lease_id\": 7, \"invoice_id\": 6}',NULL,'2026-11-16 17:11:27','2026-11-16 17:11:27'),(62,11,'invoice.new','Invoice generated for your rental','The 2026-11 invoice for Room 1 is ready. Total: PHP 1,100.00.','{\"period\": \"2026-11\", \"lease_id\": 7, \"invoice_id\": 6}','2026-11-16 17:13:27','2026-11-16 17:11:27','2026-11-16 17:13:27'),(63,10,'payment.received','Payment Acknowledged','Your payment of ₱1,100.00 for billing period 2026-11 has been recorded.','{\"amount\": 1100, \"status\": \"paid\", \"remaining\": \"0.00\", \"invoice_id\": 6}',NULL,'2026-11-16 17:14:19','2026-11-16 17:14:19'),(64,11,'payment.received','Tenant payment recorded','Ralph Christian Sabandal paid PHP 1,100.00 for invoice 2026-11.','{\"amount\": 1100, \"tenant_id\": 10, \"invoice_id\": 6}','2026-11-16 17:14:36','2026-11-16 17:14:19','2026-11-16 17:14:36'),(65,11,'inquiry.new','New Room Application','Romy Tadlas submitted an application for Room 2.','{\"message\": \"I am interested in renting Room 2. Please let me know the requirements and move-in details.\", \"room_id\": 10, \"inquiry_id\": 7, \"room_title\": \"single room\", \"room_number\": \"2\", \"monthly_rent\": \"90000.00\", \"applicant_name\": \"Romy Tadlas\", \"applicant_email\": \"romytadlas@gmail.com\", \"applicant_phone\": \"09677676673\"}','2026-11-19 09:37:27','2026-11-17 04:26:53','2026-11-19 09:37:27');
-/*!40000 ALTER TABLE `notifications` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `notifications` (`id`, `user_id`, `type`, `title`, `body`, `data`, `read_at`, `created_at`, `updated_at`) VALUES
+(1, 1, NULL, 'Inquiry approved', 'Your rental offer for Gio Boarding Room is ready. Accept it within 24 hours to start your lease.', NULL, '2026-11-13 07:35:22', '2026-11-11 07:08:14', '2026-11-13 07:35:22'),
+(21, 1, 'message', 'New message', 'Giovanni P. Cantos sent you a message.', '{\"conversation_id\": 2}', '2026-11-14 18:05:07', '2026-11-14 17:53:22', '2026-11-14 18:05:07'),
+(22, 3, 'maintenance', 'New maintenance request', 'A tenant reported: na leak ang wifi', '{\"maintenance_request_id\": 2}', '2026-11-14 18:10:02', '2026-11-14 18:06:07', '2026-11-14 18:10:02'),
+(23, 3, 'message', 'New message', 'Edcil Jhon B. Faciol sent you a message.', '{\"conversation_id\": 2}', '2026-11-14 18:10:01', '2026-11-14 18:07:33', '2026-11-14 18:10:01'),
+(24, 1, 'maintenance', 'Maintenance request updated', 'na leak ang wifi is now in progress.', '{\"maintenance_request_id\": 2}', '2026-11-14 18:11:57', '2026-11-14 18:10:28', '2026-11-14 18:11:57'),
+(25, 1, 'maintenance', 'Maintenance request updated', 'na leak ang wifi is now resolved.', '{\"maintenance_request_id\": 2}', '2026-11-14 18:11:57', '2026-11-14 18:10:39', '2026-11-14 18:11:57'),
+(26, 1, 'message', 'New message', 'Giovanni P. Cantos sent you a message.', '{\"conversation_id\": 2}', '2026-11-14 18:11:57', '2026-11-14 18:11:01', '2026-11-14 18:11:57'),
+(30, 3, 'message', 'New message', 'Edcil Jhon B. Faciol sent you a message.', '{\"conversation_id\": 2}', '2026-11-15 15:44:23', '2026-11-15 15:12:00', '2026-11-15 15:44:23'),
+(31, 1, 'message', 'New message', 'Giovanni P. Cantos sent you a message.', '{\"conversation_id\": 2}', '2026-11-15 15:47:01', '2026-11-15 15:44:47', '2026-11-15 15:47:01'),
+(32, 1, 'invoice.new', 'New Billing Statement (2026-11)', 'Your billing statement for 2026-11 of ₱1,750.00 is ready. Due date: 2026-12-05.', '{\"total\": \"1750.00\", \"period\": \"2026-11\", \"due_date\": \"2026-12-05\", \"lease_id\": 1, \"invoice_id\": 4}', '2026-11-15 16:52:44', '2026-11-15 16:30:23', '2026-11-15 16:52:44'),
+(33, 2, 'system.invoice', 'Invoice generated', 'A rental invoice for 2026-11 was generated for Room 1.', '{\"lease_id\": 1, \"invoice_id\": 4}', '2026-11-15 17:06:20', '2026-11-15 16:30:23', '2026-11-15 17:06:20'),
+(35, 1, 'payment.received', 'Simulated payment successful', 'Your simulated payment of ₱1,750.00 for 2026-11 was recorded. No real money was processed.', '{\"invoice_id\": 4, \"payment_reference\": \"BE-SIM-2B0FE072-3400-4AD7-8335-88E65C6F5956\"}', '2026-11-15 16:52:35', '2026-11-15 16:32:16', '2026-11-15 16:52:35'),
+(36, 3, 'payment.received', 'Tenant payment received', 'Edcil Jhon B. Faciol made a simulated payment of PHP 1,750.00 for 2026-11.', '{\"tenant_id\": 1, \"invoice_id\": 4, \"payment_reference\": \"BE-SIM-2B0FE072-3400-4AD7-8335-88E65C6F5956\"}', '2026-11-15 16:34:52', '2026-11-15 16:32:16', '2026-11-15 16:34:52'),
+(37, 2, 'system.payment', 'Simulated payment succeeded', 'Edcil Jhon B. Faciol completed a simulated payment for invoice 4.', '{\"invoice_id\": 4, \"payment_reference\": \"BE-SIM-2B0FE072-3400-4AD7-8335-88E65C6F5956\"}', '2026-11-15 17:06:12', '2026-11-15 16:32:16', '2026-11-15 17:06:12'),
+(39, 3, 'maintenance', 'New maintenance request', 'A tenant reported: leaking kitchen sink', '{\"maintenance_request_id\": 3}', '2026-11-15 17:04:53', '2026-11-15 17:01:09', '2026-11-15 17:04:53'),
+(40, 3, 'message', 'New message', 'Edcil Jhon B. Faciol sent you a message.', '{\"conversation_id\": 2}', '2026-11-15 17:41:58', '2026-11-15 17:09:53', '2026-11-15 17:41:58'),
+(41, 1, 'message', 'New message', 'Giovanni P. Cantos sent you a message.', '{\"conversation_id\": 2}', '2026-11-16 13:43:11', '2026-11-15 17:42:06', '2026-11-16 13:43:11'),
+(42, 1, 'maintenance', 'Maintenance request updated', 'na leak ang wifi is now in progress.', '{\"maintenance_request_id\": 2}', '2026-11-16 15:02:33', '2026-11-16 14:02:40', '2026-11-16 15:02:33'),
+(43, 1, 'maintenance', 'Maintenance request updated', 'na leak ang wifi is now resolved.', '{\"maintenance_request_id\": 2}', '2026-11-16 15:02:33', '2026-11-16 14:25:10', '2026-11-16 15:02:33'),
+(44, 1, 'maintenance', 'Maintenance request updated', 'leaking kitchen sink is now in progress.', '{\"maintenance_request_id\": 3}', '2026-11-16 15:02:33', '2026-11-16 14:25:12', '2026-11-16 15:02:33'),
+(45, 1, 'message', 'New message', 'Giovanni P. Cantos sent you a message.', '{\"conversation_id\": 2}', '2026-11-16 15:11:01', '2026-11-16 15:10:39', '2026-11-16 15:11:01'),
+(46, 3, 'message', 'New message', 'Edcil Jhon B. Faciol sent you a message.', '{\"conversation_id\": 2}', '2026-11-16 16:12:48', '2026-11-16 15:11:13', '2026-11-16 16:12:48'),
+(47, 3, 'inquiry.new', 'New Room Application', 'Glendale Montehermoso submitted an application for Room 2.', '{\"message\": \"I am interested in renting Room 2. Please let me know the requirements and move-in details.\", \"room_id\": 2, \"inquiry_id\": 5, \"room_title\": \"LADY\", \"room_number\": \"2\", \"monthly_rent\": \"2000.00\", \"applicant_name\": \"Glendale Montehermoso\", \"applicant_email\": \"youknowglendale@gmail.com\", \"applicant_phone\": \"09935215868\"}', '2026-11-16 16:02:59', '2026-11-16 16:02:39', '2026-11-16 16:02:59'),
+(48, 4, 'inquiry.offer', 'Rental Offer Received!', 'Your application for Room 2 (LADY) has been approved! You have 24 hours to accept.', '{\"room_id\": 2, \"inquiry_id\": 5, \"room_title\": \"LADY\", \"room_number\": \"2\", \"monthly_rent\": \"2000.00\", \"offer_expires_at\": \"2026-11-17T16:03:26+00:00\"}', '2026-11-16 16:03:49', '2026-11-16 16:03:26', '2026-11-16 16:03:49'),
+(49, 3, 'lease.started', 'Lease Agreement Accepted', 'Glendale Montehermoso accepted the agreement for Room 2. Record the move-in inspection to complete occupancy.', '{\"room_id\": 2, \"lease_id\": 6, \"room_number\": \"2\", \"tenant_name\": \"Glendale Montehermoso\"}', '2026-11-16 16:06:50', '2026-11-16 16:03:57', '2026-11-16 16:06:50'),
+(50, 4, 'lease.agreement_accepted', 'Lease Agreement Accepted', 'Your agreement for Room 2 (LADY) is signed. Arrange the move-in inspection with your landlord.', '{\"room_id\": 2, \"lease_id\": 6, \"room_number\": \"2\"}', '2026-11-16 16:04:28', '2026-11-16 16:03:57', '2026-11-16 16:04:28'),
+(51, 4, 'charge.created', 'Additional charge added', 'A charge of PHP 2,000.00 was added to your 2026-11 billing period.', '{\"period\": \"2026-11\", \"lease_id\": 6, \"charge_id\": 5, \"invoice_id\": null}', NULL, '2026-11-16 16:12:29', '2026-11-16 16:12:29'),
+(52, 4, 'invoice.new', 'New Billing Statement (2026-11)', 'Your billing statement for 2026-11 of ₱4,000.00 is ready. Due date: 2026-12-05.', '{\"total\": \"4000.00\", \"period\": \"2026-11\", \"due_date\": \"2026-12-05\", \"lease_id\": 6, \"invoice_id\": 5}', NULL, '2026-11-16 16:13:19', '2026-11-16 16:13:19'),
+(53, 3, 'invoice.new', 'Invoice generated for your rental', 'The 2026-11 invoice for Room 2 is ready. Total: PHP 4,000.00.', '{\"period\": \"2026-11\", \"lease_id\": 6, \"invoice_id\": 5}', '2026-11-16 16:14:42', '2026-11-16 16:13:19', '2026-11-16 16:14:42'),
+(54, 4, 'payment.received', 'Simulated payment successful', 'Your simulated payment of ₱4,000.00 for 2026-11 was recorded. No real money was processed.', '{\"invoice_id\": 5, \"payment_reference\": \"BE-SIM-7D0D17D2-4799-4FEB-90F3-29DB88D9F346\"}', NULL, '2026-11-16 16:16:09', '2026-11-16 16:16:09'),
+(55, 3, 'payment.received', 'Tenant payment received', 'Glendale Montehermoso made a simulated payment of PHP 4,000.00 for 2026-11.', '{\"tenant_id\": 4, \"invoice_id\": 5, \"payment_reference\": \"BE-SIM-7D0D17D2-4799-4FEB-90F3-29DB88D9F346\"}', '2026-11-16 16:56:01', '2026-11-16 16:16:09', '2026-11-16 16:56:01'),
+(56, 11, 'inquiry.new', 'New Room Application', 'Ralph Christian Sabandal submitted an application for Room 1.', '{\"message\": \"I am interested in renting Room 1. Please let me know the requirements and move-in details.\", \"room_id\": 9, \"inquiry_id\": 6, \"room_title\": \"Stayc Here\", \"room_number\": \"1\", \"monthly_rent\": \"1000.00\", \"applicant_name\": \"Ralph Christian Sabandal\", \"applicant_email\": \"ralphchristian@gmail.com\", \"applicant_phone\": \"09924917058\"}', '2026-11-16 17:08:07', '2026-11-16 17:07:48', '2026-11-16 17:08:07'),
+(57, 10, 'inquiry.offer', 'Rental Offer Received!', 'Your application for Room 1 (Stayc Here) has been approved! You have 24 hours to accept.', '{\"room_id\": 9, \"inquiry_id\": 6, \"room_title\": \"Stayc Here\", \"room_number\": \"1\", \"monthly_rent\": \"1000.00\", \"offer_expires_at\": \"2026-11-17T17:08:10+00:00\"}', '2026-11-16 17:08:28', '2026-11-16 17:08:10', '2026-11-16 17:08:28'),
+(58, 11, 'lease.started', 'Lease Agreement Accepted', 'Ralph Christian Sabandal accepted the agreement for Room 1. Record the move-in inspection to complete occupancy.', '{\"room_id\": 9, \"lease_id\": 7, \"room_number\": \"1\", \"tenant_name\": \"Ralph Christian Sabandal\"}', '2026-11-16 17:09:56', '2026-11-16 17:08:31', '2026-11-16 17:09:56'),
+(59, 10, 'lease.agreement_accepted', 'Lease Agreement Accepted', 'Your agreement for Room 1 (Stayc Here) is signed. Arrange the move-in inspection with your landlord.', '{\"room_id\": 9, \"lease_id\": 7, \"room_number\": \"1\"}', '2026-11-16 17:08:44', '2026-11-16 17:08:31', '2026-11-16 17:08:44'),
+(60, 10, 'charge.created', 'Additional charge added', 'A charge of PHP 100.00 was added to your 2026-11 billing period.', '{\"period\": \"2026-11\", \"lease_id\": 7, \"charge_id\": 6, \"invoice_id\": null}', NULL, '2026-11-16 17:11:18', '2026-11-16 17:11:18'),
+(61, 10, 'invoice.new', 'New Billing Statement (2026-11)', 'Your billing statement for 2026-11 of ₱1,100.00 is ready. Due date: 2026-12-05.', '{\"total\": \"1100.00\", \"period\": \"2026-11\", \"due_date\": \"2026-12-05\", \"lease_id\": 7, \"invoice_id\": 6}', NULL, '2026-11-16 17:11:27', '2026-11-16 17:11:27'),
+(62, 11, 'invoice.new', 'Invoice generated for your rental', 'The 2026-11 invoice for Room 1 is ready. Total: PHP 1,100.00.', '{\"period\": \"2026-11\", \"lease_id\": 7, \"invoice_id\": 6}', '2026-11-16 17:13:27', '2026-11-16 17:11:27', '2026-11-16 17:13:27'),
+(63, 10, 'payment.received', 'Payment Acknowledged', 'Your payment of ₱1,100.00 for billing period 2026-11 has been recorded.', '{\"amount\": 1100, \"status\": \"paid\", \"remaining\": \"0.00\", \"invoice_id\": 6}', NULL, '2026-11-16 17:14:19', '2026-11-16 17:14:19'),
+(64, 11, 'payment.received', 'Tenant payment recorded', 'Ralph Christian Sabandal paid PHP 1,100.00 for invoice 2026-11.', '{\"amount\": 1100, \"tenant_id\": 10, \"invoice_id\": 6}', '2026-11-16 17:14:36', '2026-11-16 17:14:19', '2026-11-16 17:14:36'),
+(65, 11, 'inquiry.new', 'New Room Application', 'Romy Tadlas submitted an application for Room 2.', '{\"message\": \"I am interested in renting Room 2. Please let me know the requirements and move-in details.\", \"room_id\": 10, \"inquiry_id\": 7, \"room_title\": \"single room\", \"room_number\": \"2\", \"monthly_rent\": \"90000.00\", \"applicant_name\": \"Romy Tadlas\", \"applicant_email\": \"romytadlas@gmail.com\", \"applicant_phone\": \"09677676673\"}', '2026-11-19 09:37:27', '2026-11-17 04:26:53', '2026-11-19 09:37:27');
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `password_reset_tokens`
 --
 
-DROP TABLE IF EXISTS `password_reset_tokens`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `password_reset_tokens` (
-  `email` varchar(255) NOT NULL,
-  `token` varchar(255) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`email`)
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `password_reset_tokens`
 --
 
-LOCK TABLES `password_reset_tokens` WRITE;
-/*!40000 ALTER TABLE `password_reset_tokens` DISABLE KEYS */;
-INSERT INTO `password_reset_tokens` VALUES ('youknowglendale@gmail.com','$2y$12$SK3GKekQUEL6yS6OfFnR6OjsrsvEliFuaR2SHjGNEaPqwwoiVdCxy','2026-11-16 13:45:07');
-/*!40000 ALTER TABLE `password_reset_tokens` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `password_reset_tokens` (`email`, `token`, `created_at`) VALUES
+('youknowglendale@gmail.com', '$2y$12$SK3GKekQUEL6yS6OfFnR6OjsrsvEliFuaR2SHjGNEaPqwwoiVdCxy', '2026-11-16 13:45:07');
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `payments`
 --
 
-DROP TABLE IF EXISTS `payments`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `payments` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `invoice_id` bigint(20) unsigned NOT NULL,
-  `reference_number` varchar(48) DEFAULT NULL,
-  `client_uuid` char(36) DEFAULT NULL,
-  `recorded_by` bigint(20) unsigned DEFAULT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `invoice_id` bigint UNSIGNED NOT NULL,
+  `reference_number` varchar(48) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `client_uuid` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `recorded_by` bigint UNSIGNED DEFAULT NULL,
   `amount` decimal(10,2) NOT NULL,
-  `transaction_status` enum('succeeded','failed') NOT NULL DEFAULT 'succeeded',
-  `method` varchar(255) NOT NULL DEFAULT 'cash',
-  `notes` varchar(255) DEFAULT NULL,
-  `failure_reason` varchar(255) DEFAULT NULL,
+  `transaction_status` enum('succeeded','failed') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'succeeded',
+  `method` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'cash',
+  `notes` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `failure_reason` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `paid_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `payments_reference_number_unique` (`reference_number`),
-  UNIQUE KEY `payments_client_uuid_unique` (`client_uuid`),
-  KEY `payments_invoice_id_foreign` (`invoice_id`),
-  KEY `payments_recorded_by_foreign` (`recorded_by`),
-  KEY `payments_invoice_id_transaction_status_index` (`invoice_id`,`transaction_status`),
-  CONSTRAINT `payments_invoice_id_foreign` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `payments_recorded_by_foreign` FOREIGN KEY (`recorded_by`) REFERENCES `users` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `payments`
 --
 
-LOCK TABLES `payments` WRITE;
-/*!40000 ALTER TABLE `payments` DISABLE KEYS */;
-INSERT INTO `payments` VALUES (4,4,'BE-SIM-2B0FE072-3400-4AD7-8335-88E65C6F5956','b89a32ce-54ae-4d28-895a-000b802a2290',1,1750.00,'succeeded','gcash_simulated','Simulated online payment. No real money was processed.',NULL,'2026-11-15 16:32:16','2026-11-15 16:32:16','2026-11-15 16:32:16'),(5,5,'BE-SIM-7D0D17D2-4799-4FEB-90F3-29DB88D9F346','b84cb0e4-d597-4fab-9b50-03c25e6a94cb',4,4000.00,'succeeded','maya_simulated','Simulated online payment. No real money was processed.',NULL,'2026-11-16 16:16:09','2026-11-16 16:16:09','2026-11-16 16:16:09'),(6,6,NULL,NULL,11,1100.00,'succeeded','cash','sa cash nag bayad',NULL,'2026-11-16 17:14:19','2026-11-16 17:14:19','2026-11-16 17:14:19');
-/*!40000 ALTER TABLE `payments` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `payments` (`id`, `invoice_id`, `reference_number`, `client_uuid`, `recorded_by`, `amount`, `transaction_status`, `method`, `notes`, `failure_reason`, `paid_at`, `created_at`, `updated_at`) VALUES
+(4, 4, 'BE-SIM-2B0FE072-3400-4AD7-8335-88E65C6F5956', 'b89a32ce-54ae-4d28-895a-000b802a2290', 1, 1750.00, 'succeeded', 'gcash_simulated', 'Simulated online payment. No real money was processed.', NULL, '2026-11-15 16:32:16', '2026-11-15 16:32:16', '2026-11-15 16:32:16'),
+(5, 5, 'BE-SIM-7D0D17D2-4799-4FEB-90F3-29DB88D9F346', 'b84cb0e4-d597-4fab-9b50-03c25e6a94cb', 4, 4000.00, 'succeeded', 'maya_simulated', 'Simulated online payment. No real money was processed.', NULL, '2026-11-16 16:16:09', '2026-11-16 16:16:09', '2026-11-16 16:16:09'),
+(6, 6, NULL, NULL, 11, 1100.00, 'succeeded', 'cash', 'sa cash nag bayad', NULL, '2026-11-16 17:14:19', '2026-11-16 17:14:19', '2026-11-16 17:14:19');
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `pending_charges`
 --
 
-DROP TABLE IF EXISTS `pending_charges`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pending_charges` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `lease_id` bigint(20) unsigned NOT NULL,
-  `category` enum('CANTEEN','APPLIANCE','OTHER') NOT NULL DEFAULT 'OTHER',
-  `description` varchar(255) DEFAULT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `lease_id` bigint UNSIGNED NOT NULL,
+  `category` enum('CANTEEN','APPLIANCE','OTHER') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'OTHER',
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `amount` decimal(10,2) NOT NULL,
-  `status` enum('pending','billed','voided') NOT NULL DEFAULT 'pending',
-  `invoice_id` bigint(20) unsigned DEFAULT NULL,
-  `client_uuid` char(36) DEFAULT NULL,
+  `status` enum('pending','billed','voided') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `invoice_id` bigint UNSIGNED DEFAULT NULL,
+  `client_uuid` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `billing_period` char(7) DEFAULT NULL,
-  `utility_type` varchar(24) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `pending_charges_client_uuid_unique` (`client_uuid`),
-  KEY `pending_charges_lease_id_status_index` (`lease_id`,`status`),
-  KEY `pending_charges_invoice_id_foreign` (`invoice_id`),
-  KEY `pending_charges_billing_period_status_index` (`billing_period`,`status`),
-  CONSTRAINT `pending_charges_invoice_id_foreign` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `pending_charges_lease_id_foreign` FOREIGN KEY (`lease_id`) REFERENCES `leases` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `billing_period` char(7) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `utility_type` varchar(24) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `pending_charges`
 --
 
-LOCK TABLES `pending_charges` WRITE;
-/*!40000 ALTER TABLE `pending_charges` DISABLE KEYS */;
-INSERT INTO `pending_charges` VALUES (1,1,'CANTEEN',NULL,250.00,'billed',4,NULL,'2026-11-11 07:10:04','2026-11-15 16:30:23',NULL,NULL),(5,6,'APPLIANCE',NULL,2000.00,'billed',5,'373af664-66ec-4e55-b2b2-4c6cb2426cb3','2026-11-16 16:12:29','2026-11-16 16:13:19','2026-11','electricity'),(6,7,'APPLIANCE',NULL,100.00,'billed',6,'b696a7eb-215c-4d9c-9538-b1bc5ceb18d4','2026-11-16 17:11:18','2026-11-16 17:11:27','2026-11','water');
-/*!40000 ALTER TABLE `pending_charges` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `pending_charges` (`id`, `lease_id`, `category`, `description`, `amount`, `status`, `invoice_id`, `client_uuid`, `created_at`, `updated_at`, `billing_period`, `utility_type`) VALUES
+(1, 1, 'CANTEEN', NULL, 250.00, 'billed', 4, NULL, '2026-11-11 07:10:04', '2026-11-15 16:30:23', NULL, NULL),
+(5, 6, 'APPLIANCE', NULL, 2000.00, 'billed', 5, '373af664-66ec-4e55-b2b2-4c6cb2426cb3', '2026-11-16 16:12:29', '2026-11-16 16:13:19', '2026-11', 'electricity'),
+(6, 7, 'APPLIANCE', NULL, 100.00, 'billed', 6, 'b696a7eb-215c-4d9c-9538-b1bc5ceb18d4', '2026-11-16 17:11:18', '2026-11-16 17:11:27', '2026-11', 'water');
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `personal_access_tokens`
 --
 
-DROP TABLE IF EXISTS `personal_access_tokens`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `personal_access_tokens` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `tokenable_type` varchar(255) NOT NULL,
-  `tokenable_id` bigint(20) unsigned NOT NULL,
-  `name` text NOT NULL,
-  `token` varchar(64) NOT NULL,
-  `abilities` text DEFAULT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_id` bigint UNSIGNED NOT NULL,
+  `name` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text COLLATE utf8mb4_unicode_ci,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `last_activity_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
-  KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`),
-  KEY `personal_access_tokens_expires_at_index` (`expires_at`),
-  KEY `personal_access_tokens_last_activity_at_index` (`last_activity_at`)
-) ENGINE=InnoDB AUTO_INCREMENT=140 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `personal_access_tokens`
---
-
-LOCK TABLES `personal_access_tokens` WRITE;
-/*!40000 ALTER TABLE `personal_access_tokens` DISABLE KEYS */;
-INSERT INTO `personal_access_tokens` VALUES (139,'App\\Models\\User',11,'api','9e7768da689da4579dce44a86faae279c8ef24ea77b1ea7f44de64b191eb9809','[\"*\"]',NULL,NULL,'2026-11-19 13:42:29','2026-11-19 13:42:29','2026-11-19 13:42:29');
-/*!40000 ALTER TABLE `personal_access_tokens` ENABLE KEYS */;
-UNLOCK TABLES;
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `rental_reviews`
 --
 
-DROP TABLE IF EXISTS `rental_reviews`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `rental_reviews` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `lease_id` bigint(20) unsigned NOT NULL,
-  `room_id` bigint(20) unsigned NOT NULL,
-  `tenant_id` bigint(20) unsigned NOT NULL,
-  `rating` tinyint(3) unsigned NOT NULL,
-  `review` text NOT NULL,
-  `status` enum('pending','approved','rejected') NOT NULL DEFAULT 'pending',
-  `moderated_by` bigint(20) unsigned DEFAULT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `lease_id` bigint UNSIGNED NOT NULL,
+  `room_id` bigint UNSIGNED NOT NULL,
+  `tenant_id` bigint UNSIGNED NOT NULL,
+  `rating` tinyint UNSIGNED NOT NULL,
+  `review` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('pending','approved','rejected') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `moderated_by` bigint UNSIGNED DEFAULT NULL,
   `moderated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `rental_reviews_lease_id_unique` (`lease_id`),
-  KEY `rental_reviews_tenant_id_foreign` (`tenant_id`),
-  KEY `rental_reviews_moderated_by_foreign` (`moderated_by`),
-  KEY `rental_reviews_room_id_status_index` (`room_id`,`status`),
-  CONSTRAINT `rental_reviews_lease_id_foreign` FOREIGN KEY (`lease_id`) REFERENCES `leases` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `rental_reviews_moderated_by_foreign` FOREIGN KEY (`moderated_by`) REFERENCES `users` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `rental_reviews_room_id_foreign` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `rental_reviews_tenant_id_foreign` FOREIGN KEY (`tenant_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `rental_reviews`
---
-
-LOCK TABLES `rental_reviews` WRITE;
-/*!40000 ALTER TABLE `rental_reviews` DISABLE KEYS */;
-/*!40000 ALTER TABLE `rental_reviews` ENABLE KEYS */;
-UNLOCK TABLES;
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `roles`
 --
 
-DROP TABLE IF EXISTS `roles`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `roles` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `label` varchar(255) NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `label` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `roles_name_unique` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `roles`
 --
 
-LOCK TABLES `roles` WRITE;
-/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-INSERT INTO `roles` VALUES (1,'admin','Admin','2026-11-10 12:54:13','2026-11-10 12:54:13'),(2,'landlord','Landlord','2026-11-10 12:54:13','2026-11-10 12:54:13'),(3,'staff','Staff','2026-11-10 12:54:13','2026-11-10 12:54:13'),(4,'tenant','Tenant','2026-11-10 12:54:13','2026-11-10 12:54:13');
-/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `roles` (`id`, `name`, `label`, `created_at`, `updated_at`) VALUES
+(1, 'admin', 'Admin', '2026-11-10 12:54:13', '2026-11-10 12:54:13'),
+(2, 'landlord', 'Landlord', '2026-11-10 12:54:13', '2026-11-10 12:54:13'),
+(3, 'staff', 'Staff', '2026-11-10 12:54:13', '2026-11-10 12:54:13'),
+(4, 'tenant', 'Tenant', '2026-11-10 12:54:13', '2026-11-10 12:54:13');
 
---
--- Table structure for table `room_availability_blocks`
---
-
-DROP TABLE IF EXISTS `room_availability_blocks`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `room_availability_blocks` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `room_id` bigint(20) unsigned NOT NULL,
-  `created_by` bigint(20) unsigned NOT NULL,
-  `start_date` date NOT NULL,
-  `end_date` date NOT NULL,
-  `reason` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `room_availability_blocks_created_by_foreign` (`created_by`),
-  KEY `room_availability_lookup` (`room_id`,`start_date`,`end_date`),
-  CONSTRAINT `room_availability_blocks_created_by_foreign` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`),
-  CONSTRAINT `room_availability_blocks_room_id_foreign` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `room_availability_blocks`
---
-
-LOCK TABLES `room_availability_blocks` WRITE;
-/*!40000 ALTER TABLE `room_availability_blocks` DISABLE KEYS */;
-/*!40000 ALTER TABLE `room_availability_blocks` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `room_favorites`
---
-
-DROP TABLE IF EXISTS `room_favorites`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `room_favorites` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` bigint(20) unsigned NOT NULL,
-  `room_id` bigint(20) unsigned NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `room_favorites_user_id_room_id_unique` (`user_id`,`room_id`),
-  KEY `room_favorites_room_id_foreign` (`room_id`),
-  CONSTRAINT `room_favorites_room_id_foreign` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `room_favorites_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `room_favorites`
---
-
-LOCK TABLES `room_favorites` WRITE;
-/*!40000 ALTER TABLE `room_favorites` DISABLE KEYS */;
-/*!40000 ALTER TABLE `room_favorites` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `room_images`
---
-
-DROP TABLE IF EXISTS `room_images`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `room_images` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `room_id` bigint(20) unsigned NOT NULL,
-  `path` varchar(255) NOT NULL,
-  `original_name` varchar(255) DEFAULT NULL,
-  `sort_order` int(10) unsigned NOT NULL DEFAULT 0,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `room_images_room_id_foreign` (`room_id`),
-  CONSTRAINT `room_images_room_id_foreign` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `room_images`
---
-
-LOCK TABLES `room_images` WRITE;
-/*!40000 ALTER TABLE `room_images` DISABLE KEYS */;
-INSERT INTO `room_images` VALUES (20,1,'rooms/1/BWdK9su9dirhVmMKeBVogvRYbpmJnI6izxDCSNuS.jpg','723041829_1656241888768213_8515870498273430234_n.jpg',1,'2026-11-15 17:04:31','2026-11-15 17:04:31'),(21,1,'rooms/1/ONbH4BXWas4ttgKBSsrhpzXx2ZR1M2j6W8qDLMAq.jpg','724613947_1656241922101543_9168292880152158903_n.jpg',2,'2026-11-15 17:04:31','2026-11-15 17:04:31'),(22,1,'rooms/1/cUnydPeXivFQYTG8IFib0TdjCwOI1IT882w17S1G.jpg','725006770_1656241915434877_6332926228104344165_n.jpg',3,'2026-11-15 17:04:31','2026-11-15 17:04:31'),(23,1,'rooms/1/DHK3ke4Fu2gyfr37YoIp5ETtUSXlwFjJTzv2GxTc.jpg','725034588_1656241938768208_6689320000896177805_n.jpg',4,'2026-11-15 17:04:32','2026-11-15 17:04:32'),(25,2,'rooms/2/CJPYVHtwdGwsL54XfKLkAMhAQLap2OlT6ZJOKehq.jpg','830563705_1714483912975844_9123455198023035371_n.jpg',1,'2026-11-15 17:29:49','2026-11-15 17:29:49'),(26,2,'rooms/2/HhbXKJ2EzhiD4iUioXjiA19EW1OwvjMtyhAygvXY.jpg','832329178_1526534345908429_4021860746985531284_n.jpg',2,'2026-11-15 17:29:49','2026-11-15 17:29:49'),(27,2,'rooms/2/cQF0v4w3zjADUcf8LWloXvMsSGWXG2GCRu0rRJTH.jpg','832964524_1697739698376177_6167021974738785433_n.jpg',3,'2026-11-15 17:29:49','2026-11-15 17:29:49'),(28,2,'rooms/2/TeoRIMJkWk9rFDyhsYAld0jbUkpMKg1RHUSVvdRX.jpg','833363568_4825833610978256_748632748593019341_n.jpg',4,'2026-11-15 17:29:50','2026-11-15 17:29:50'),(29,2,'rooms/2/DtFWXU12BDgGx3JSN8rcU8jiqarEcBzZ9fPqkfwm.jpg','833925827_1398921915236362_354360254372985986_n.jpg',5,'2026-11-15 17:29:50','2026-11-15 17:29:50'),(30,9,'rooms/9/jwzc15TV9mz5JhkrEzsoVltkHpcZ2xPe7gAlWJiC.jpg','871963983.jpg',1,'2026-11-16 17:06:49','2026-11-16 17:06:49'),(32,10,'rooms/10/cPeL2OqmBOav1cEVV1VD9Ywtmn7ONfi3cN5zGBek.jpg','5ed47575dbc6e5eccb2bd48b8d797fe5.jpg',1,'2026-11-17 04:25:46','2026-11-17 04:25:46');
-/*!40000 ALTER TABLE `room_images` ENABLE KEYS */;
-UNLOCK TABLES;
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `rooms`
 --
 
-DROP TABLE IF EXISTS `rooms`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `rooms` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `landlord_id` bigint(20) unsigned NOT NULL,
-  `room_number` varchar(255) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `type` varchar(255) DEFAULT NULL,
-  `capacity` smallint(5) unsigned DEFAULT NULL,
-  `description` text DEFAULT NULL,
-  `location` varchar(255) NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `landlord_id` bigint UNSIGNED NOT NULL,
+  `room_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `capacity` smallint UNSIGNED DEFAULT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `location` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `price` decimal(10,2) NOT NULL,
-  `amenities` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`amenities`)),
-  `status` varchar(20) NOT NULL DEFAULT 'available',
+  `amenities` json DEFAULT NULL,
+  `status` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'available',
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `rooms_landlord_id_room_number_unique` (`landlord_id`,`room_number`),
-  KEY `rooms_landlord_id_foreign` (`landlord_id`),
-  KEY `rooms_price_index` (`price`),
-  KEY `rooms_location_index` (`location`),
-  KEY `rooms_status_index` (`status`),
-  CONSTRAINT `rooms_landlord_id_foreign` FOREIGN KEY (`landlord_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `rooms`
 --
 
-LOCK TABLES `rooms` WRITE;
-/*!40000 ALTER TABLE `rooms` DISABLE KEYS */;
-INSERT INTO `rooms` VALUES (1,3,'1','Gio Boarding Room','Single Bedspacer',NULL,'Do not go past curfew','Tinago, Natumulan, Tag. Mis. Or.',1500.00,'[\"Wi-Fi\", \"Aircon\", \"Bathroom\", \"Kitchen\"]','occupied','2026-11-11 05:55:42','2026-11-11 07:08:14'),(2,3,'2','LADY','LADY BEDSPACER',4,'Ready for occupancy \nBed with Foam','Poblacion, Tagoloan, Misamis, Oriental',2000.00,'[\"Wifi Vendo (Timer Cut)\", \"Aircon\", \"Separate CRs and Shower Rooms\"]','occupied','2026-11-11 09:31:00','2026-11-16 16:03:57'),(9,11,'1','Stayc Here','Single Room',1,NULL,'Baluarte, Tagoloan, Mis. Or.',1000.00,'[\"Unlimited WiFi with UPS\", \"Electricity\", \"Foam Mattress\", \"Fan\"]','occupied','2026-11-16 17:06:49','2026-11-16 17:08:31'),(10,11,'2','single room','single',2,NULL,'7th floor',90000.00,'[\"netflix and chill\"]','available','2026-11-17 04:25:45','2026-11-17 04:25:45'),(11,13,'101','Sunny Bedspace near Campus','Bedspace',NULL,'Sunny Bedspace near Campus listed from the boarding house inventory.','Sampaloc, Manila',3500.00,'[\"WiFi\",\"Electric fan\",\"Shared bath\"]','available','2026-11-19 13:42:06','2026-11-19 13:42:06'),(12,13,'102','Single Room with Window','Single',NULL,'Single Room with Window listed from the boarding house inventory.','Sampaloc, Manila',6500.00,'[\"WiFi\",\"Own bath\",\"Study desk\"]','available','2026-11-19 13:42:06','2026-11-19 13:42:06'),(13,13,'201','Shared Twin for Students','Shared Twin',NULL,'Shared Twin for Students listed from the boarding house inventory.','Quezon City',4500.00,'[\"WiFi\",\"Two beds\",\"Kitchen access\"]','available','2026-11-19 13:42:06','2026-11-19 13:42:06'),(14,13,'202','Studio with Kitchenette','Studio',NULL,'Studio with Kitchenette listed from the boarding house inventory.','Makati',12000.00,'[\"WiFi\",\"Kitchenette\",\"Aircon\",\"Own bath\"]','available','2026-11-19 13:42:06','2026-11-19 13:42:06'),(15,13,'301','Family Room Ground Floor','Family',NULL,'Family Room Ground Floor listed from the boarding house inventory.','Pasig',15000.00,'[\"WiFi\",\"Aircon\",\"Two beds\",\"Own bath\"]','available','2026-11-19 13:42:06','2026-11-19 13:42:06');
-/*!40000 ALTER TABLE `rooms` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `rooms` (`id`, `landlord_id`, `room_number`, `title`, `type`, `capacity`, `description`, `location`, `price`, `amenities`, `status`, `created_at`, `updated_at`) VALUES
+(1, 3, '1', 'Gio Boarding Room', 'Single Bedspacer', NULL, 'Do not go past curfew', 'Tinago, Natumulan, Tag. Mis. Or.', 1500.00, '[\"Wi-Fi\", \"Aircon\", \"Bathroom\", \"Kitchen\"]', 'occupied', '2026-11-11 05:55:42', '2026-11-11 07:08:14'),
+(2, 3, '2', 'LADY', 'LADY BEDSPACER', 4, 'Ready for occupancy \nBed with Foam', 'Poblacion, Tagoloan, Misamis, Oriental', 2000.00, '[\"Wifi Vendo (Timer Cut)\", \"Aircon\", \"Separate CRs and Shower Rooms\"]', 'occupied', '2026-11-11 09:31:00', '2026-11-16 16:03:57'),
+(9, 11, '1', 'Stayc Here', 'Single Room', 1, NULL, 'Baluarte, Tagoloan, Mis. Or.', 1000.00, '[\"Unlimited WiFi with UPS\", \"Electricity\", \"Foam Mattress\", \"Fan\"]', 'occupied', '2026-11-16 17:06:49', '2026-11-16 17:08:31'),
+(10, 11, '2', 'single room', 'single', 2, NULL, '7th floor', 90000.00, '[\"netflix and chill\"]', 'available', '2026-11-17 04:25:45', '2026-11-17 04:25:45');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `room_availability_blocks`
+--
+
+CREATE TABLE `room_availability_blocks` (
+  `id` bigint UNSIGNED NOT NULL,
+  `room_id` bigint UNSIGNED NOT NULL,
+  `created_by` bigint UNSIGNED NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `reason` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `room_favorites`
+--
+
+CREATE TABLE `room_favorites` (
+  `id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `room_id` bigint UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `room_images`
+--
+
+CREATE TABLE `room_images` (
+  `id` bigint UNSIGNED NOT NULL,
+  `room_id` bigint UNSIGNED NOT NULL,
+  `path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `original_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sort_order` int UNSIGNED NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `room_images`
+--
+
+INSERT INTO `room_images` (`id`, `room_id`, `path`, `original_name`, `sort_order`, `created_at`, `updated_at`) VALUES
+(20, 1, 'rooms/1/BWdK9su9dirhVmMKeBVogvRYbpmJnI6izxDCSNuS.jpg', '723041829_1656241888768213_8515870498273430234_n.jpg', 1, '2026-11-15 17:04:31', '2026-11-15 17:04:31'),
+(21, 1, 'rooms/1/ONbH4BXWas4ttgKBSsrhpzXx2ZR1M2j6W8qDLMAq.jpg', '724613947_1656241922101543_9168292880152158903_n.jpg', 2, '2026-11-15 17:04:31', '2026-11-15 17:04:31'),
+(22, 1, 'rooms/1/cUnydPeXivFQYTG8IFib0TdjCwOI1IT882w17S1G.jpg', '725006770_1656241915434877_6332926228104344165_n.jpg', 3, '2026-11-15 17:04:31', '2026-11-15 17:04:31'),
+(23, 1, 'rooms/1/DHK3ke4Fu2gyfr37YoIp5ETtUSXlwFjJTzv2GxTc.jpg', '725034588_1656241938768208_6689320000896177805_n.jpg', 4, '2026-11-15 17:04:32', '2026-11-15 17:04:32'),
+(25, 2, 'rooms/2/CJPYVHtwdGwsL54XfKLkAMhAQLap2OlT6ZJOKehq.jpg', '830563705_1714483912975844_9123455198023035371_n.jpg', 1, '2026-11-15 17:29:49', '2026-11-15 17:29:49'),
+(26, 2, 'rooms/2/HhbXKJ2EzhiD4iUioXjiA19EW1OwvjMtyhAygvXY.jpg', '832329178_1526534345908429_4021860746985531284_n.jpg', 2, '2026-11-15 17:29:49', '2026-11-15 17:29:49'),
+(27, 2, 'rooms/2/cQF0v4w3zjADUcf8LWloXvMsSGWXG2GCRu0rRJTH.jpg', '832964524_1697739698376177_6167021974738785433_n.jpg', 3, '2026-11-15 17:29:49', '2026-11-15 17:29:49'),
+(28, 2, 'rooms/2/TeoRIMJkWk9rFDyhsYAld0jbUkpMKg1RHUSVvdRX.jpg', '833363568_4825833610978256_748632748593019341_n.jpg', 4, '2026-11-15 17:29:50', '2026-11-15 17:29:50'),
+(29, 2, 'rooms/2/DtFWXU12BDgGx3JSN8rcU8jiqarEcBzZ9fPqkfwm.jpg', '833925827_1398921915236362_354360254372985986_n.jpg', 5, '2026-11-15 17:29:50', '2026-11-15 17:29:50'),
+(30, 9, 'rooms/9/jwzc15TV9mz5JhkrEzsoVltkHpcZ2xPe7gAlWJiC.jpg', '871963983.jpg', 1, '2026-11-16 17:06:49', '2026-11-16 17:06:49'),
+(32, 10, 'rooms/10/cPeL2OqmBOav1cEVV1VD9Ywtmn7ONfi3cN5zGBek.jpg', '5ed47575dbc6e5eccb2bd48b8d797fe5.jpg', 1, '2026-11-17 04:25:46', '2026-11-17 04:25:46');
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `sessions`
 --
 
-DROP TABLE IF EXISTS `sessions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sessions` (
-  `id` varchar(255) NOT NULL,
-  `user_id` bigint(20) unsigned DEFAULT NULL,
-  `ip_address` varchar(45) DEFAULT NULL,
-  `user_agent` text DEFAULT NULL,
-  `payload` longtext NOT NULL,
-  `last_activity` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `sessions_user_id_index` (`user_id`),
-  KEY `sessions_last_activity_index` (`last_activity`)
+  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint UNSIGNED DEFAULT NULL,
+  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_agent` text COLLATE utf8mb4_unicode_ci,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_activity` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `sessions`
 --
 
-LOCK TABLES `sessions` WRITE;
-/*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` VALUES ('1nA21T0j5EjiPzraMxwPzya767BPYqVFpi4l5kQe',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36','YTozOntzOjY6Il90b2tlbiI7czo0MDoia0dwTDVQVlpoT0hVV1hKdVYzNDlXaVY1YkNCRmYzajJKbHZkSnhaMiI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6NDU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMS8/dXRtX3NvdXJjZT1jaGF0Z3B0LmNvbSI7czo1OiJyb3V0ZSI7Tjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1794329719),('cSv8iJF1DhRWhj5OkzI3mfi2levLPYt4q5ZB0TlE',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.9818','YTozOntzOjY6Il90b2tlbiI7czo0MDoiZjJWalNKY2tBUFAzMThsMHhQYUp6eTFGREZndGFkMzFsOEozclp1ZSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7Tjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1795092552),('zmzjA90U3pCKi35jskJDLkDn1cRUoKTf2O7UkYHh',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.9818','YTozOntzOjY6Il90b2tlbiI7czo0MDoiSXJnWEF4aWMzbjBGREZiU3RuQk9hTzdIcGw2WlQ1bU1Ma3l3Znk0SiI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7Tjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1795091972);
-/*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
+('1nA21T0j5EjiPzraMxwPzya767BPYqVFpi4l5kQe', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoia0dwTDVQVlpoT0hVV1hKdVYzNDlXaVY1YkNCRmYzajJKbHZkSnhaMiI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6NDU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMS8/dXRtX3NvdXJjZT1jaGF0Z3B0LmNvbSI7czo1OiJyb3V0ZSI7Tjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1794329719);
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `username` varchar(255) DEFAULT NULL,
-  `email` varchar(255) NOT NULL,
-  `phone` varchar(255) DEFAULT NULL,
-  `role_id` bigint(20) unsigned NOT NULL,
-  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `role_id` bigint UNSIGNED NOT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
-  `remember_token` varchar(100) DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `users_email_unique` (`email`),
-  UNIQUE KEY `users_username_unique` (`username`),
-  KEY `users_role_id_foreign` (`role_id`),
-  CONSTRAINT `users_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Edcil Jhon B. Faciol','eji','edciljhonfaciol@gmail.com','09915633814',4,1,NULL,'$2y$12$nelUK8wKlDjsY8codBNDz.Aiaxis8yx9q2fDWkr2kN5efHaagsJMa',NULL,'2026-11-10 09:09:25','2026-11-11 08:35:12'),(2,'Kurt Laurence Arbues','kurtarbues','kurtlaurencearbues@gmail.com','09935215868',1,1,NULL,'$2y$12$mkoLKEbAyEJmFTFbnGl1Q.bAE2.nwjUNitPgMxtHcKkFkszG8UdV6',NULL,'2026-11-10 09:20:05','2026-11-13 08:03:36'),(3,'Giovanni P. Cantos','gio','giovannicantos18@gmail.com','09935478932',2,1,NULL,'$2y$12$GI5WB3itk4genbVnDkOiWuOTl.s6OACOgOuZ8YTwrXc/cr76Aepzm',NULL,'2026-11-11 05:51:44','2026-11-11 09:52:06'),(4,'Glendale Montehermoso','glendale','youknowglendale@gmail.com','09935215868',4,1,NULL,'$2y$12$UC4Y9pSTsrp7uIH0ljdJuuSCy2kIfjmPe0BexQw52mFXR.x6h7wn6',NULL,'2026-11-11 08:17:08','2026-11-16 14:01:05'),(10,'Ralph Christian Sabandal','larp','ralphchristian@gmail.com','09924917058',4,1,NULL,'$2y$12$zz.Px3quiPW49HOQAi2jmO/1CpJWDFnMe93ki0v7RSZ1tsJTXBNkm',NULL,'2026-11-16 16:59:01','2026-11-16 16:59:01'),(11,'Angel Stacee Tabligan','stayc','angelstacee@gmail.com','09450676188',2,1,NULL,'$2y$12$bNxYNjryK8cAQoHqenR5kOHpJNFl6pQZmIgZRtR76Duyc4lgYmBNW',NULL,'2026-11-16 17:00:14','2026-11-16 17:00:14'),(12,'Romy Tadlas','romy','romytadlas@gmail.com','09677676673',4,1,NULL,'$2y$12$a/Dk1K8yErSCnJ3NoDI.EOSWFy67/J5XMHRuKphVu/ZTct8K9grU2',NULL,'2026-11-17 04:23:22','2026-11-17 04:23:22'),(13,'Maria Santos','landlord','landlord@bhms.test','09171234567',2,1,NULL,'$2y$12$lXkhR6a46LIXbfm8Vok91.D5gwU7jL09G6wD/EXKryCrfV1AY/BPO',NULL,'2026-11-19 13:42:06','2026-11-19 13:42:06'),(14,'Juan Dela Cruz','tenant','tenant@bhms.test','09179876543',4,1,NULL,'$2y$12$yqRqcbQOP1okZt/t4pJm1uaoy/AEacrNDVWkH2zo7e6wim09sQINe',NULL,'2026-11-19 13:42:06','2026-11-19 13:42:06'),(15,'Ana Reyes','tenant2','tenant2@bhms.test','09175551234',4,1,NULL,'$2y$12$Y8rgEMzxCdd/32Zl5PHn.OW51N06peAx4djOixZvZJ3HyqhuUzzxK',NULL,'2026-11-19 13:42:06','2026-11-19 13:42:06');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+INSERT INTO `users` (`id`, `name`, `username`, `email`, `phone`, `role_id`, `is_active`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Edcil Jhon B. Faciol', 'eji', 'edciljhonfaciol@gmail.com', '09915633814', 4, 1, NULL, '$2y$12$nelUK8wKlDjsY8codBNDz.Aiaxis8yx9q2fDWkr2kN5efHaagsJMa', NULL, '2026-11-10 09:09:25', '2026-11-11 08:35:12'),
+(2, 'Kurt Laurence Arbues', 'kurtarbues', 'kurtlaurencearbues@gmail.com', '09935215868', 1, 1, NULL, '$2y$12$mkoLKEbAyEJmFTFbnGl1Q.bAE2.nwjUNitPgMxtHcKkFkszG8UdV6', NULL, '2026-11-10 09:20:05', '2026-11-13 08:03:36'),
+(3, 'Giovanni P. Cantos', 'gio', 'giovannicantos18@gmail.com', '09935478932', 2, 1, NULL, '$2y$12$GI5WB3itk4genbVnDkOiWuOTl.s6OACOgOuZ8YTwrXc/cr76Aepzm', NULL, '2026-11-11 05:51:44', '2026-11-11 09:52:06'),
+(4, 'Glendale Montehermoso', 'glendale', 'youknowglendale@gmail.com', '09935215868', 4, 1, NULL, '$2y$12$UC4Y9pSTsrp7uIH0ljdJuuSCy2kIfjmPe0BexQw52mFXR.x6h7wn6', NULL, '2026-11-11 08:17:08', '2026-11-16 14:01:05'),
+(10, 'Ralph Christian Sabandal', 'larp', 'ralphchristian@gmail.com', '09924917058', 4, 1, NULL, '$2y$12$zz.Px3quiPW49HOQAi2jmO/1CpJWDFnMe93ki0v7RSZ1tsJTXBNkm', NULL, '2026-11-16 16:59:01', '2026-11-16 16:59:01'),
+(11, 'Angel Stacee Tabligan', 'stayc', 'angelstacee@gmail.com', '09450676188', 2, 1, NULL, '$2y$12$bNxYNjryK8cAQoHqenR5kOHpJNFl6pQZmIgZRtR76Duyc4lgYmBNW', NULL, '2026-11-16 17:00:14', '2026-11-16 17:00:14'),
+(12, 'Romy Tadlas', 'romy', 'romytadlas@gmail.com', '09677676673', 4, 1, NULL, '$2y$12$a/Dk1K8yErSCnJ3NoDI.EOSWFy67/J5XMHRuKphVu/ZTct8K9grU2', NULL, '2026-11-17 04:23:22', '2026-11-17 04:23:22');
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `activity_logs`
+--
+ALTER TABLE `activity_logs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `activity_logs_user_id_foreign` (`user_id`),
+  ADD KEY `activity_logs_subject_type_subject_id_index` (`subject_type`,`subject_id`);
+
+--
+-- Indexes for table `cache`
+--
+ALTER TABLE `cache`
+  ADD PRIMARY KEY (`key`),
+  ADD KEY `cache_expiration_index` (`expiration`);
+
+--
+-- Indexes for table `cache_locks`
+--
+ALTER TABLE `cache_locks`
+  ADD PRIMARY KEY (`key`),
+  ADD KEY `cache_locks_expiration_index` (`expiration`);
+
+--
+-- Indexes for table `conversation_messages`
+--
+ALTER TABLE `conversation_messages`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `conversation_messages_sender_id_foreign` (`sender_id`),
+  ADD KEY `conversation_messages_conversation_id_created_at_index` (`conversation_id`,`created_at`);
+
+--
+-- Indexes for table `failed_jobs`
+--
+ALTER TABLE `failed_jobs`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
+
+--
+-- Indexes for table `inquiries`
+--
+ALTER TABLE `inquiries`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `inquiries_room_id_foreign` (`room_id`),
+  ADD KEY `inquiries_tenant_id_foreign` (`tenant_id`),
+  ADD KEY `inquiries_room_id_status_index` (`room_id`,`status`),
+  ADD KEY `inquiries_tenant_id_status_index` (`tenant_id`,`status`),
+  ADD KEY `inquiry_room_offer_lookup` (`room_id`,`status`,`offer_expires_at`);
+
+--
+-- Indexes for table `invoices`
+--
+ALTER TABLE `invoices`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `invoices_lease_id_billing_period_unique` (`lease_id`,`billing_period`),
+  ADD KEY `invoices_lease_id_foreign` (`lease_id`),
+  ADD KEY `invoices_status_due_date_index` (`status`,`due_date`);
+
+--
+-- Indexes for table `leases`
+--
+ALTER TABLE `leases`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `one_active_lease_per_room` (`active_room_id`),
+  ADD KEY `leases_room_id_foreign` (`room_id`),
+  ADD KEY `leases_tenant_id_foreign` (`tenant_id`),
+  ADD KEY `leases_landlord_id_foreign` (`landlord_id`),
+  ADD KEY `leases_inquiry_id_foreign` (`inquiry_id`),
+  ADD KEY `leases_landlord_id_status_index` (`landlord_id`,`status`),
+  ADD KEY `leases_tenant_id_status_index` (`tenant_id`,`status`);
+
+--
+-- Indexes for table `lease_conversations`
+--
+ALTER TABLE `lease_conversations`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `lease_conversations_lease_id_unique` (`lease_id`),
+  ADD KEY `lease_conversations_landlord_id_foreign` (`landlord_id`),
+  ADD KEY `lease_conversations_tenant_id_landlord_id_index` (`tenant_id`,`landlord_id`);
+
+--
+-- Indexes for table `lease_inspections`
+--
+ALTER TABLE `lease_inspections`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `lease_inspection_once_per_kind` (`lease_id`,`kind`),
+  ADD KEY `lease_inspections_recorded_by_foreign` (`recorded_by`),
+  ADD KEY `lease_inspections_kind_status_index` (`kind`,`status`);
+
+--
+-- Indexes for table `maintenance_requests`
+--
+ALTER TABLE `maintenance_requests`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `maintenance_requests_lease_id_foreign` (`lease_id`),
+  ADD KEY `maintenance_requests_landlord_id_status_index` (`landlord_id`,`status`),
+  ADD KEY `maintenance_requests_tenant_id_created_at_index` (`tenant_id`,`created_at`);
+
+--
+-- Indexes for table `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `notifications_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `password_reset_tokens`
+--
+ALTER TABLE `password_reset_tokens`
+  ADD PRIMARY KEY (`email`);
+
+--
+-- Indexes for table `payments`
+--
+ALTER TABLE `payments`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `payments_reference_number_unique` (`reference_number`),
+  ADD UNIQUE KEY `payments_client_uuid_unique` (`client_uuid`),
+  ADD KEY `payments_invoice_id_foreign` (`invoice_id`),
+  ADD KEY `payments_recorded_by_foreign` (`recorded_by`),
+  ADD KEY `payments_invoice_id_transaction_status_index` (`invoice_id`,`transaction_status`);
+
+--
+-- Indexes for table `pending_charges`
+--
+ALTER TABLE `pending_charges`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `pending_charges_client_uuid_unique` (`client_uuid`),
+  ADD KEY `pending_charges_lease_id_status_index` (`lease_id`,`status`),
+  ADD KEY `pending_charges_invoice_id_foreign` (`invoice_id`),
+  ADD KEY `pending_charges_billing_period_status_index` (`billing_period`,`status`);
+
+--
+-- Indexes for table `personal_access_tokens`
+--
+ALTER TABLE `personal_access_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
+  ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`),
+  ADD KEY `personal_access_tokens_expires_at_index` (`expires_at`),
+  ADD KEY `personal_access_tokens_last_activity_at_index` (`last_activity_at`);
+
+--
+-- Indexes for table `rental_reviews`
+--
+ALTER TABLE `rental_reviews`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `rental_reviews_lease_id_unique` (`lease_id`),
+  ADD KEY `rental_reviews_tenant_id_foreign` (`tenant_id`),
+  ADD KEY `rental_reviews_moderated_by_foreign` (`moderated_by`),
+  ADD KEY `rental_reviews_room_id_status_index` (`room_id`,`status`);
+
+--
+-- Indexes for table `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `roles_name_unique` (`name`);
+
+--
+-- Indexes for table `rooms`
+--
+ALTER TABLE `rooms`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `rooms_landlord_id_room_number_unique` (`landlord_id`,`room_number`),
+  ADD KEY `rooms_landlord_id_foreign` (`landlord_id`),
+  ADD KEY `rooms_price_index` (`price`),
+  ADD KEY `rooms_location_index` (`location`),
+  ADD KEY `rooms_status_index` (`status`);
+
+--
+-- Indexes for table `room_availability_blocks`
+--
+ALTER TABLE `room_availability_blocks`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `room_availability_blocks_created_by_foreign` (`created_by`),
+  ADD KEY `room_availability_lookup` (`room_id`,`start_date`,`end_date`);
+
+--
+-- Indexes for table `room_favorites`
+--
+ALTER TABLE `room_favorites`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `room_favorites_user_id_room_id_unique` (`user_id`,`room_id`),
+  ADD KEY `room_favorites_room_id_foreign` (`room_id`);
+
+--
+-- Indexes for table `room_images`
+--
+ALTER TABLE `room_images`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `room_images_room_id_foreign` (`room_id`);
+
+--
+-- Indexes for table `sessions`
+--
+ALTER TABLE `sessions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sessions_user_id_index` (`user_id`),
+  ADD KEY `sessions_last_activity_index` (`last_activity`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `users_email_unique` (`email`),
+  ADD UNIQUE KEY `users_username_unique` (`username`),
+  ADD KEY `users_role_id_foreign` (`role_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `activity_logs`
+--
+ALTER TABLE `activity_logs`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=363;
+
+--
+-- AUTO_INCREMENT for table `conversation_messages`
+--
+ALTER TABLE `conversation_messages`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `failed_jobs`
+--
+ALTER TABLE `failed_jobs`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `inquiries`
+--
+ALTER TABLE `inquiries`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `invoices`
+--
+ALTER TABLE `invoices`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `leases`
+--
+ALTER TABLE `leases`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `lease_conversations`
+--
+ALTER TABLE `lease_conversations`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `lease_inspections`
+--
+ALTER TABLE `lease_inspections`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `maintenance_requests`
+--
+ALTER TABLE `maintenance_requests`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- AUTO_INCREMENT for table `notifications`
+--
+ALTER TABLE `notifications`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+
+--
+-- AUTO_INCREMENT for table `payments`
+--
+ALTER TABLE `payments`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `pending_charges`
+--
+ALTER TABLE `pending_charges`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `personal_access_tokens`
+--
+ALTER TABLE `personal_access_tokens`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
+
+--
+-- AUTO_INCREMENT for table `rental_reviews`
+--
+ALTER TABLE `rental_reviews`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `rooms`
+--
+ALTER TABLE `rooms`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `room_availability_blocks`
+--
+ALTER TABLE `room_availability_blocks`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `room_favorites`
+--
+ALTER TABLE `room_favorites`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `room_images`
+--
+ALTER TABLE `room_images`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `activity_logs`
+--
+ALTER TABLE `activity_logs`
+  ADD CONSTRAINT `activity_logs_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
+
+--
+-- Constraints for table `conversation_messages`
+--
+ALTER TABLE `conversation_messages`
+  ADD CONSTRAINT `conversation_messages_conversation_id_foreign` FOREIGN KEY (`conversation_id`) REFERENCES `lease_conversations` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `conversation_messages_sender_id_foreign` FOREIGN KEY (`sender_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `inquiries`
+--
+ALTER TABLE `inquiries`
+  ADD CONSTRAINT `inquiries_room_id_foreign` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `inquiries_tenant_id_foreign` FOREIGN KEY (`tenant_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `invoices`
+--
+ALTER TABLE `invoices`
+  ADD CONSTRAINT `invoices_lease_id_foreign` FOREIGN KEY (`lease_id`) REFERENCES `leases` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `leases`
+--
+ALTER TABLE `leases`
+  ADD CONSTRAINT `leases_inquiry_id_foreign` FOREIGN KEY (`inquiry_id`) REFERENCES `inquiries` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `leases_landlord_id_foreign` FOREIGN KEY (`landlord_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `leases_room_id_foreign` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `leases_tenant_id_foreign` FOREIGN KEY (`tenant_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `lease_conversations`
+--
+ALTER TABLE `lease_conversations`
+  ADD CONSTRAINT `lease_conversations_landlord_id_foreign` FOREIGN KEY (`landlord_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `lease_conversations_lease_id_foreign` FOREIGN KEY (`lease_id`) REFERENCES `leases` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `lease_conversations_tenant_id_foreign` FOREIGN KEY (`tenant_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `lease_inspections`
+--
+ALTER TABLE `lease_inspections`
+  ADD CONSTRAINT `lease_inspections_lease_id_foreign` FOREIGN KEY (`lease_id`) REFERENCES `leases` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `lease_inspections_recorded_by_foreign` FOREIGN KEY (`recorded_by`) REFERENCES `users` (`id`) ON DELETE RESTRICT;
+
+--
+-- Constraints for table `maintenance_requests`
+--
+ALTER TABLE `maintenance_requests`
+  ADD CONSTRAINT `maintenance_requests_landlord_id_foreign` FOREIGN KEY (`landlord_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `maintenance_requests_lease_id_foreign` FOREIGN KEY (`lease_id`) REFERENCES `leases` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `maintenance_requests_tenant_id_foreign` FOREIGN KEY (`tenant_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD CONSTRAINT `notifications_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `payments`
+--
+ALTER TABLE `payments`
+  ADD CONSTRAINT `payments_invoice_id_foreign` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `payments_recorded_by_foreign` FOREIGN KEY (`recorded_by`) REFERENCES `users` (`id`) ON DELETE SET NULL;
+
+--
+-- Constraints for table `pending_charges`
+--
+ALTER TABLE `pending_charges`
+  ADD CONSTRAINT `pending_charges_invoice_id_foreign` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `pending_charges_lease_id_foreign` FOREIGN KEY (`lease_id`) REFERENCES `leases` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `rental_reviews`
+--
+ALTER TABLE `rental_reviews`
+  ADD CONSTRAINT `rental_reviews_lease_id_foreign` FOREIGN KEY (`lease_id`) REFERENCES `leases` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `rental_reviews_moderated_by_foreign` FOREIGN KEY (`moderated_by`) REFERENCES `users` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `rental_reviews_room_id_foreign` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `rental_reviews_tenant_id_foreign` FOREIGN KEY (`tenant_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `rooms`
+--
+ALTER TABLE `rooms`
+  ADD CONSTRAINT `rooms_landlord_id_foreign` FOREIGN KEY (`landlord_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `room_availability_blocks`
+--
+ALTER TABLE `room_availability_blocks`
+  ADD CONSTRAINT `room_availability_blocks_created_by_foreign` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE RESTRICT,
+  ADD CONSTRAINT `room_availability_blocks_room_id_foreign` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `room_favorites`
+--
+ALTER TABLE `room_favorites`
+  ADD CONSTRAINT `room_favorites_room_id_foreign` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `room_favorites_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `room_images`
+--
+ALTER TABLE `room_images`
+  ADD CONSTRAINT `room_images_room_id_foreign` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`);
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2026-11-19  8:42:48
